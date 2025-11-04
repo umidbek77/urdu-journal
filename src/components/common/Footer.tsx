@@ -1,7 +1,7 @@
-// src/components/common/Footer.tsx
+// src/components/common/Footer.tsx (Grid o'rniga Box/Flexbox ishlatildi)
 
 import React from 'react';
-import { Box, Container, Grid, Typography, Link as MuiLink, IconButton, Divider } from '@mui/material';
+import { Box, Container, Typography, Link as MuiLink, IconButton, Divider } from '@mui/material';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
         { title: 'Issues', path: '/issues' },
         { title: 'Editorial board', path: '/editorial-board' },
         { title: 'For authors', path: '/for-authors' },
-        { title: 'Contacts', path: '/contacts' },
+        { title: 'Contacts', 'path': '/contacts' },
     ];
 
     return (
@@ -27,10 +27,22 @@ const Footer: React.FC = () => {
             borderTop: '5px solid #FFCC00' // Aksent chizig'i
         }}>
             <Container maxWidth="lg">
-                <Grid container spacing={4}>
 
-                    {/* 1. Jurnal haqida ma'lumot / Logo */}
-                    <Grid item xs={12} md={4}>
+                {/* Grid container o'rniga Box (Flex container) ishlatildi */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 4 // spacing={4} ga mos keladi
+                    }}
+                >
+                    {/* 1. Jurnal haqida ma'lumot / Logo (md=4) */}
+                    <Box
+                        sx={{
+                            width: { xs: '100%', md: 'calc(33.3333% - 16px)' }, // md=4 ga mos
+                            flexShrink: 0
+                        }}
+                    >
                         <Typography
                             variant="h6"
                             sx={{ fontWeight: 'bold', mb: 1, borderBottom: '2px solid #FFCC00', display: 'inline-block', pb: 0.5 }}
@@ -40,10 +52,15 @@ const Footer: React.FC = () => {
                         <Typography variant="body2" sx={{ opacity: 0.8 }}>
                             Journal "Science and society" of Nukus State Pedagogical Institute named after Ajiniyaz.
                         </Typography>
-                    </Grid>
+                    </Box>
 
-                    {/* 2. Kontakt ma'lumotlari */}
-                    <Grid item xs={12} sm={6} md={4}>
+                    {/* 2. Kontakt ma'lumotlari (sm=6, md=4) */}
+                    <Box
+                        sx={{
+                            width: { xs: '100%', sm: 'calc(50% - 16px)', md: 'calc(33.3333% - 16px)' }, // sm=6, md=4 ga mos
+                            flexShrink: 0
+                        }}
+                    >
                         <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
                             Contacts
                         </Typography>
@@ -61,10 +78,15 @@ const Footer: React.FC = () => {
                                 <Typography variant="body2">{CONTACT_INFO.address}</Typography>
                             </Box>
                         </Box>
-                    </Grid>
+                    </Box>
 
-                    {/* 3. Navigatsiya havolalari */}
-                    <Grid item xs={12} sm={6} md={4}>
+                    {/* 3. Navigatsiya havolalari (sm=6, md=4) */}
+                    <Box
+                        sx={{
+                            width: { xs: '100%', sm: 'calc(50% - 16px)', md: 'calc(33.3333% - 16px)' }, // sm=6, md=4 ga mos
+                            flexShrink: 0
+                        }}
+                    >
                         <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
                             Quick Links
                         </Typography>
@@ -82,13 +104,13 @@ const Footer: React.FC = () => {
                                 </MuiLink>
                             ))}
                         </Box>
-                    </Grid>
+                    </Box>
 
-                </Grid>
+                </Box>
 
                 <Divider sx={{ my: 3, backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
 
-                {/* Mualliflik huquqi (Copyright) qismi */}
+                {/* Mualliflik huquqi (Copyright) qismi o'zgarishsiz */}
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
                     <Typography variant="caption" sx={{ opacity: 0.7 }}>
                         ©2020-2025 Nukus State Pedagogical Institute named after Ajiniyaz.

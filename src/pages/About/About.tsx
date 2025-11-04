@@ -1,7 +1,7 @@
-// src/pages/About/About.tsx
+// src/pages/About/About.tsx (Grid o'rniga Box/Flexbox ishlatildi)
 
 import React from 'react';
-import { Container, Typography, Box, List, ListItem, ListItemIcon, ListItemText, Paper, Grid } from '@mui/material';
+import { Container, Typography, Box, List, ListItem, ListItemIcon, ListItemText, Paper } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
 
@@ -29,11 +29,24 @@ const About: React.FC = () => {
                 About the Journal
             </Typography>
 
-            <Grid container spacing={4}>
+            {/* Grid container o'rniga Box (Flex container) ishlatildi */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: { xs: 3, md: 4 }, // xs=3, md=4 spacing ga mos keladi
+                    mx: { md: -2 } // Agar zarur bo'lsa, manfiy margin
+                }}
+            >
 
-                {/* Chap ustun: Maqsad va Missiya */}
-                <Grid item xs={12} md={7}>
-                    <Paper elevation={1} sx={{ p: 4 }}>
+                {/* Chap ustun: Grid item (md=7) o'rniga Box ishlatildi */}
+                <Box
+                    sx={{
+                        width: { xs: '100%', md: 'calc(58.3333% - 16px)' }, // md=7 ga mos keladi (7/12 * 100). 16px = 4*4
+                        flexGrow: 1
+                    }}
+                >
+                    <Paper elevation={1} sx={{ p: 4, height: '100%' }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 2, fontWeight: 600 }}>
                             Mission and History
                         </Typography>
@@ -58,10 +71,15 @@ const About: React.FC = () => {
                             ))}
                         </List>
                     </Paper>
-                </Grid>
+                </Box>
 
-                {/* O'ng ustun: Indeks bazalari va ISSN */}
-                <Grid item xs={12} md={5}>
+                {/* O'ng ustun: Grid item (md=5) o'rniga Box ishlatildi */}
+                <Box
+                    sx={{
+                        width: { xs: '100%', md: 'calc(41.6667% - 16px)' }, // md=5 ga mos keladi (5/12 * 100)
+                        flexGrow: 1
+                    }}
+                >
                     <Paper elevation={3} sx={{ p: 4, height: '100%', backgroundColor: 'background.default' }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 2, fontWeight: 600 }}>
                             Indexing and Recognition
@@ -89,14 +107,14 @@ const About: React.FC = () => {
 
                         <Box sx={{ mt: 4, textAlign: 'center' }}>
                             <img
-                                src="/src/assets/images/logo_journal_big.png"
+                                src="/images/logo_journal_big.png"
                                 alt="Journal Logo"
                                 style={{ maxWidth: '80%', opacity: 0.8 }}
                             />
                         </Box>
                     </Paper>
-                </Grid>
-            </Grid>
+                </Box>
+            </Box>
         </Container>
     );
 };

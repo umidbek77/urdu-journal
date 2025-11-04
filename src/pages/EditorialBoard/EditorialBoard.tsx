@@ -1,7 +1,7 @@
-// src/pages/EditorialBoard/EditorialBoard.tsx
+// src/pages/EditorialBoard/EditorialBoard.tsx (Grid o'rniga Box/Flexbox ishlatildi)
 
 import React from 'react';
-import { Container, Typography, Grid, Box, Paper } from '@mui/material';
+import { Container, Typography, Box, Paper } from '@mui/material';
 import { EDITORIAL_MEMBERS } from '../../utils/mockData';
 import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
 
@@ -12,6 +12,7 @@ const EditorialBoard: React.FC = () => {
     const executiveSecretary = EDITORIAL_MEMBERS.find(m => m.role === 'Executive Secretary');
     const members = EDITORIAL_MEMBERS.filter(m => m.role === 'Member');
 
+    // A'zolar kartochkasi
     const MemberCard: React.FC<{ member: any }> = ({ member }) => (
         <Box sx={{ mb: 2 }}>
             <Typography variant="body1" sx={{ fontWeight: 500, color: 'primary.main' }}>
@@ -22,6 +23,11 @@ const EditorialBoard: React.FC = () => {
             </Typography>
         </Box>
     );
+
+    // A'zolar ro'yxatini ikki qismga ajratish
+    const half = Math.ceil(members.length / 2);
+    const firstColumn = members.slice(0, half);
+    const secondColumn = members.slice(half);
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -56,19 +62,38 @@ const EditorialBoard: React.FC = () => {
                     Editorial Members:
                 </Typography>
 
-                {/* Oddiy a'zolar ro'yxati (ikki ustunli tartib) */}
-                <Grid container spacing={4}>
-                    <Grid item xs={12} sm={6}>
-                        {members.slice(0, Math.ceil(members.length / 2)).map((member, index) => (
+                {/* Oddiy a'zolar ro'yxati (Grid o'rniga Box/Flexbox) */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 4 // spacing={4} ga mos keladi
+                    }}
+                >
+                    {/* 1-ustun (xs=12, sm=6 ga mos Box) */}
+                    <Box
+                        sx={{
+                            width: { xs: '100%', sm: 'calc(50% - 16px)' }, // sm=6 ga mos
+                            flexGrow: 1
+                        }}
+                    >
+                        {firstColumn.map((member, index) => (
                             <MemberCard key={index} member={member} />
                         ))}
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        {members.slice(Math.ceil(members.length / 2)).map((member, index) => (
+                    </Box>
+
+                    {/* 2-ustun (xs=12, sm=6 ga mos Box) */}
+                    <Box
+                        sx={{
+                            width: { xs: '100%', sm: 'calc(50% - 16px)' }, // sm=6 ga mos
+                            flexGrow: 1
+                        }}
+                    >
+                        {secondColumn.map((member, index) => (
                             <MemberCard key={index} member={member} />
                         ))}
-                    </Grid>
-                </Grid>
+                    </Box>
+                </Box>
             </Paper>
         </Container>
     );

@@ -1,7 +1,7 @@
-// src/components/common/UsefulLinks.tsx
+// src/components/common/UsefulLinks.tsx (Grid o'rniga Box/Flexbox ishlatildi)
 
 import React from 'react';
-import { Box, Container, Typography, Grid, Paper, Link as MuiLink } from '@mui/material';
+import { Box, Container, Typography, Paper, Link as MuiLink } from '@mui/material';
 import { USEFUL_LINKS } from '../../utils/mockData';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
@@ -18,9 +18,26 @@ const UsefulLinks: React.FC = () => {
                 Useful Links
             </Typography>
 
-            <Grid container spacing={3}>
+            {/* Grid container o'rniga Box (Flex container) ishlatildi */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 3, // spacing={3} ga mos keladi
+                }}
+            >
                 {USEFUL_LINKS.map((link, index) => (
-                    <Grid item xs={12} sm={6} md={3} key={index}>
+                    <Box
+                        key={index}
+                        sx={{
+                            width: {
+                                xs: '100%',
+                                sm: 'calc(50% - 12px)',
+                                md: 'calc(25% - 18px)',
+                            },
+                            flexGrow: 1,
+                        }}
+                    >
                         <Paper
                             elevation={3}
                             sx={{
@@ -35,15 +52,13 @@ const UsefulLinks: React.FC = () => {
                                     boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
                                     transform: 'translateY(-4px)',
                                     borderColor: 'primary.main',
-                                }
+                                },
                             }}
                         >
-                            {/* Logo (Mock Image) */}
                             <Box sx={{ minHeight: 70, mb: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                {/* Mock logoni qabul qilish uchun yo'lni tekshirish */}
                                 <Box
                                     component="img"
-                                    src={link.logo} // MockData dan kelgan yo'l
+                                    src={link.logo}
                                     alt={link.name}
                                     sx={{ maxWidth: '80%', maxHeight: 60, objectFit: 'contain' }}
                                 />
@@ -61,18 +76,18 @@ const UsefulLinks: React.FC = () => {
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    '&:hover': { color: 'primary.main' }
+                                    '&:hover': { color: 'primary.main' },
                                 }}
                             >
                                 {link.name}
                                 <ArrowForwardIcon sx={{ ml: 1, fontSize: 16 }} />
                             </MuiLink>
                         </Paper>
-                    </Grid>
+                    </Box>
                 ))}
-            </Grid>
-        </Container>
-    );
+        </Box>
+</Container>
+);
 };
 
 export default UsefulLinks;

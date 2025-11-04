@@ -1,7 +1,7 @@
-// src/pages/Issues/CurrentIssue.tsx
+// src/pages/Issues/CurrentIssue.tsx (Grid o'rniga Box/Flexbox ishlatildi)
 
 import React from 'react';
-import { Box, Container, Grid, Typography, Button, Paper } from '@mui/material';
+import { Box, Container, Typography, Button, Paper } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import { MOCK_ISSUES } from '../../utils/mockData';
 import { Link } from 'react-router-dom';
@@ -22,10 +22,23 @@ const CurrentIssue: React.FC = () => {
                 elevation={5}
                 sx={{ p: 4, transition: 'box-shadow 0.3s', '&:hover': { boxShadow: '0 15px 30px rgba(0,0,0,0.2)' } }}
             >
-                <Grid container spacing={4} alignItems="center">
-
-                    {/* Chap qism: Muqova rasmi */}
-                    <Grid item xs={12} md={4}>
+                {/* Grid container o'rniga Box (Flex container) ishlatildi */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 4, // spacing={4} ga mos keladi
+                        alignItems: 'center'
+                    }}
+                >
+                    {/* Chap qism: Muqova rasmi (md=4 ga mos Box) */}
+                    <Box
+                        sx={{
+                            width: { xs: '100%', md: 'calc(33.3333% - 16px)' }, // md=4 ga mos
+                            flexShrink: 0,
+                            flexGrow: 1 // Kichik ekranlarda butun kenglikni olishi uchun
+                        }}
+                    >
                         <Box sx={{
                             borderRadius: 2,
                             overflow: 'hidden',
@@ -38,10 +51,15 @@ const CurrentIssue: React.FC = () => {
                                 style={{ width: '100%', height: 'auto', display: 'block' }}
                             />
                         </Box>
-                    </Grid>
+                    </Box>
 
-                    {/* O'ng qism: Ma'lumotlar */}
-                    <Grid item xs={12} md={8}>
+                    {/* O'ng qism: Ma'lumotlar (md=8 ga mos Box) */}
+                    <Box
+                        sx={{
+                            width: { xs: '100%', md: 'calc(66.6667% - 16px)' }, // md=8 ga mos
+                            flexGrow: 1
+                        }}
+                    >
                         <Typography variant="h5" color="secondary" sx={{ fontWeight: 700, mb: 1 }}>
                             VOLUME {currentIssue.year}, {currentIssue.number}
                         </Typography>
@@ -80,8 +98,8 @@ const CurrentIssue: React.FC = () => {
                             </Button>
                         </Box>
 
-                    </Grid>
-                </Grid>
+                    </Box>
+                </Box>
             </Paper>
         </Container>
     );

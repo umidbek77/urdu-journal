@@ -1,7 +1,7 @@
-// src/pages/Contacts/Contacts.tsx
+// src/pages/Contacts/Contacts.tsx (Grid o'rniga Box/Flexbox ishlatildi)
 
 import React from 'react';
-import { Container, Grid, Typography, TextField, Button, Box, Paper, useTheme } from '@mui/material';
+import { Container, Typography, TextField, Button, Box, Paper, useTheme } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
@@ -28,9 +28,21 @@ const Contacts: React.FC = () => {
                 Contacts
             </Typography>
 
-            <Grid container spacing={4}>
-                {/* 1. Aloqa ma'lumotlari va Forma */}
-                <Grid item xs={12} md={6}>
+            {/* Grid container o'rniga Box (Flex container) ishlatildi */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 4 // spacing={4} ga mos keladi
+                }}
+            >
+                {/* 1. Aloqa ma'lumotlari va Forma (md=6) */}
+                <Box
+                    sx={{
+                        width: { xs: '100%', md: 'calc(50% - 16px)' }, // md=6 ga mos
+                        flexGrow: 1
+                    }}
+                >
                     <Paper elevation={3} sx={{ p: 4, height: '100%' }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 3, fontWeight: 600 }}>
                             Send us a message
@@ -45,10 +57,15 @@ const Contacts: React.FC = () => {
                             </Button>
                         </form>
                     </Paper>
-                </Grid>
+                </Box>
 
-                {/* 2. Ma'lumotlar va Xarita */}
-                <Grid item xs={12} md={6}>
+                {/* 2. Ma'lumotlar va Xarita (md=6) */}
+                <Box
+                    sx={{
+                        width: { xs: '100%', md: 'calc(50% - 16px)' }, // md=6 ga mos
+                        flexGrow: 1
+                    }}
+                >
                     <Paper elevation={3} sx={{ p: 4 }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 3, fontWeight: 600 }}>
                             Contact Information
@@ -70,15 +87,15 @@ const Contacts: React.FC = () => {
                             content={CONTACT_INFO.email}
                         />
 
-                        {/* Xarita (Mock up, haqiqiy xarita uchun Google Maps Embed kodi kerak) */}
+                        {/* Xarita (Mock up) */}
                         <Box sx={{ mt: 3, height: 300, border: `1px solid ${theme.palette.divider}`, borderRadius: 1, overflow: 'hidden' }}>
-                            <Typography variant="body2" align="center" sx={{ py: 12, backgroundColor: '#E0E0E0' }}>
-
+                            <Typography variant="body2" align="center" sx={{ py: 12, backgroundColor: '#E0E0E0', color: theme.palette.text.secondary }}>
+                                Map Placeholder (Google Maps Embed)
                             </Typography>
                         </Box>
                     </Paper>
-                </Grid>
-            </Grid>
+                </Box>
+            </Box>
         </Container>
     );
 };
