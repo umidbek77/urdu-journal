@@ -1,4 +1,4 @@
-// src/components/articles/ArticleCard.tsx
+// src/components/articles/ArticleCard.tsx (O'zbek tiliga tarjima qilindi)
 
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography, Button, Box, useTheme } from '@mui/material';
@@ -29,7 +29,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
                 component="img"
                 height="200"
                 image={issue.coverImage} // Mock rasmdan olinadi
-                alt={`Cover of Issue ${issue.number}`}
+                alt={`${issue.number}-son muqovasi`} // Alt text tarjimalandi
                 sx={{ objectFit: 'cover' }}
             />
             <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -40,13 +40,13 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
                         component="div"
                         sx={{ fontWeight: 600, color: 'primary.main', minHeight: 50 }}
                     >
-                        {`Volume ${issue.year}, ${issue.number}`}
+                        {`Jild ${issue.year}, Son ${issue.number}`}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        **Series:** {issue.seriesName}
+                        **Seriyasi:** {issue.seriesName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        **Published:** {issue.publishedDate}
+                        **Nashr qilingan:** {issue.publishedDate}
                     </Typography>
                 </Box>
 
@@ -58,7 +58,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
                     to={`/issues/${issue.id}`}
                     sx={{ fontWeight: 700 }}
                 >
-                    View Articles
+                    Maqolalarni ko'rish
                 </Button>
             </CardContent>
         </Card>

@@ -1,91 +1,112 @@
-// src/pages/Home/Home.tsx
 import React from 'react';
-import { Box, Container, Typography, Button } from '@mui/material';
-import LatestIssuesSection from '../../components/articles/LatestIssuesSection';
+import { Box, Container, Typography, Button, useTheme } from '@mui/material';
+// import LatestIssuesSection from '../../components/articles/LatestIssuesSection'; // Import tiklandi
 import UsefulLinks from '../../components/common/UsefulLinks';
 import CurrentIssue from '../Issues/CurrentIssue';
 import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
+    const theme = useTheme();
+
     return (
         <Box>
-            {/* ================= HERO SECTION ================= */}
+            {/* 1. HERO SECTION - Ilmiy va Jozibali Ko'rinish */}
             <Box
                 sx={{
                     position: 'relative',
-                    height: { xs: '60vh', md: '90vh' },
+                    height: { xs: '65vh', md: '95vh' },
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: 'white',
                     backgroundImage: `
-                        linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-                        url('https://urdu.uz/user_files/user_4/Matbuot/1920%20%D1%85%201080%20%D0%BF%D0%B8%D0%BA%D1%81%D0%B5%D0%BB%20089%2B.jpg')
+                        /* Kuchliroq gradient, matnni aniqroq qilish uchun */
+                        linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3)),
+                        url('https://yuz.uz/imageproxy/1200x/https://yuz.uz/file/news/2187687a3fdc6f8f5dfbabb583d8e806.jpg')
                     `,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                 }}
             >
+                {/* Ilmiy Sayt Dizayni: Sarlavha va Call to Action */}
                 <Container maxWidth="md" sx={{ textAlign: 'center', px: 2 }}>
+
+                    {/* Sarlavha: Katta va Ta'sirchan */}
                     <Typography
-                        variant="h2"
+                        variant="h1"
                         sx={{
-                            fontWeight: 800,
-                            mb: 2,
-                            fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-                            textShadow: '2px 2px 8px rgba(0,0,0,0.7)',
+                            fontWeight: 900,
+                            mb: 1,
+                            fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
+                            textShadow: '3px 3px 10px rgba(0,0,0,0.8)',
+                            lineHeight: 1.1,
+                            letterSpacing: 1.5,
                         }}
                     >
-                        Journal “URDU-Journal”
+                        URDU ILMIY JURNALI
                     </Typography>
+
+                    {/* Ilmiylikni ta'kidlash uchun ajratuvchi chiziq */}
+                    <Box sx={{
+                        width: '80px',
+                        height: '4px',
+                        backgroundColor: 'secondary.main',
+                        margin: '15px auto 30px auto'
+                    }} />
+
                     <Typography
-                        variant="h6"
+                        variant="h5"
+                        component="h2"
                         sx={{
-                            mb: 4,
-                            color: 'rgba(255,255,255,0.9)',
-                            textShadow: '1px 1px 5px rgba(0,0,0,0.6)',
-                            fontSize: { xs: '1rem', sm: '1.1rem' },
+                            mb: 5,
+                            color: theme.palette.secondary.light,
+                            textShadow: '1px 1px 5px rgba(0,0,0,0.8)',
+                            fontSize: { xs: '1.1rem', sm: '1.3rem' },
+                            fontWeight: 500,
                         }}
                     >
-                        The scientific and methodical journal of the Urgench State Pedagogical Institute,
-                        dedicated to promoting scientific research and innovation.
+                        Urganch Davlat Pedagogika Instituti ilmiy-uslubiy jurnali, <br/>
+                        **ilmiy tadqiqotlar va innovatsiyalarni qo'llab-quvvatlashga** bag'ishlangan.
                     </Typography>
+
+                    {/* Tugma: Jozibador effektlar */}
                     <Button
                         variant="contained"
                         color="secondary"
                         size="large"
                         sx={{
                             fontWeight: 700,
-                            px: 4,
-                            py: 1.2,
-                            borderRadius: 3,
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+                            px: 5,
+                            py: 1.5,
+                            borderRadius:'15px',
+                            boxShadow: '0 6px 25px rgba(255, 204, 0, 0.4)',
+                            transition: 'all 0.3s ease',
                             '&:hover': {
                                 backgroundColor: 'secondary.dark',
-                                transform: 'scale(1.05)',
-                                transition: '0.3s ease',
+                                transform: 'scale(1.05) translateY(-2px)',
+                                boxShadow: '0 8px 30px rgba(255, 204, 0, 0.6)',
                             },
                         }}
                         component={Link}
                         to="/about"
                     >
-                        More about the journal
+                        Jurnal Haqida Batafsil
                     </Button>
                 </Container>
             </Box>
 
-            {/* ================= CURRENT ISSUE ================= */}
+            {/* 2. Joriy Son Seksiyasi */}
             <Box sx={{ py: { xs: 4, md: 6 }, backgroundColor: 'background.paper' }}>
                 <CurrentIssue />
             </Box>
 
-            {/* ================= LATEST ISSUES ================= */}
-            <Box sx={{ py: { xs: 4, md: 6 }, backgroundColor: '#f9fafb' }}>
-                <LatestIssuesSection />
-            </Box>
+            {/*/!* 3. So'nggi Sonlar Seksiyasi (TIKLANDI) *!/*/}
+            {/*<Box sx={{ py: { xs: 4, md: 6 }, backgroundColor: '#f9fafb' }}>*/}
+            {/*    <LatestIssuesSection />*/}
+            {/*</Box>*/}
 
-            {/* ================= CALL TO ACTION ================= */}
+            {/* 4. Maqola chop etishga taklif (TIKLANDI va O'ZBEKCHAGA O'TKAZILDI) */}
             <Box
                 sx={{
                     backgroundColor: 'primary.main',
@@ -100,7 +121,7 @@ const Home: React.FC = () => {
                         gutterBottom
                         sx={{ fontWeight: 700, mb: 2 }}
                     >
-                        Want to publish a scientific article?
+                        Ilmiy maqola chop etishni xohlaysizmi?
                     </Typography>
                     <Typography
                         variant="h6"
@@ -109,7 +130,7 @@ const Home: React.FC = () => {
                             color: 'rgba(255,255,255,0.9)',
                         }}
                     >
-                        We invite researchers to submit their articles for publication in our journal.
+                        Tadqiqotchilarni maqolalarini jurnalimizda nashr etishga taklif qilamiz.
                     </Typography>
                     <Button
                         variant="contained"
@@ -130,12 +151,12 @@ const Home: React.FC = () => {
                             },
                         }}
                     >
-                        More Information
+                        Batafsil Ma'lumot
                     </Button>
                 </Container>
             </Box>
 
-            {/* ================= USEFUL LINKS ================= */}
+            {/* 5. Foydali Havolalar Seksiyasi */}
             <Box sx={{ py: { xs: 4, md: 6 }, backgroundColor: 'background.paper' }}>
                 <UsefulLinks />
             </Box>

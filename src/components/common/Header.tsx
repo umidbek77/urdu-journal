@@ -1,4 +1,4 @@
-// src/components/common/Header.tsx (Yangilangan)
+// src/components/common/Header.tsx (Barcha matnlar o'zbek tiliga o'tkazildi)
 
 import React from 'react';
 import {
@@ -10,11 +10,11 @@ import LanguageIcon from '@mui/icons-material/Language';
 import { Link, useLocation } from 'react-router-dom';
 
 const navItems = [
-    { name: 'About', path: '/about' },
-    { name: 'Issues', path: '/issues' },
-    { name: 'Editorial board', path: '/editorial-board' },
-    { name: 'For authors', path: '/for-authors' },
-    { name: 'Contacts', path: '/contacts' },
+    { name: 'Jurnal haqida', path: '/about' },      // About -> Jurnal haqida
+    { name: 'Sonlar', path: '/issues' },            // Issues -> Sonlar
+    { name: 'Tahririyat kengashi', path: '/editorial-board' }, // Editorial board -> Tahririyat kengashi
+    { name: 'Mualliflar uchun', path: '/for-authors' }, // For authors -> Mualliflar uchun
+    { name: 'Kontaktlar', path: '/contacts' },      // Contacts -> Kontaktlar
 ];
 
 const Header: React.FC = () => {
@@ -39,18 +39,42 @@ const Header: React.FC = () => {
             <Container maxWidth="lg">
                 <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 1, sm: 2 } }}>
 
-                    {/* Logo / Sayt nomi */}
-                    <Typography
-                        variant="h6"
+                    {/* Logo / Sayt nomi qismi */}
+                    <Box
                         component={Link}
                         to="/"
-                        sx={{ flexGrow: 1, textDecoration: 'none', color: 'primary.main', fontWeight: 'bold', lineHeight: 1.2 }}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            textDecoration: 'none',
+                            flexGrow: 1,
+                            color: 'primary.main',
+                            mr: 2
+                        }}
                     >
-                        URDU JOURNAL
-                        <Typography variant="caption" color="text.secondary" display="block" sx={{ fontSize: '0.7rem' }}>
-                            Scientific-methodical journal
+                        {/* 1. Logo Rasmi */}
+                        <Box
+                            component="img"
+                            src="https://urdu.uz/martxa/martxa/assets/images/logoursu.png"
+                            alt="Universitet Logosi" // Alt text tarjimalandi
+                            sx={{
+                                height: 43,
+                                mr: 1.2,
+                                flexShrink: 0
+                            }}
+                        />
+
+                        {/* 2. Matn */}
+                        <Typography
+                            variant="h6"
+                            sx={{ color: 'primary.main', fontWeight: 'bold', lineHeight: 1.2, flexShrink: 1 }}
+                        >
+                            URDU JURNALI
+                            <Typography variant="caption" color="text.secondary" display="block" sx={{ fontSize: '0.7rem' }}>
+                                Ilmiy-uslubiy jurnal
+                            </Typography>
                         </Typography>
-                    </Typography>
+                    </Box>
 
                     {isMobile ? (
                         /* Mobile Navigatsiya */
@@ -76,7 +100,7 @@ const Header: React.FC = () => {
                                 ))}
                                 <Divider />
                                 <MenuItem>
-                                    <LanguageIcon fontSize="small" sx={{ mr: 1 }} /> English
+                                    <LanguageIcon fontSize="small" sx={{ mr: 1 }} /> O'zbekcha
                                 </MenuItem>
                             </Menu>
                         </Box>
@@ -88,7 +112,7 @@ const Header: React.FC = () => {
                                     key={item.name}
                                     component={Link}
                                     to={item.path}
-                                    color={isActive(item.path) ? 'secondary' : 'primary'} // Active linkni ajratish
+                                    color={isActive(item.path) ? 'secondary' : 'primary'}
                                     sx={{
                                         mx: 0.5,
                                         fontWeight: 600,
@@ -104,7 +128,7 @@ const Header: React.FC = () => {
                                 sx={{ ml: 2, fontWeight: 600, borderColor: 'primary.main', color: 'primary.main' }}
                                 startIcon={<LanguageIcon />}
                             >
-                                English
+                                Tilni o'zgartirish
                             </Button>
                         </Box>
                     )}

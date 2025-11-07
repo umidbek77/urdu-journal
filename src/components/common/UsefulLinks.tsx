@@ -1,4 +1,4 @@
-// src/components/common/UsefulLinks.tsx (Grid o'rniga Box/Flexbox ishlatildi)
+// src/components/common/UsefulLinks.tsx (O'zbek tiliga tarjima qilindi)
 
 import React from 'react';
 import { Box, Container, Typography, Paper, Link as MuiLink } from '@mui/material';
@@ -15,7 +15,7 @@ const UsefulLinks: React.FC = () => {
                 gutterBottom
                 sx={{ fontWeight: 700, mb: 4 }}
             >
-                Useful Links
+                Foydali Havolalar
             </Typography>
 
             {/* Grid container o'rniga Box (Flex container) ishlatildi */}
@@ -85,9 +85,9 @@ const UsefulLinks: React.FC = () => {
                         </Paper>
                     </Box>
                 ))}
-        </Box>
-</Container>
-);
+            </Box>
+        </Container>
+    );
 };
 
 export default UsefulLinks;

@@ -1,4 +1,4 @@
-// src/pages/Contacts/Contacts.tsx (Grid o'rniga Box/Flexbox ishlatildi)
+// src/pages/Contacts/Contacts.tsx (Grid o'rniga Box/Flexbox ishlatildi - O'zbekcha)
 
 import React from 'react';
 import { Container, Typography, TextField, Button, Box, Paper, useTheme } from '@mui/material';
@@ -23,9 +23,9 @@ const Contacts: React.FC = () => {
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
-            <CustomBreadcrumbs currentPage="Contacts" />
+            <CustomBreadcrumbs currentPage="Kontaktlar" />
             <Typography variant="h4" component="h1" gutterBottom>
-                Contacts
+                Kontaktlar
             </Typography>
 
             {/* Grid container o'rniga Box (Flex container) ishlatildi */}
@@ -45,15 +45,15 @@ const Contacts: React.FC = () => {
                 >
                     <Paper elevation={3} sx={{ p: 4, height: '100%' }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 3, fontWeight: 600 }}>
-                            Send us a message
+                            Bizga xabar yuboring
                         </Typography>
                         <form>
-                            <TextField fullWidth label="Full name" margin="normal" required />
-                            <TextField fullWidth label="Email" margin="normal" type="email" required />
-                            <TextField fullWidth label="Phone" margin="normal" />
-                            <TextField fullWidth label="Message" margin="normal" multiline rows={4} required />
+                            <TextField fullWidth label="To'liq ism" margin="normal" required />
+                            <TextField fullWidth label="Elektron pochta" margin="normal" type="email" required />
+                            <TextField fullWidth label="Telefon" margin="normal" />
+                            <TextField fullWidth label="Xabar" margin="normal" multiline rows={4} required />
                             <Button variant="contained" color="primary" type="submit" sx={{ mt: 2 }}>
-                                Send
+                                Yuborish
                             </Button>
                         </form>
                     </Paper>
@@ -68,29 +68,29 @@ const Contacts: React.FC = () => {
                 >
                     <Paper elevation={3} sx={{ p: 4 }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 3, fontWeight: 600 }}>
-                            Contact Information
+                            Aloqa ma'lumotlari
                         </Typography>
 
                         <ContactItem
                             icon={<LocationOnIcon />}
-                            title="Address"
+                            title="Manzil"
                             content={CONTACT_INFO.address}
                         />
                         <ContactItem
                             icon={<PhoneIcon />}
-                            title="Phone"
+                            title="Telefon"
                             content={CONTACT_INFO.phone}
                         />
                         <ContactItem
                             icon={<EmailIcon />}
-                            title="Email"
+                            title="Elektron pochta"
                             content={CONTACT_INFO.email}
                         />
 
                         {/* Xarita (Mock up) */}
                         <Box sx={{ mt: 3, height: 300, border: `1px solid ${theme.palette.divider}`, borderRadius: 1, overflow: 'hidden' }}>
                             <Typography variant="body2" align="center" sx={{ py: 12, backgroundColor: '#E0E0E0', color: theme.palette.text.secondary }}>
-                                Map Placeholder (Google Maps Embed)
+                                Xarita joylashuvi (Google Maps Embed)
                             </Typography>
                         </Box>
                     </Paper>

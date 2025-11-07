@@ -1,4 +1,3 @@
-// src/pages/Issues/IssueDetail.tsx (Yangi sahifa: Maqolalar ro'yxati)
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Container, Typography, Box, Paper, Divider, Button, Chip } from '@mui/material';
@@ -52,10 +51,8 @@ const IssueDetail: React.FC = () => {
                 Volume {issue.year} - Published: {issue.publishedDate}
             </Typography>
 
-            {/* Muqova va asosiy ma'lumotlar (Box/Flex) */}
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4, mb: 4, alignItems: 'flex-start' }}>
 
-                {/* Chap ustun: Muqova (md=3 ga mos) */}
                 <Box sx={{ width: { xs: '100%', sm: '33.3333%' }, flexShrink: 0 }}>
                     <Paper elevation={3} sx={{ p: 2, borderRadius: 2 }}>
                         <img
@@ -78,7 +75,6 @@ const IssueDetail: React.FC = () => {
                     </Paper>
                 </Box>
 
-                {/* O'ng ustun: Umumiy ma'lumot (md=9 ga mos) */}
                 <Box sx={{ width: { xs: '100%', sm: 'calc(66.6667% - 16px)' }, flexGrow: 1 }}>
                     <Paper elevation={1} sx={{ p: 4, height: '100%' }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 2, fontWeight: 600 }}>
@@ -99,7 +95,6 @@ const IssueDetail: React.FC = () => {
 
             <Divider sx={{ my: 4 }} />
 
-            {/* Maqolalar ro'yxati */}
             <Typography variant="h5" sx={{ mb: 3, fontWeight: 700, borderLeft: '5px solid', pl: 2, borderColor: 'secondary.main' }}>
                 Articles in this Issue
             </Typography>

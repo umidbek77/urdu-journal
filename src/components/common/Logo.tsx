@@ -8,7 +8,7 @@ const Logo: React.FC = () => {
     return (
         <Box component={Link} to="/" sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
             <img
-                src="/images/logo_journal_small.png" // Mock rasm yo'li
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpJ1w5b3WkXwfymHwoOunfFG_fhgEnnhEKgg&s" // Mock rasm yo'li
                 alt="Journal Logo"
                 style={{ height: 40, marginRight: 10 }}
             />

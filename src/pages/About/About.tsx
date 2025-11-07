@@ -1,4 +1,4 @@
-// src/pages/About/About.tsx (Grid o'rniga Box/Flexbox ishlatildi)
+// src/pages/About/About.tsx (O'zbek tiliga tarjima qilindi)
 
 import React from 'react';
 import { Container, Typography, Box, List, ListItem, ListItemIcon, ListItemText, Paper } from '@mui/material';
@@ -7,26 +7,28 @@ import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
 
 const About: React.FC = () => {
 
+    // Maqsadlar tarjima qilindi
     const objectives = [
-        "Promotion of scientific research results.",
-        "Support for young scientists and researchers.",
-        "Dissemination of scientific and methodological knowledge.",
-        "Integration of science and education with production.",
+        "Ilmiy tadqiqot natijalarini targ'ib qilish.",
+        "Yosh olimlar va tadqiqotchilarni qo'llab-quvvatlash.",
+        "Ilmiy-uslubiy bilimlarni keng yoyish.",
+        "Fan va ta'limni ishlab chiqarish bilan integratsiyalash.",
     ];
 
+    // Indeksatsiya bazalari nomlari tarjima qilindi
     const indexingDatabases = [
         "Google Scholar",
-        "DOAJ (Directory of Open Access Journals)",
+        "DOAJ (Ochiq Kirish Jurnallari Katalogi)",
         "Index Copernicus International",
         "Ulrich's Periodicals Directory",
-        "Advanced scientific databases (Mock Data)",
+        "Ixtisoslashgan ilmiy bazalar (Mock Data)",
     ];
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
-            <CustomBreadcrumbs currentPage="About" />
+            <CustomBreadcrumbs currentPage="Jurnal haqida" /> {/* Breadcrumb tarjimasi */}
             <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3 }}>
-                About the Journal
+                Jurnal haqida ma'lumot
             </Typography>
 
             {/* Grid container o'rniga Box (Flex container) ishlatildi */}
@@ -34,31 +36,31 @@ const About: React.FC = () => {
                 sx={{
                     display: 'flex',
                     flexWrap: 'wrap',
-                    gap: { xs: 3, md: 4 }, // xs=3, md=4 spacing ga mos keladi
-                    mx: { md: -2 } // Agar zarur bo'lsa, manfiy margin
+                    gap: { xs: 3, md: 4 },
+                    mx: { md: -2 }
                 }}
             >
 
-                {/* Chap ustun: Grid item (md=7) o'rniga Box ishlatildi */}
+                {/* Chap ustun: Missiya va maqsadlar */}
                 <Box
                     sx={{
-                        width: { xs: '100%', md: 'calc(58.3333% - 16px)' }, // md=7 ga mos keladi (7/12 * 100). 16px = 4*4
+                        width: { xs: '100%', md: 'calc(58.3333% - 16px)' },
                         flexGrow: 1
                     }}
                 >
                     <Paper elevation={1} sx={{ p: 4, height: '100%' }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 2, fontWeight: 600 }}>
-                            Mission and History
+                            Missiyasi va Tarixi
                         </Typography>
                         <Typography paragraph>
-                            The scientific and methodical journal **"Science and society"** of the Nukus State Pedagogical Institute named after Ajiniyaz was founded in **2004**. Our main goal is to create a platform for the effective exchange of scientific experience between national and international researchers.
+                            Urganch Davlat Pedagogika Institutining ilmiy-uslubiy jurnali **"URDU ILMIY JURNALI"** (avvalgi nomi: "Fan va jamiyat") **2004-yilda** asos solingan. Bizning asosiy maqsadimiz — milliy va xalqaro tadqiqotchilar o'rtasida ilmiy tajriba almashinuvi uchun samarali platforma yaratishdir.
                         </Typography>
                         <Typography paragraph>
-                            The journal publishes original, high-quality articles in various fields of natural-technical, pedagogical, psychological, social-economic, and philological sciences.
+                            Jurnal tabiiy-texnika, pedagogika, psixologiya, ijtimoiy-iqtisodiy va filologiya fanlarining turli yo'nalishlarida original, yuqori sifatli maqolalarni nashr etadi.
                         </Typography>
 
                         <Typography variant="h6" sx={{ mt: 3, mb: 1, fontWeight: 600, color: 'primary.main' }}>
-                            Key Objectives:
+                            Asosiy Maqsadlar:
                         </Typography>
                         <List disablePadding>
                             {objectives.map((text, index) => (
@@ -73,29 +75,29 @@ const About: React.FC = () => {
                     </Paper>
                 </Box>
 
-                {/* O'ng ustun: Grid item (md=5) o'rniga Box ishlatildi */}
+                {/* O'ng ustun: Indeksatsiya va tan olinishi */}
                 <Box
                     sx={{
-                        width: { xs: '100%', md: 'calc(41.6667% - 16px)' }, // md=5 ga mos keladi (5/12 * 100)
+                        width: { xs: '100%', md: 'calc(41.6667% - 16px)' },
                         flexGrow: 1
                     }}
                 >
                     <Paper elevation={3} sx={{ p: 4, height: '100%', backgroundColor: 'background.default' }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 2, fontWeight: 600 }}>
-                            Indexing and Recognition
+                            Indeksatsiya va E'tirof
                         </Typography>
 
                         <Box sx={{ mb: 3 }}>
                             <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                                ISSN: <span style={{ fontWeight: 400 }}>2181-4413</span> (Print)
+                                ISSN (Bosma): <span style={{ fontWeight: 400 }}>2181-4413</span>
                             </Typography>
                             <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                                e-ISSN: <span style={{ fontWeight: 400 }}>2181-4413</span> (Online)
+                                e-ISSN (Onlayn): <span style={{ fontWeight: 400 }}>2181-4413</span>
                             </Typography>
                         </Box>
 
                         <Typography variant="h6" sx={{ mb: 1, fontWeight: 600, color: 'primary.main' }}>
-                            The journal is indexed in:
+                            Jurnal quyidagi bazalarda indekslanadi:
                         </Typography>
                         <List disablePadding>
                             {indexingDatabases.map((text, index) => (
@@ -107,8 +109,8 @@ const About: React.FC = () => {
 
                         <Box sx={{ mt: 4, textAlign: 'center' }}>
                             <img
-                                src="/images/logo_journal_big.png"
-                                alt="Journal Logo"
+                                src="https://urdu.uz/martxa/martxa/assets/images/logoursu.png"
+                                alt="Jurnal Logosi"
                                 style={{ maxWidth: '80%', opacity: 0.8 }}
                             />
                         </Box>

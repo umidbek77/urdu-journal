@@ -1,5 +1,3 @@
-// src/pages/Page404/Page404.tsx
-
 import React from 'react';
 import { Box, Typography, Button, Container, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';

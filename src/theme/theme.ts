@@ -1,11 +1,9 @@
-// src/theme/theme.ts
 import { createTheme } from '@mui/material/styles';
 
-// Universitet brend ranglariga moslashamiz
-const PrimaryColor = '#004A99'; // To'q ko'k
-const SecondaryColor = '#FFCC00'; // Sarg'ish
+const PrimaryColor = '#004A99';
+const SecondaryColor = '#FFCC00';
 const TextDark = '#1A1A1A';
-const BackgroundLight = '#F8F9FA'; // Oqish fon
+const BackgroundLight = '#F8F9FA';
 
 export const theme = createTheme({
     palette: {
@@ -21,7 +19,7 @@ export const theme = createTheme({
         },
         text: {
             primary: TextDark,
-            secondary: PrimaryColor, // Muhim matnlarni asosiy rangda ko'rsatish uchun
+            secondary: PrimaryColor,
         },
     },
     typography: {
@@ -32,7 +30,6 @@ export const theme = createTheme({
             marginTop: '1.5rem',
             marginBottom: '1rem',
         },
-        // ... boshqa tipografik sozlamalar
     },
     components: {
         MuiButton: {
@@ -44,7 +41,7 @@ export const theme = createTheme({
                     fontWeight: 600,
                     transition: 'transform 0.2s ease-in-out',
                     '&:hover': {
-                        transform: 'translateY(-2px)', // Yengil effekt
+                        transform: 'translateY(-2px)',
                     }
                 },
             },
@@ -52,7 +49,7 @@ export const theme = createTheme({
         MuiAppBar: {
             styleOverrides: {
                 root: {
-                    borderBottom: `2px solid ${SecondaryColor}`, // Sitemga o'xshash chegara
+                    borderBottom: `2px solid ${SecondaryColor}`,
                 }
             }
         }

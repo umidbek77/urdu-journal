@@ -7,30 +7,30 @@ import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
 const ForAuthors: React.FC = () => {
 
     const submissionSteps = [
-        'Review the Journal’s Scope and Policies',
-        'Prepare your manuscript according to the requirements',
-        'Submit the article via the online system (Mock)',
-        'Peer Review Process',
-        'Acceptance and Publication',
+        "Jurnal doirasi va qoidalarini ko'rib chiqish", // Review the Journal’s Scope and Policies
+        "Qo'lyozmani talablarga muvofiq tayyorlash", // Prepare your manuscript according to the requirements
+        "Maqolani onlayn tizim orqali yuborish (Mock)", // Submit the article via the online system (Mock)
+        "Taqriz (Peer Review) jarayoni", // Peer Review Process
+        "Qabul qilish va nashr etish", // Acceptance and Publication
     ];
 
     const requirements = [
-        { rule: 'Formatting', desc: 'Font: Times New Roman, Size 12, 1.5 line spacing.' },
-        { rule: 'Abstract', desc: 'Should not exceed 250 words, structured (Objective, Methods, Results, Conclusion).' },
-        { rule: 'References', desc: 'Must follow APA or Vancouver style (Specify which one).' },
-        { rule: 'Originality', desc: 'Plagiarism check (Similarity Index must be less than 15%).' },
+        { rule: 'Formatlash', desc: "Shrift: Times New Roman, Hajmi 12, 1.5 qator oralig'i." }, // Formatting
+        { rule: 'Annotatsiya', desc: "250 so'zdan oshmasligi kerak, tuzilishi (Maqsadi, Usullari, Natijalari, Xulosa)." }, // Abstract, structured (Objective, Methods, Results, Conclusion).
+        { rule: 'Adabiyotlar', desc: "APA yoki Vancouver uslubiga rioya qilish shart (Qaysi birini aniqlang)." }, // References, Must follow APA or Vancouver style (Specify which one).
+        { rule: "O'ziga xoslik", desc: "Plagiat tekshiruvi (O'xshashlik indeksi 15% dan kam bo'lishi shart)." }, // Originality, Plagiarism check (Similarity Index must be less than 15%).
     ];
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
-            <CustomBreadcrumbs currentPage="For Authors" />
+            <CustomBreadcrumbs currentPage="Mualliflar uchun" />
             <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 4 }}>
-                Guidelines for Authors
+                Mualliflar uchun Yoʻriqnomalar
             </Typography>
 
             <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
                 <Typography variant="h5" color="primary" sx={{ mb: 3, fontWeight: 600 }}>
-                    Article Submission Process
+                    Maqola Yuborish Jarayoni
                 </Typography>
 
                 {/* Bosqichli jarayon (Stepper) */}
@@ -45,7 +45,7 @@ const ForAuthors: React.FC = () => {
                 <Divider sx={{ my: 3 }} />
 
                 <Typography variant="h5" color="primary" sx={{ mb: 3, fontWeight: 600 }}>
-                    Manuscript Requirements
+                    Qoʻlyozmaga Qoʻyiladigan Talablar
                 </Typography>
 
                 {/* Jadval shaklida talablar */}
@@ -53,8 +53,8 @@ const ForAuthors: React.FC = () => {
                     <Table size="small">
                         <TableHead>
                             <TableRow sx={{ backgroundColor: 'primary.light' }}>
-                                <TableCell sx={{ fontWeight: 700, color: 'primary.main' }}>Rule</TableCell>
-                                <TableCell sx={{ fontWeight: 700, color: 'primary.main' }}>Description / Requirement</TableCell>
+                                <TableCell sx={{ fontWeight: 700, color: 'primary.main' }}>Qoida</TableCell>
+                                <TableCell sx={{ fontWeight: 700, color: 'primary.main' }}>Tavsif / Talab</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -74,10 +74,10 @@ const ForAuthors: React.FC = () => {
             {/* Murojaat uchun qo'shimcha ma'lumot */}
             <Box sx={{ mt: 4, p: 3, border: '1px solid #FFCC00', borderRadius: 2, backgroundColor: '#FFFBEA' }}>
                 <Typography variant="h6" color="primary" sx={{ mb: 1, fontWeight: 600 }}>
-                    Need assistance?
+                    Yordam kerakmi?
                 </Typography>
                 <Typography variant="body1">
-                    For any questions regarding submission or the peer review process, please contact the Executive Secretary at:
+                    Yuborish yoki taqriz jarayoni bo'yicha har qanday savollar yuzasidan Mas'ul kotibga murojaat qiling:
                     <a href="mailto:fanvajamiyat@mail.ru" style={{ marginLeft: '8px', color: '#004A99' }}>
                         fanvajamiyat@mail.ru
                     </a>
