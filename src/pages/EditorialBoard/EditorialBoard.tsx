@@ -227,35 +227,37 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import PublicIcon from '@mui/icons-material/Public';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-// **Yagona Mock Avatar URL'i**
-const DEFAULT_AVATAR = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'; // Universal Profil Rasmi
+interface EditorialMember {
+    id: number | string;
+    fullName: string;
+    imageUrl?: string;
+    role?: string;
+    degree?: string;
+    city?: string;
+    email?: string;
+    phone?: string;
+}
 
+const DEFAULT_AVATAR = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
 
-// Universitet Ilmiy A'zosi Kartochkasi Komponenti (Barcha a'zolar uchun Gorizontal dizayn)
-const ScientificMemberCard: React.FC<{ member: any; roleType: 'Chief' | 'Member' }> = ({ member, roleType }) => {
-
+const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief' | 'Member' }> = ({ member, roleType }) => {
     const isChief = roleType === 'Chief';
 
-    // Rasm va Card Hajmini aniqlash
     const avatarSize = isChief ? 140 : 100;
     const cardPadding = isChief ? 3 : 2;
 
-    // Kartochka uslubini roliga qarab aniqlash
     const cardStyles = {
         transition: 'all 0.3s ease-in-out',
         borderRadius: 2,
         height: '100%',
         p: cardPadding,
-
         display: 'flex',
         flexDirection: { xs: 'column', sm: 'row' },
         alignItems: { xs: 'center', sm: 'flex-start' },
         gap: 3,
-
         border: isChief ? '2px solid #1E3A5F' : '1px solid #ddd',
         backgroundColor: isChief ? '#F0F5FF' : 'white',
         boxShadow: isChief ? '0 10px 25px rgba(30, 58, 95, 0.15)' : '0 4px 12px rgba(0,0,0,0.05)',
-
         '&:hover': {
             transform: 'translateY(-3px)',
             boxShadow: isChief ? '0 15px 30px rgba(30, 58, 95, 0.25)' : '0 6px 15px rgba(0,0,0,0.1)',
@@ -264,21 +266,18 @@ const ScientificMemberCard: React.FC<{ member: any; roleType: 'Chief' | 'Member'
 
     return (
         <Paper sx={cardStyles}>
-
-            {/* Chap qism: Rasm va Tugma */}
             <Box
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     minWidth: avatarSize,
-                    textAlign: 'center'
+                    textAlign: 'center',
                 }}
             >
-                {/* Rasm (Doira shaklida - Har doim DEFAULT_AVATAR ishlatiladi) */}
                 <Avatar
                     alt={member.fullName}
-                    src={DEFAULT_AVATAR} // **FAKAT MOCK RASM**
+                    src={member.imageUrl || DEFAULT_AVATAR}
                     sx={{
                         width: avatarSize,
                         height: avatarSize,
@@ -288,24 +287,20 @@ const ScientificMemberCard: React.FC<{ member: any; roleType: 'Chief' | 'Member'
                     }}
                 />
 
-                {/* Avtobiografiya Tugmasi (Faqat Rahbariyat uchun) */}
                 {isChief && (
                     <Button
                         variant="contained"
                         color="primary"
                         endIcon={<KeyboardArrowDownIcon />}
                         sx={{ mt: 1, width: '100%', fontWeight: 600 }}
-                        disabled={true}
+                        disabled
                     >
                         Avtobiografiya
                     </Button>
                 )}
             </Box>
 
-            {/* O'ng qism: Ma'lumotlar */}
             <Box sx={{ flexGrow: 1, width: '100%', textAlign: { xs: 'center', sm: 'left' } }}>
-
-                {/* Ilmiy Yo'nalish/Bosh Qism (Faqat Rahbariyat uchun) */}
                 {isChief && (
                     <Typography
                         variant="subtitle1"
@@ -316,7 +311,6 @@ const ScientificMemberCard: React.FC<{ member: any; roleType: 'Chief' | 'Member'
                     </Typography>
                 )}
 
-                {/* Shaxs nomi */}
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', sm: 'flex-start' }, mb: 1 }}>
                     <PersonIcon color="primary" sx={{ mr: 1, fontSize: 18 }} />
                     <Typography variant="body1" sx={{ fontWeight: 600 }}>
@@ -324,15 +318,13 @@ const ScientificMemberCard: React.FC<{ member: any; roleType: 'Chief' | 'Member'
                     </Typography>
                 </Box>
 
-                {/* Lavozim / Daraja */}
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', sm: 'flex-start' }, mb: 1 }}>
                     <DescriptionIcon color="primary" sx={{ mr: 1, fontSize: 18 }} />
                     <Typography variant="body2" color="text.primary">
-                        **{member.role}**: {member.degree}
+                        <strong>{member.role}</strong>{member.role && member.degree ? `: ${member.degree}` : member.degree || ''}
                     </Typography>
                 </Box>
 
-                {/* Shahar / Joylashuv */}
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', sm: 'flex-start' }, mb: 1 }}>
                     <PublicIcon color="primary" sx={{ mr: 1, fontSize: 18 }} />
                     <Typography variant="body2" color="text.secondary">
@@ -340,8 +332,6 @@ const ScientificMemberCard: React.FC<{ member: any; roleType: 'Chief' | 'Member'
                     </Typography>
                 </Box>
 
-
-                {/* Kontakt Ma'lumotlari (Faqat Rahbariyat uchun) */}
                 {isChief && (
                     <Box sx={{ mt: 2, pt: 2, borderTop: '1px solid #ddd' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -352,9 +342,7 @@ const ScientificMemberCard: React.FC<{ member: any; roleType: 'Chief' | 'Member'
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                             <PhoneIcon color="primary" sx={{ mr: 1, fontSize: 18 }} />
-                            <Typography variant="body2">
-                                {member.phone || '+998 ** *** ** **'}
-                            </Typography>
+                            <Typography variant="body2">{member.phone || '+998 ** *** ** **'}</Typography>
                         </Box>
                     </Box>
                 )}
@@ -363,15 +351,10 @@ const ScientificMemberCard: React.FC<{ member: any; roleType: 'Chief' | 'Member'
     );
 };
 
-
 const EditorialBoard: React.FC = () => {
-    const chiefEditor = EDITORIAL_MEMBERS.find(m => m.role === "Bosh muharrir");
-    const executiveSecretary = EDITORIAL_MEMBERS.find(m => m.role === "Mas'ul kotib");
-
-    // ✅ MUAMMO TUZATILDI: 'let' o'rniga 'const' ishlatildi
-    const members = EDITORIAL_MEMBERS.filter(m => m.role === "A'zo");
-
-    members.sort((a, b) => a.fullName.localeCompare(b.fullName, 'uz'));
+    const chiefEditor = EDITORIAL_MEMBERS.find(m => m.role);
+    const executiveSecretary = EDITORIAL_MEMBERS.find(m => m.role);
+    const members = EDITORIAL_MEMBERS.filter(m => m.role).sort((a, b) => a.fullName.localeCompare(b.fullName, 'uz'));
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -381,7 +364,6 @@ const EditorialBoard: React.FC = () => {
                 Tahririyat Hayʼati
             </Typography>
 
-            {/* 1. Rahbariyat Qismi (Kattaroq Cardlar) */}
             <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.dark', mt: 4, mb: 3, borderBottom: '2px solid #FFCC00', pb: 1 }}>
                 Rahbariyat
             </Typography>
@@ -395,7 +377,7 @@ const EditorialBoard: React.FC = () => {
             >
                 {chiefEditor && (
                     <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 12px)' }, flexGrow: 1 }}>
-                        <ScientificMemberCard member={{...chiefEditor, email: 'rectorursu@gmail.com', phone: '+998622246700'}} roleType="Chief" />
+                        <ScientificMemberCard member={{ ...chiefEditor, email: 'rectorursu@gmail.com', phone: '+998622246700' }} roleType="Chief" />
                     </Box>
                 )}
                 {executiveSecretary && (
@@ -405,12 +387,10 @@ const EditorialBoard: React.FC = () => {
                 )}
             </Box>
 
-            {/* 2. Tahririyat A'zolari Qismi (Ixcham Cardlar) */}
             <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.dark', mt: 4, mb: 3, borderBottom: '2px solid #FFCC00', pb: 1 }}>
                 Tahririyat Aʼzolari
             </Typography>
 
-            {/* Oddiy A'zolar uchun Grid tartibi (2 ustun) */}
             <Box
                 sx={{
                     display: 'grid',
@@ -418,10 +398,10 @@ const EditorialBoard: React.FC = () => {
                         xs: '1fr',
                         sm: 'repeat(2, 1fr)',
                     },
-                    gap: 3
+                    gap: 3,
                 }}
             >
-                {members.map((member) => (
+                {members.map(member => (
                     <ScientificMemberCard key={member.id} member={member} roleType="Member" />
                 ))}
             </Box>
