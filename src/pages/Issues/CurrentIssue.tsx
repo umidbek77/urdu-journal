@@ -23,7 +23,7 @@ const MOCK_ISSUES: Issue[] = [
         seriesName: "Xorazm Axborot Texnologiyalari Jurnali",
         publishedDate: "2025-06-01",
         series: "Texnik va Amaliy Fanlar",
-        coverImage: "public/img.png", // Mavhum muqova rasmi
+        coverImage: "img.png", // Mavhum muqova rasmi
     }
 ];
 
