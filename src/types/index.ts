@@ -1,6 +1,3 @@
-// src/types/index.ts
-
-// Birinchi marta berilgan interfeyslar
 export interface Issue {
     id: number;
     year: number;

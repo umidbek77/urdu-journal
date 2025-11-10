@@ -15,15 +15,6 @@ const About: React.FC = () => {
         "Fan va ta'limni ishlab chiqarish bilan integratsiyalash.",
     ];
 
-    // Indeksatsiya bazalari nomlari tarjima qilindi
-    const indexingDatabases = [
-        "Google Scholar",
-        "DOAJ (Ochiq Kirish Jurnallari Katalogi)",
-        "Index Copernicus International",
-        "Ulrich's Periodicals Directory",
-        "Ixtisoslashgan ilmiy bazalar",
-    ];
-
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
             <CustomBreadcrumbs currentPage="Jurnal haqida" /> {/* Breadcrumb tarjimasi */}
@@ -49,14 +40,11 @@ const About: React.FC = () => {
                     }}
                 >
                     <Paper elevation={1} sx={{ p: 4, height: '100%' }}>
-                        <Typography variant="h5" color="primary" sx={{ mb: 2, fontWeight: 600 }}>
-                            Missiyasi va Tarixi
+                        <Typography paragraph>
+                            Abu Rayhon Beruniy nomidagi Urganch Davlat Universitetining ilmiy-uslubiy jurnali "Journal of Khwarazm Information Technologies" 2024-yilda asos solingan. Bizning asosiy maqsadimiz — milliy va xalqaro tadqiqotchilar o'rtasida ilmiy tajriba almashinuvi uchun samarali jurnal yaratishdir.
                         </Typography>
                         <Typography paragraph>
-                            Abu Rayhon Beruniy nomidagi Urganch Davlat Pedagogika Institutining ilmiy-uslubiy jurnali "Journal of Khwarazm Information Technologies" 2024-yilda asos solingan. Bizning asosiy maqsadimiz — milliy va xalqaro tadqiqotchilar o'rtasida ilmiy tajriba almashinuvi uchun samarali platforma yaratishdir.
-                        </Typography>
-                        <Typography paragraph>
-                            Jurnal Axborot-texnologiyalari, Dasturlash, Zamonaviy-Texnologiyalar va ijtimoiy-iqtisodiy fanlarining turli yo'nalishlarida original, yuqori sifatli maqolalarni nashr etadi.
+                            Jurnalda dasturlash texnologiyalari va algoritmlar, infokommunikatsiya texnologiyalari, sun’iy intellekt va raqamli texnologiyalar, kriptografiya va ma’lumotlarni himoyalash texnologiyalari, aloqa, tarmoq va radioeshitirish texnologiyalari, intellektual axborot tizimlari va kompyuter lingvistikasi yo‘nalishlarida original, yuqori sifatli maqolalarni nashr etadi.
                         </Typography>
 
                         <Typography variant="h6" sx={{ mt: 3, mb: 1, fontWeight: 600, color: 'primary.main' }}>
@@ -72,48 +60,6 @@ const About: React.FC = () => {
                                 </ListItem>
                             ))}
                         </List>
-                    </Paper>
-                </Box>
-
-                {/* O'ng ustun: Indeksatsiya va tan olinishi */}
-                <Box
-                    sx={{
-                        width: { xs: '100%', md: 'calc(41.6667% - 16px)' },
-                        flexGrow: 1
-                    }}
-                >
-                    <Paper elevation={3} sx={{ p: 4, height: '100%', backgroundColor: 'background.default' }}>
-                        <Typography variant="h5" color="primary" sx={{ mb: 2, fontWeight: 600 }}>
-                            Indeksatsiya va E'tirof
-                        </Typography>
-
-                        <Box sx={{ mb: 3 }}>
-                            <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                                ISSN (Bosma): <span style={{ fontWeight: 400 }}>2333-4444</span>
-                            </Typography>
-                            <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                                e-ISSN (Onlayn): <span style={{ fontWeight: 400 }}>2111-4455</span>
-                            </Typography>
-                        </Box>
-
-                        <Typography variant="h6" sx={{ mb: 1, fontWeight: 600, color: 'primary.main' }}>
-                            Jurnal quyidagi bazalarda indekslanadi:
-                        </Typography>
-                        <List disablePadding>
-                            {indexingDatabases.map((text, index) => (
-                                <ListItem key={index} disableGutters sx={{ py: 0.3 }}>
-                                    <ListItemText primary={`• ${text}`} sx={{ ml: -2 }} />
-                                </ListItem>
-                            ))}
-                        </List>
-
-                        <Box sx={{ mt: 4, textAlign: 'center' }}>
-                            <img
-                                src="https://urdu.uz/martxa/martxa/assets/images/logoursu.png"
-                                alt="Jurnal Logosi"
-                                style={{ maxWidth: '80%', opacity: 0.8 }}
-                            />
-                        </Box>
                     </Paper>
                 </Box>
             </Box>

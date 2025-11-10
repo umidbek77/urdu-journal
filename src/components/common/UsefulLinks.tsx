@@ -23,19 +23,22 @@ const UsefulLinks: React.FC = () => {
     const SCROLL_DURATION = USEFUL_LINKS.length * 6; // 6 ta karta * 6 sekund = 36 sekund (yengilroq harakat uchun)
 
     return (
-        <Container maxWidth="lg" sx={{ py: 6 }}>
+        <Container maxWidth="lg" sx={{ py: 1 }}>
             <Typography
                 variant="h4"
                 component="h2"
                 align="center"
                 gutterBottom
                 sx={{
-                    fontWeight: 700,
-                    mb: 4,
-                    color: theme.palette.primary.dark // Universitet rangiga mos
+                    fontWeight: 800,
+                    mb: 5,
+                    textAlign: 'center',
+                    color: theme.palette.primary.dark,
+                    letterSpacing: '0.05em',
+                    textTransform: 'uppercase'
                 }}
             >
-                Foydali Hamkorlar va Havolalar
+                Foydali Havolalar
             </Typography>
 
             {/* Aylanma Ticker uchun Cheklangan Konteyner */}
@@ -69,9 +72,9 @@ const UsefulLinks: React.FC = () => {
                         <Box
                             key={index}
                             sx={{
-                                flexShrink: 0, // Kichrayishni oldini olish
-                                width: CARD_WIDTH, // Har bir kartaning aniq kengligi
-                                px: 1.5, // Kartalar orasidagi bo'shliqni hisobga olish
+                                flexShrink: 0,
+                                width: CARD_WIDTH,
+                                px: 1.5,
                             }}
                         >
                             <Paper
@@ -84,14 +87,13 @@ const UsefulLinks: React.FC = () => {
                                     flexDirection: 'column',
                                     justifyContent: 'space-between',
                                     transition: 'box-shadow 0.3s, transform 0.3s',
-                                    borderRadius: 3, // UI ga mos yumaloq burchaklar
-                                    border: `1px solid ${theme.palette.divider}`, // Yengil chegarani qo'shish
+                                    borderRadius: 3,
+                                    border: `1px solid ${theme.palette.divider}`,
 
-                                    // Hoverda kartochka yengil ko'tariladi
                                     '&:hover': {
                                         boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
-                                        transform: 'translateY(-5px)', // Kattaroq ko'tarilish
-                                        borderColor: theme.palette.secondary.main, // Rangli chegara
+                                        transform: 'translateY(-5px)',
+                                        borderColor: theme.palette.secondary.main,
                                         cursor: 'pointer',
                                     },
                                 }}
@@ -129,7 +131,7 @@ const UsefulLinks: React.FC = () => {
                                         whiteSpace: 'normal',
                                         textAlign: 'center',
                                         minHeight: 40,
-                                        '&:hover': { color: 'secondary.main' }, // Hover rangini o'zgartirish
+                                        '&:hover': { color: 'secondary.main' },
                                     }}
                                 >
                                     {link.name}

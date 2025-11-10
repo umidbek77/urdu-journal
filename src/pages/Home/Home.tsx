@@ -30,10 +30,7 @@ const Home: React.FC = () => {
                     backgroundRepeat: 'no-repeat',
                 }}
             >
-                {/* Ilmiy Sayt Dizayni: Sarlavha va Call to Action */}
                 <Container maxWidth="md" sx={{ textAlign: 'center', px: 2 }}>
-
-                    {/* Sarlavha: Katta va Ta'sirchan */}
                     <Typography
                         variant="h1"
                         sx={{
@@ -48,7 +45,6 @@ const Home: React.FC = () => {
                         Journal of Khwarazm Information Technologies
                     </Typography>
 
-                    {/* Ilmiylikni ta'kidlash uchun ajratuvchi chiziq */}
                     <Box sx={{
                         width: '80px',
                         height: '4px',
@@ -67,11 +63,10 @@ const Home: React.FC = () => {
                             fontWeight: 500,
                         }}
                     >
-                        Abu Rayhon Beruniy Nomidagi Urganch Davlat Pedagogika Instituti Xorazm axborot <br/>
-                        texnologiyalari jurnali ilmiy tadqiqotlar va innovatsiyalarni qo'llab-quvvatlashga bag'ishlangan.
+                        Abu Rayhon Beruniy Nomidagi Urganch davlat universiteti “Xorazm axborot<br/>
+                        texnologiyalari” jurnali ilmiy tadqiqotlar va innovatsiyalarni qo'llab-quvvatlashga bag'ishlangan
                     </Typography>
 
-                    {/* Tugma: Jozibador effektlar */}
                     <Button
                         variant="contained"
                         color="secondary"
@@ -92,7 +87,7 @@ const Home: React.FC = () => {
                         component={Link}
                         to="/about"
                     >
-                        Jurnal Haqida Batafsil
+                        Jurnal haqida batafsil !
                     </Button>
                 </Container>
             </Box>

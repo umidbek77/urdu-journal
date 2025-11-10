@@ -4,7 +4,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link } from 'react-router-dom';
 
-// MOCK_ISSUES va Submission type bu yerda yana e'lon qilinishi kerak
+// MOCK_ISSUES
 interface Issue {
     id: string;
     year: number;
@@ -13,6 +13,7 @@ interface Issue {
     publishedDate: string;
     series: string;
     coverImage: string;
+    pdfFile: string;
 }
 
 const MOCK_ISSUES: Issue[] = [
@@ -20,25 +21,29 @@ const MOCK_ISSUES: Issue[] = [
         id: "2025-1",
         year: 2025,
         number: 1,
-        seriesName: "Xorazm Axborot Texnologiyalari Jurnali",
-        publishedDate: "2025-06-01",
-        series: "Texnik va Amaliy Fanlar",
-        coverImage: "img.png", // Mavhum muqova rasmi
+        seriesName: "Xorazm axborot texnologiyalari jurnali",
+        publishedDate: "2025-11-15",
+        series: "Texnik va amaliy fanlar",
+        coverImage: "img_1.png",
+        pdfFile: "/public/pdfs/xorazm-jurnali-2025-1.pdf",
     }
 ];
 
 const CurrentIssue: React.FC = () => {
     const currentIssue = MOCK_ISSUES[0];
     const theme = useTheme();
-
     if (!currentIssue) return null;
-
-    // CSS Gradiyent: Universitet uslubida ko'k/ko'k-yashil yengil gradiyent
     const gradientBackground = `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${theme.palette.grey[50]} 100%)`;
 
+    const handleDownload = () => {
+        const link = document.createElement('a');
+        link.href = currentIssue.pdfFile;
+        link.download = `Jurnal-${currentIssue.year}-${currentIssue.number}.pdf`;
+        link.click();
+    };
 
     return (
-        <Container maxWidth="lg" sx={{ my: { xs: 4, md: 6 } }}>
+        <Container maxWidth="lg" sx={{ my: { xs: 2, md: 1 } }}>
             <Typography
                 variant="h4"
                 component="h2"
@@ -55,16 +60,16 @@ const CurrentIssue: React.FC = () => {
             </Typography>
 
             <Paper
-                elevation={10} // Kuchliroq ko'lanka
+                elevation={10}
                 sx={{
                     p: { xs: 2, sm: 4, md: 6 },
                     borderRadius: 3,
-                    background: gradientBackground, // Orqa fon gradiyenti
+                    background: gradientBackground,
                     transition: 'transform 0.3s ease-in-out, box-shadow 0.3s',
                     border: `1px solid ${theme.palette.grey[200]}`,
                     '&:hover': {
-                        boxShadow: `0 20px 40px rgba(0,0,0,0.3), 0 0 10px ${theme.palette.primary.light}`, // Kuchliroq ko'lanka, nufuzli ko'rinish uchun
-                        transform: 'translateY(-5px)', // Yengil 3D effekt
+                        boxShadow: `0 20px 40px rgba(0,0,0,0.3), 0 0 10px ${theme.palette.primary.light}`,
+                        transform: 'translateY(-5px)',
                     },
                 }}
             >
@@ -76,19 +81,17 @@ const CurrentIssue: React.FC = () => {
                         alignItems: 'center'
                     }}
                 >
-                    {/* Rasm joyi (Muqova effekti) */}
                     <Box
                         sx={{
-                            width: { xs: '100%', md: 300 }, // Kenglik fiksatsiya qilindi, kontentga ko'proq joy qoldirish uchun
+                            width: { xs: '100%', md: 300 },
                             flexShrink: 0,
                         }}
                     >
                         <Box sx={{
                             borderRadius: 2,
                             overflow: 'hidden',
-                            // Muqovaga xos ko'lanka
                             boxShadow: '8px 8px 20px rgba(0, 0, 0, 0.4)',
-                            border: `4px solid ${theme.palette.common.white}`, // Oq kontur
+                            border: `4px solid ${theme.palette.common.white}`,
                             maxHeight: { xs: 400, md: 450 },
                         }}>
                             <img
@@ -104,14 +107,7 @@ const CurrentIssue: React.FC = () => {
                         </Box>
                     </Box>
 
-                    {/* Matn va tugmalar joyi */}
-                    <Box
-                        sx={{
-                            flexGrow: 1,
-                            minWidth: 0, // Flex elementlar siqilmasligi uchun
-                        }}
-                    >
-                        {/* JILD va SON yuqori professional uslubda */}
+                    <Box sx={{ flexGrow: 1, minWidth: 0 }}>
                         <Typography
                             variant="h5"
                             color="secondary"
@@ -156,20 +152,19 @@ const CurrentIssue: React.FC = () => {
                                 startIcon={<VisibilityIcon />}
                                 sx={{ fontWeight: 700, textTransform: 'none' }}
                             >
-                                Kontentni To'liq Ko'rish
+                                Kontentni to'liq ko'rish
                             </Button>
                             <Button
                                 variant="outlined"
                                 color="primary"
                                 size="large"
                                 startIcon={<DownloadIcon />}
-                                href="#"
+                                onClick={handleDownload}
                                 sx={{ fontWeight: 600, textTransform: 'none' }}
                             >
-                                To'liq PDF Yuklab Olish
+                                To'liq PDF yuklab olish
                             </Button>
                         </Box>
-
                     </Box>
                 </Box>
             </Paper>

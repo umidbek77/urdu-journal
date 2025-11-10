@@ -12,64 +12,58 @@ const ResearchCallout: React.FC = () => {
                 sx={{
                     p: { xs: 4, md: 6 },
                     borderRadius: 3,
-                    backgroundColor: theme.palette.background.paper, // Oq fonni saqlab qolish
-                    borderLeft: `8px solid ${theme.palette.primary.main}`, // Kuchli vertikal chiziq nufuzni ta'kidlaydi
+                    backgroundColor: theme.palette.background.paper,
+                    borderLeft: `8px solid ${theme.palette.primary.main}`,
                     transition: 'box-shadow 0.4s',
                     '&:hover': {
-                        boxShadow: `0 15px 35px rgba(0,0,0,0.2), 0 0 5px ${theme.palette.primary.light}`, // Yorqinroq hover effekti
-                        '& svg': {
-                            stroke: theme.palette.primary.dark, // SVG rangini o'zgartirish
-                        }
+                        boxShadow: `0 15px 35px rgba(0,0,0,0.2), 0 0 5px ${theme.palette.primary.light}`,
                     },
                 }}
             >
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        alignItems: { xs: 'flex-start', sm: 'center' },
-                        justifyContent: 'space-between',
-                        gap: 3,
-                    }}
-                >
-                    {/* Matn va Tugma Qismi */}
-                    <Box sx={{ flexGrow: 1, minWidth: 0, textAlign: { xs: 'left', sm: 'left' } }}>
-                        <Typography
-                            variant="h5"
-                            component="h2"
-                            gutterBottom
-                            sx={{
-                                fontWeight: 800,
-                                color: theme.palette.primary.dark,
-                                mb: 1.5,
-                            }}
-                        >
-                            Ilm-fan Sayohatiga Qo'shiling
-                        </Typography>
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                mb: { xs: 3, sm: 0 }, // Kichik ekranlarda matndan keyin bo'sh joy
-                                color: theme.palette.text.secondary,
-                                fontWeight: 400,
-                            }}
-                        >
-                            Tadqiqotchilarni maqolalarini jurnalimizda nashr etishga va o'z ishlarini xalqaro miqyosda yoritishga taklif qilamiz.
-                        </Typography>
-                    </Box>
-
-                    {/* SVG Ikonka va Tugma Guruhi */}
-                    <Box
+                <Box>
+                    {/* Matn qismi */}
+                    <Typography
+                        variant="h5"
+                        component="h2"
+                        gutterBottom
                         sx={{
-                            flexShrink: 0,
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 3,
-                            width: { xs: '100%', sm: 'auto' }
+                            fontWeight: 800,
+                            mb: 2,
+                            textAlign: 'center',
+                            color: theme.palette.primary.dark,
+                            letterSpacing: '0.05em',
+                            textTransform: 'uppercase'
                         }}
                     >
+                        Ilm-fan sayohatimizga qo‘shiling!
+                    </Typography>
 
-                        {/* Tugma */}
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            mb: 4,
+                            color: theme.palette.text.secondary,
+                            fontWeight: 400,
+                            textAlign: 'justify',
+                            lineHeight: 1.7,
+                        }}
+                    >
+                        Hurmatli tadqiqotchilar, olimlar va ilmiy izlanuvchilar! Sizni ilmiy izlanishlaringiz
+                        natijalarini keng ilmiy jamoatchilikka taqdim etish maqsadida jurnalimiz sahifalarida
+                        maqolalaringizni e’lon qilishga taklif etamiz. Jurnalimiz ilm-fan taraqqiyotiga hissa
+                        qo‘shayotgan barcha tadqiqotchilarni o‘z ilmiy maqolalarini chop ettirishga chorlaydi.
+                        Sizning maqolangiz ilm-fanning dolzarb masalalarini yoritish, yangi g‘oyalar va ilmiy
+                        yechimlarni taqdim etish orqali ilmiy hamjamiyat e’tiborini qozonish va o‘z sohangizda
+                        yetakchi sifatida tanilish imkoniyatini taqdim etadi.
+                    </Typography>
+
+                    {/* Tugma markazda */}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}
+                    >
                         <Button
                             variant="contained"
                             color="secondary"
@@ -81,8 +75,6 @@ const ResearchCallout: React.FC = () => {
                                 px: { xs: 3, md: 5 },
                                 py: { xs: 1.2, md: 1.5 },
                                 borderRadius: 3,
-                                minWidth: 200,
-                                // Kuchliroq soya va hover effekti
                                 boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
                                 '&:hover': {
                                     backgroundColor: theme.palette.secondary.dark,
@@ -92,7 +84,7 @@ const ResearchCallout: React.FC = () => {
                                 },
                             }}
                         >
-                            Mualliflar uchun Yo'riqnoma
+                            Mualliflar uchun yo‘riqnoma
                         </Button>
                     </Box>
                 </Box>

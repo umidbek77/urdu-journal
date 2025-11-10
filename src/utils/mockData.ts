@@ -8,73 +8,10 @@ export const MOCK_ISSUES: Issue[] = [
         id: 1,
         year: 2025,
         number: 'Nº5',
-        series: '1-seriya', // 1 series -> 1-seriya
-        publishedDate: '30 Sentyabr 2025', // 30 September 2025 -> 30 Sentyabr 2025
-        seriesName: "Tabiiy-texnika fanlari, Ijtimoiy-iqtisodiy fanlar, Filologiya fanlari", // Tarjima
-        coverImage: 'https://talimtelekanali.uz/media/uploads/2025/04/08/image-20250408110051-2.jpeg',
-    },
-    {
-        id: 2,
-        year: 2025,
-        number: 'Nº4',
-        series: '2-seriya', // 2 series -> 2-seriya
-        publishedDate: '27 Iyun 2025', // 27 June 2025 -> 27 Iyun 2025
-        seriesName: 'Pedagogika fanlari, Psixologiya fanlari', // Tarjima
-        coverImage: 'https://talimtelekanali.uz/media/uploads/2025/04/08/image-20250408110051-2.jpeg',
-    },
-    {
-        id: 3,
-        year: 2025,
-        number: 'Nº3',
         series: '1-seriya',
-        publishedDate: '15 May 2025', // 15 May 2025 -> 15 May 2025
-        seriesName: 'Tabiiy-texnika fanlari, Ijtimoiy-iqtisodiy fanlar', // Tarjima
-        coverImage: 'https://talimtelekanali.uz/media/uploads/2025/04/08/image-20250408110051-2.jpeg',
-    },
-    {
-        id: 4,
-        year: 2025,
-        number: 'Nº5',
-        series: '1-seriya',
-        publishedDate: '30 Sentyabr 2025',
-        seriesName: "Tabiiy-texnika fanlari, Ijtimoiy-iqtisodiy fanlar, Filologiya fanlari",
-        coverImage: 'https://talimtelekanali.uz/media/uploads/2025/04/08/image-20250408110051-2.jpeg',
-    },
-    {
-        id: 5,
-        year: 2025,
-        number: 'Nº4',
-        series: '2-seriya',
-        publishedDate: '27 Iyun 2025',
-        seriesName: 'Pedagogika fanlari, Psixologiya fanlari',
-        coverImage: 'https://talimtelekanali.uz/media/uploads/2025/04/08/image-20250408110051-2.jpeg',
-    },
-    {
-        id: 6,
-        year: 2025,
-        number: 'Nº3',
-        series: '1-seriya',
-        publishedDate: '15 May 2025',
-        seriesName: 'Tabiiy-texnika fanlari, Ijtimoiy-iqtisodiy fanlar',
-        coverImage: 'https://talimtelekanali.uz/media/uploads/2025/04/08/image-20250408110051-2.jpeg',
-    },
-    {
-        id: 7,
-        year: 2025,
-        number: 'Nº5',
-        series: '1-seriya',
-        publishedDate: '30 Sentyabr 2025',
-        seriesName: "Tabiiy-texnika fanlari, Ijtimoiy-iqtisodiy fanlar, Filologiya fanlari",
-        coverImage: 'https://talimtelekanali.uz/media/uploads/2025/04/08/image-20250408110051-2.jpeg',
-    },
-    {
-        id: 8,
-        year: 2025,
-        number: 'Nº4',
-        series: '2-seriya',
-        publishedDate: '27 Iyun 2025',
-        seriesName: 'Pedagogika fanlari, Psixologiya fanlari',
-        coverImage: 'https://talimtelekanali.uz/media/uploads/2025/04/08/image-20250408110051-2.jpeg',
+        publishedDate: '15-noyabr 2025',
+        seriesName: "Texnik va amaliy fanlar", // Tarjima
+        coverImage: 'public/img_1.png',
     },
 ];
 

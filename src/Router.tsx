@@ -16,6 +16,7 @@ import EditorialBoard from './pages/EditorialBoard/EditorialBoard';
 import ForAuthors from './pages/ForAuthors/ForAuthors';
 import Contacts from './pages/Contacts/Contacts';
 import Page404 from './pages/Page404/Page404';
+import IssueDetail from "./pages/Issues/IssueDetail.tsx";
 
 const Router: React.FC = () => {
     return (
@@ -26,6 +27,7 @@ const Router: React.FC = () => {
                     <Route index element={<Home />} />
                     <Route path="about" element={<About />} />
                     <Route path="issues" element={<Issues />} />
+                    <Route path="issues/:issueId" element={<IssueDetail />} />
                     <Route path="editorial-board" element={<EditorialBoard />} />
                     <Route path="for-authors" element={<ForAuthors />} />
                     <Route path="contacts" element={<Contacts />} />
