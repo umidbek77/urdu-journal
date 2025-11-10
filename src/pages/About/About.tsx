@@ -21,7 +21,7 @@ const About: React.FC = () => {
         "DOAJ (Ochiq Kirish Jurnallari Katalogi)",
         "Index Copernicus International",
         "Ulrich's Periodicals Directory",
-        "Ixtisoslashgan ilmiy bazalar (Mock Data)",
+        "Ixtisoslashgan ilmiy bazalar",
     ];
 
     return (
@@ -53,10 +53,10 @@ const About: React.FC = () => {
                             Missiyasi va Tarixi
                         </Typography>
                         <Typography paragraph>
-                            Urganch Davlat Pedagogika Institutining ilmiy-uslubiy jurnali **"URDU ILMIY JURNALI"** (avvalgi nomi: "Fan va jamiyat") **2004-yilda** asos solingan. Bizning asosiy maqsadimiz — milliy va xalqaro tadqiqotchilar o'rtasida ilmiy tajriba almashinuvi uchun samarali platforma yaratishdir.
+                            Abu Rayhon Beruniy nomidagi Urganch Davlat Pedagogika Institutining ilmiy-uslubiy jurnali "Journal of Khwarazm Information Technologies" 2024-yilda asos solingan. Bizning asosiy maqsadimiz — milliy va xalqaro tadqiqotchilar o'rtasida ilmiy tajriba almashinuvi uchun samarali platforma yaratishdir.
                         </Typography>
                         <Typography paragraph>
-                            Jurnal tabiiy-texnika, pedagogika, psixologiya, ijtimoiy-iqtisodiy va filologiya fanlarining turli yo'nalishlarida original, yuqori sifatli maqolalarni nashr etadi.
+                            Jurnal Axborot-texnologiyalari, Dasturlash, Zamonaviy-Texnologiyalar va ijtimoiy-iqtisodiy fanlarining turli yo'nalishlarida original, yuqori sifatli maqolalarni nashr etadi.
                         </Typography>
 
                         <Typography variant="h6" sx={{ mt: 3, mb: 1, fontWeight: 600, color: 'primary.main' }}>
@@ -89,10 +89,10 @@ const About: React.FC = () => {
 
                         <Box sx={{ mb: 3 }}>
                             <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                                ISSN (Bosma): <span style={{ fontWeight: 400 }}>2181-4413</span>
+                                ISSN (Bosma): <span style={{ fontWeight: 400 }}>2333-4444</span>
                             </Typography>
                             <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                                e-ISSN (Onlayn): <span style={{ fontWeight: 400 }}>2181-4413</span>
+                                e-ISSN (Onlayn): <span style={{ fontWeight: 400 }}>2111-4455</span>
                             </Typography>
                         </Box>
 

@@ -1,5 +1,3 @@
-// src/components/common/Header.tsx (Barcha matnlar o'zbek tiliga o'tkazildi)
-
 import React from 'react';
 import {
     AppBar, Toolbar, Typography, Button, Box, IconButton, MenuItem, Menu, useMediaQuery, useTheme, Container,
@@ -10,15 +8,17 @@ import LanguageIcon from '@mui/icons-material/Language';
 import { Link, useLocation } from 'react-router-dom';
 
 const navItems = [
-    { name: 'Jurnal haqida', path: '/about' },      // About -> Jurnal haqida
-    { name: 'Sonlar', path: '/issues' },            // Issues -> Sonlar
-    { name: 'Tahririyat kengashi', path: '/editorial-board' }, // Editorial board -> Tahririyat kengashi
-    { name: 'Mualliflar uchun', path: '/for-authors' }, // For authors -> Mualliflar uchun
-    { name: 'Kontaktlar', path: '/contacts' },      // Contacts -> Kontaktlar
+    { name: 'Jurnal haqida', path: '/about' },
+    { name: 'Sonlar', path: '/issues' },
+    { name: 'Tahririyat kengashi', path: '/editorial-board' },
+    { name: 'Mualliflar uchun', path: '/for-authors' },
+    { name: 'Kontaktlar', path: '/contacts' },
 ];
 
 const Header: React.FC = () => {
     const theme = useTheme();
+    // Navigatsiya tugmachalari 1280px dan kichik bo'lsa mobil rejimga o'tadi
+    const isSmallDesktop = useMediaQuery(theme.breakpoints.down('lg'));
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const location = useLocation();
 
@@ -34,10 +34,18 @@ const Header: React.FC = () => {
             position="sticky"
             color="inherit"
             elevation={2}
-            sx={{ borderBottom: `3px solid ${theme.palette.secondary.main}` }}
+            sx={{
+                borderBottom: `3px solid ${theme.palette.secondary.main}`,
+                zIndex: theme.zIndex.appBar + 1
+            }}
         >
-            <Container maxWidth="lg">
-                <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 1, sm: 2 } }}>
+            <Container maxWidth="xl"> {/* Kontentni kengaytirish uchun maxWidth "xl" ga o'zgartirildi */}
+                <Toolbar sx={{
+                    justifyContent: 'space-between',
+                    px: { xs: 1, sm: 2 },
+                    // Kichik desktoplarda kontentni sig'dirish uchun paddingni kamaytiramiz
+                    py: { xs: 1, lg: 0.5 }
+                }}>
 
                     {/* Logo / Sayt nomi qismi */}
                     <Box
@@ -47,37 +55,49 @@ const Header: React.FC = () => {
                             display: 'flex',
                             alignItems: 'center',
                             textDecoration: 'none',
-                            flexGrow: 1,
                             color: 'primary.main',
-                            mr: 2
+                            // Logotip uzunligini kamaytirish uchun flexGrow ni olib tashladik
+                            flexShrink: 0,
+                            mr: 2,
                         }}
                     >
                         {/* 1. Logo Rasmi */}
                         <Box
                             component="img"
                             src="https://urdu.uz/martxa/martxa/assets/images/logoursu.png"
-                            alt="Universitet Logosi" // Alt text tarjimalandi
+                            alt="Universitet Logosi"
                             sx={{
-                                height: 43,
-                                mr: 1.2,
+                                height: { xs: 35, md: 45 }, // Mobil ko'rinishda kichraytirdik
+                                mr: 1.5,
                                 flexShrink: 0
                             }}
                         />
 
-                        {/* 2. Matn */}
-                        <Typography
-                            variant="h6"
-                            sx={{ color: 'primary.main', fontWeight: 'bold', lineHeight: 1.2, flexShrink: 1 }}
-                        >
-                            URDU JURNALI
-                            <Typography variant="caption" color="text.secondary" display="block" sx={{ fontSize: '0.7rem' }}>
-                                Ilmiy-uslubiy jurnal
+                        {/* 2. Qisqartirilgan Matn */}
+                        <Box sx={{ lineHeight: 1.2 }}>
+                            <Typography
+                                variant={isMobile ? "subtitle2" : "h6"}
+                                sx={{ color: 'primary.main', fontWeight: 'bold', flexShrink: 1, display: 'block' }}
+                            >
+                                Journal of Khwarazm Information Technologies
                             </Typography>
-                        </Typography>
+                            <Typography
+                                variant="caption"
+                                color="text.secondary"
+                                display="block"
+                                sx={{
+                                    fontSize: { xs: '0.65rem', md: '0.75rem' },
+                                    lineHeight: 1.2
+                                }}
+                            >
+                                {/* To'liq nomi pastda ko'rsatiladi, agar joy bo'lsa */}
+                                Xorazm axborot texnologiyalari jurnali
+                            </Typography>
+                        </Box>
                     </Box>
 
-                    {isMobile ? (
-                        /* Mobile Navigatsiya */
+                    {isSmallDesktop ? (
+                        /* Mobile va Tablet Navigatsiya (LG breakpointgacha) */
                         <Box>
                             <IconButton size="large" onClick={handleMenu} color="primary">
                                 <MenuIcon />
@@ -100,12 +120,12 @@ const Header: React.FC = () => {
                                 ))}
                                 <Divider />
                                 <MenuItem>
-                                    <LanguageIcon fontSize="small" sx={{ mr: 1 }} /> O'zbekcha
+                                    <LanguageIcon fontSize="small" sx={{ mr: 1 }} /> Tilni o'zgartirish
                                 </MenuItem>
                             </Menu>
                         </Box>
                     ) : (
-                        /* Desktop Navigatsiya */
+                        /* Desktop Navigatsiya (LG breakpointdan yuqori) */
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             {navItems.map((item) => (
                                 <Button
@@ -114,10 +134,14 @@ const Header: React.FC = () => {
                                     to={item.path}
                                     color={isActive(item.path) ? 'secondary' : 'primary'}
                                     sx={{
-                                        mx: 0.5,
+                                        // Tugmalar orasidagi bo'shliqni qisqartirdik
+                                        mx: 0.3,
+                                        px: 1, // Tugma ichidagi padding
                                         fontWeight: 600,
+                                        fontSize: '0.875rem', // Matn hajmini biroz kichraytirdik
                                         borderBottom: isActive(item.path) ? `2px solid ${theme.palette.secondary.main}` : 'none',
                                         borderRadius: 0,
+                                        whiteSpace: 'nowrap'
                                     }}
                                 >
                                     {item.name}
@@ -125,10 +149,17 @@ const Header: React.FC = () => {
                             ))}
                             <Button
                                 variant="outlined"
-                                sx={{ ml: 2, fontWeight: 600, borderColor: 'primary.main', color: 'primary.main' }}
+                                size="small" // Tugmani kichraytirdik
+                                sx={{
+                                    ml: 2,
+                                    fontWeight: 600,
+                                    borderColor: 'primary.main',
+                                    color: 'primary.main',
+                                    whiteSpace: 'nowrap'
+                                }}
                                 startIcon={<LanguageIcon />}
                             >
-                                Tilni o'zgartirish
+                                O'zbekcha
                             </Button>
                         </Box>
                     )}

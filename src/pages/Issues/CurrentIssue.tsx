@@ -1,89 +1,150 @@
-// src/pages/Issues/CurrentIssue.tsx (O'zbek tili, Katta Rasm va Flexbox)
-
 import React from 'react';
-import { Box, Container, Typography, Button, Paper } from '@mui/material';
+import { Box, Container, Typography, Button, Paper, useTheme } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
-import { MOCK_ISSUES } from '../../utils/mockData';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link } from 'react-router-dom';
 
+// MOCK_ISSUES va Submission type bu yerda yana e'lon qilinishi kerak
+interface Issue {
+    id: string;
+    year: number;
+    number: number;
+    seriesName: string;
+    publishedDate: string;
+    series: string;
+    coverImage: string;
+}
+
+const MOCK_ISSUES: Issue[] = [
+    {
+        id: "2025-1",
+        year: 2025,
+        number: 1,
+        seriesName: "Xorazm Axborot Texnologiyalari Jurnali",
+        publishedDate: "2025-06-01",
+        series: "Texnik va Amaliy Fanlar",
+        coverImage: "src/assets/images/img.png", // Mavhum muqova rasmi
+    }
+];
+
 const CurrentIssue: React.FC = () => {
-    // MOCK_ISSUES ni import qilish unutilmaganiga ishonch hosil qiling!
     const currentIssue = MOCK_ISSUES[0];
+    const theme = useTheme();
 
     if (!currentIssue) return null;
 
+    // CSS Gradiyent: Universitet uslubida ko'k/ko'k-yashil yengil gradiyent
+    const gradientBackground = `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${theme.palette.grey[50]} 100%)`;
+
+
     return (
-        <Container maxWidth="lg" sx={{ my: 4 }}>
-            <Typography variant="h4" component="h2" sx={{ fontWeight: 700, mb: 3, textAlign: 'center' }}>
-                Joriy Son
+        <Container maxWidth="lg" sx={{ my: { xs: 4, md: 6 } }}>
+            <Typography
+                variant="h4"
+                component="h2"
+                sx={{
+                    fontWeight: 800,
+                    mb: 5,
+                    textAlign: 'center',
+                    color: theme.palette.primary.dark,
+                    letterSpacing: '0.05em',
+                    textTransform: 'uppercase'
+                }}
+            >
+                Joriy Nashr
             </Typography>
 
             <Paper
-                elevation={5}
+                elevation={10} // Kuchliroq ko'lanka
                 sx={{
-                    p: 4,
-                    transition: 'box-shadow 0.3s',
-                    '&:hover': { boxShadow: '0 15px 30px rgba(0,0,0,0.2)' },
-                    backgroundColor: 'background.default' // Oq fonni yanada aniqroq ajratish uchun
+                    p: { xs: 2, sm: 4, md: 6 },
+                    borderRadius: 3,
+                    background: gradientBackground, // Orqa fon gradiyenti
+                    transition: 'transform 0.3s ease-in-out, box-shadow 0.3s',
+                    border: `1px solid ${theme.palette.grey[200]}`,
+                    '&:hover': {
+                        boxShadow: `0 20px 40px rgba(0,0,0,0.3), 0 0 10px ${theme.palette.primary.light}`, // Kuchliroq ko'lanka, nufuzli ko'rinish uchun
+                        transform: 'translateY(-5px)', // Yengil 3D effekt
+                    },
                 }}
             >
                 <Box
                     sx={{
                         display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: 4,
+                        flexDirection: { xs: 'column', md: 'row' },
+                        gap: { xs: 4, md: 6 },
                         alignItems: 'center'
                     }}
                 >
-                    {/* Rasm joyi (Kattalashtirildi) */}
+                    {/* Rasm joyi (Muqova effekti) */}
                     <Box
                         sx={{
-                            width: { xs: '100%', md: 'calc(33.3333% - 16px)' },
+                            width: { xs: '100%', md: 300 }, // Kenglik fiksatsiya qilindi, kontentga ko'proq joy qoldirish uchun
                             flexShrink: 0,
-                            flexGrow: 1
                         }}
                     >
                         <Box sx={{
                             borderRadius: 2,
                             overflow: 'hidden',
-                            boxShadow: '0 5px 15px rgba(0,0,0,0.2)',
-                            // Rasm balandligi kattalashtirildi (kitob/maqola muqovasi uchun)
-                            maxHeight: { xs: 450, md: 550 },
+                            // Muqovaga xos ko'lanka
+                            boxShadow: '8px 8px 20px rgba(0, 0, 0, 0.4)',
+                            border: `4px solid ${theme.palette.common.white}`, // Oq kontur
+                            maxHeight: { xs: 400, md: 450 },
                         }}>
-                            {/*  */}
                             <img
                                 src={currentIssue.coverImage}
-                                alt={`${currentIssue.number}-son muqovasi`} // Alt text tarjimalandi
+                                alt={`${currentIssue.number}-son muqovasi`}
                                 style={{
                                     width: '100%',
-                                    height: '100%', // Katta rasm bo'lishi uchun height: 100%
-                                    objectFit: 'cover', // Katta konteynerni to'ldirsin
+                                    height: '100%',
+                                    objectFit: 'cover',
                                     display: 'block'
                                 }}
                             />
                         </Box>
                     </Box>
 
-                    {/* Matn joyi */}
+                    {/* Matn va tugmalar joyi */}
                     <Box
                         sx={{
-                            width: { xs: '100%', md: 'calc(66.6667% - 16px)' },
-                            flexGrow: 1
+                            flexGrow: 1,
+                            minWidth: 0, // Flex elementlar siqilmasligi uchun
                         }}
                     >
-                        <Typography variant="h5" color="secondary" sx={{ fontWeight: 700, mb: 1 }}>
-                            JILD {currentIssue.year}, SON {currentIssue.number}
+                        {/* JILD va SON yuqori professional uslubda */}
+                        <Typography
+                            variant="h5"
+                            color="secondary"
+                            sx={{
+                                fontWeight: 900,
+                                mb: 1,
+                                letterSpacing: '0.1em',
+                                textTransform: 'uppercase',
+                                borderBottom: `2px solid ${theme.palette.secondary.light}`,
+                                pb: 0.5,
+                                display: 'inline-block'
+                            }}
+                        >
+                            JILD {currentIssue.year} | SON {currentIssue.number}
                         </Typography>
-                        <Typography variant="h6" color="primary" sx={{ fontWeight: 600, mb: 2 }}>
+
+                        <Typography
+                            variant="h4"
+                            color="primary.dark"
+                            component="h3"
+                            sx={{ fontWeight: 700, mb: 3 }}
+                        >
                             {currentIssue.seriesName}
                         </Typography>
 
-                        <Typography variant="body1" sx={{ mb: 1 }}>
-                            **Nashr qilingan sana:** {currentIssue.publishedDate}
-                        </Typography>
-                        <Typography variant="body1" sx={{ mb: 3 }}>
-                            **Seriyasi:** {currentIssue.series}
-                        </Typography>
+                        <Box sx={{ mb: 4, color: theme.palette.text.secondary }}>
+                            <Typography variant="body1" sx={{ mb: 1.5 }}>
+                                <Box component="span" sx={{ fontWeight: 600, color: theme.palette.text.primary }}>Nashr qilingan sana:</Box> {currentIssue.publishedDate}
+                            </Typography>
+                            <Typography variant="body1">
+                                <Box component="span" sx={{ fontWeight: 600, color: theme.palette.text.primary }}>Seriya/Mavzu:</Box> {currentIssue.series}
+                            </Typography>
+                        </Box>
 
                         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                             <Button
@@ -92,20 +153,20 @@ const CurrentIssue: React.FC = () => {
                                 size="large"
                                 component={Link}
                                 to={`/issues/${currentIssue.id}`}
-                                sx={{ fontWeight: 700 }}
+                                startIcon={<VisibilityIcon />}
+                                sx={{ fontWeight: 700, textTransform: 'none' }}
                             >
-                                Kontentni ko'rish
+                                Kontentni To'liq Ko'rish
                             </Button>
                             <Button
                                 variant="outlined"
                                 color="primary"
                                 size="large"
                                 startIcon={<DownloadIcon />}
-                                // Mock link
                                 href="#"
-                                sx={{ fontWeight: 600 }}
+                                sx={{ fontWeight: 600, textTransform: 'none' }}
                             >
-                                PDF yuklab olish
+                                To'liq PDF Yuklab Olish
                             </Button>
                         </Box>
 

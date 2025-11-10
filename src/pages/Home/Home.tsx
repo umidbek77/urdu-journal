@@ -4,6 +4,7 @@ import { Box, Container, Typography, Button, useTheme } from '@mui/material';
 import UsefulLinks from '../../components/common/UsefulLinks';
 import CurrentIssue from '../Issues/CurrentIssue';
 import { Link } from 'react-router-dom';
+import ResearchCallout from "../ResearchCallout/ResearchCallout";
 
 const Home: React.FC = () => {
     const theme = useTheme();
@@ -38,13 +39,13 @@ const Home: React.FC = () => {
                         sx={{
                             fontWeight: 900,
                             mb: 1,
-                            fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
-                            textShadow: '3px 3px 10px rgba(0,0,0,0.8)',
+                            fontSize: { xs: '2.5rem', sm: '3rem', md: '3rem' },
+                            textShadow: '2px 2px 8px rgba(0,0,0,0.8)',
                             lineHeight: 1.1,
                             letterSpacing: 1.5,
                         }}
                     >
-                        URDU ILMIY JURNALI
+                        Journal of Khwarazm Information Technologies
                     </Typography>
 
                     {/* Ilmiylikni ta'kidlash uchun ajratuvchi chiziq */}
@@ -62,12 +63,12 @@ const Home: React.FC = () => {
                             mb: 5,
                             color: theme.palette.secondary.light,
                             textShadow: '1px 1px 5px rgba(0,0,0,0.8)',
-                            fontSize: { xs: '1.1rem', sm: '1.3rem' },
+                            fontSize: { xs: '1.1rem', sm: '1.4rem' },
                             fontWeight: 500,
                         }}
                     >
-                        Urganch Davlat Pedagogika Instituti ilmiy-uslubiy jurnali, <br/>
-                        **ilmiy tadqiqotlar va innovatsiyalarni qo'llab-quvvatlashga** bag'ishlangan.
+                        Abu Rayhon Beruniy Nomidagi Urganch Davlat Pedagogika Instituti Xorazm axborot <br/>
+                        texnologiyalari jurnali ilmiy tadqiqotlar va innovatsiyalarni qo'llab-quvvatlashga bag'ishlangan.
                     </Typography>
 
                     {/* Tugma: Jozibador effektlar */}
@@ -101,7 +102,7 @@ const Home: React.FC = () => {
                 <CurrentIssue />
             </Box>
 
-            {/*/!* 3. So'nggi Sonlar Seksiyasi (TIKLANDI) *!/*/}
+            {/* 3. So'nggi Sonlar Seksiyasi (TIKLANDI) */}
             {/*<Box sx={{ py: { xs: 4, md: 6 }, backgroundColor: '#f9fafb' }}>*/}
             {/*    <LatestIssuesSection />*/}
             {/*</Box>*/}
@@ -115,45 +116,7 @@ const Home: React.FC = () => {
                     textAlign: 'center',
                 }}
             >
-                <Container maxWidth="lg">
-                    <Typography
-                        variant="h4"
-                        gutterBottom
-                        sx={{ fontWeight: 700, mb: 2 }}
-                    >
-                        Ilmiy maqola chop etishni xohlaysizmi?
-                    </Typography>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            mb: 3,
-                            color: 'rgba(255,255,255,0.9)',
-                        }}
-                    >
-                        Tadqiqotchilarni maqolalarini jurnalimizda nashr etishga taklif qilamiz.
-                    </Typography>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        size="large"
-                        component={Link}
-                        to="/for-authors"
-                        sx={{
-                            fontWeight: 700,
-                            px: 4,
-                            py: 1.2,
-                            borderRadius: 3,
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-                            '&:hover': {
-                                backgroundColor: 'secondary.dark',
-                                transform: 'scale(1.05)',
-                                transition: '0.3s ease',
-                            },
-                        }}
-                    >
-                        Batafsil Ma'lumot
-                    </Button>
-                </Container>
+                <ResearchCallout/>
             </Box>
 
             {/* 5. Foydali Havolalar Seksiyasi */}
