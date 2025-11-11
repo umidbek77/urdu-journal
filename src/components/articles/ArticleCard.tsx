@@ -15,6 +15,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
         <Card
             sx={{
                 maxWidth: 300,
+                padding: 2,
                 margin: 'auto',
                 transition: 'transform 0.3s, box-shadow 0.3s',
                 display: 'flex',
