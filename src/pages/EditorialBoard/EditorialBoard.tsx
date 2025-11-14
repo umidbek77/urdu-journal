@@ -25,8 +25,9 @@ const DEFAULT_AVATAR = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-pro
 const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief' | 'Member' }> = ({ member, roleType }) => {
     const isChief = roleType === 'Chief';
 
-    const avatarSize = isChief ? 140 : 100;
-    const cardPadding = isChief ? 3 : 2;
+    const avatarSize = isChief ? 170 : 120;
+    
+    const cardPadding = isChief ? 4 : 3; 
 
     const cardStyles = {
         transition: 'all 0.3s ease-in-out',
@@ -53,24 +54,24 @@ const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    minWidth: avatarSize,
+                    minWidth: avatarSize + 20, 
                     textAlign: 'center',
                 }}
             >
                 <Avatar
-    alt={member.fullName}
-    src={member.imageUrl ? member.imageUrl : DEFAULT_AVATAR}
-    sx={{
-        width: avatarSize,
-        height: avatarSize,
-        border: isChief ? '4px solid #FFCC00' : '2px solid #1E3A5F',
-        mx: 'auto',
-        mb: isChief ? 2 : 0,
-    }}
-    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-        e.currentTarget.src = DEFAULT_AVATAR; // Agar rasm topilmasa default avatar
-    }}
-/>
+                    alt={member.fullName}
+                    src={member.imageUrl ? member.imageUrl : DEFAULT_AVATAR}
+                    sx={{
+                        width: avatarSize,
+                        height: avatarSize,
+                        border: isChief ? '4px solid #FFCC00' : '2px solid #1E3A5F',
+                        mx: 'auto',
+                        mb: isChief ? 2 : 0,
+                    }}
+                    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                        e.currentTarget.src = DEFAULT_AVATAR;
+                    }}
+                />
 
 
                 {isChief && (
@@ -79,7 +80,6 @@ const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief
                         color="primary"
                         endIcon={<KeyboardArrowDownIcon />}
                         sx={{ mt: 1, width: '100%', fontWeight: 600 }}
-                        disabled
                     >
                         Avtobiografiya
                     </Button>
@@ -137,24 +137,25 @@ const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief
     );
 };
 
-        const EditorialBoard: React.FC = () => {
-        const chiefEditor = EDITORIAL_MEMBERS.find(m => m.role === 'Bosh muharrir');
-        const executiveSecretary = EDITORIAL_MEMBERS.find(m => m.role === 'Muharrir kotib');
-        const members = EDITORIAL_MEMBERS.filter(m => m.role === 'Muharrir').sort((a, b) =>
+const EditorialBoard: React.FC = () => {
+    // Tahririyat hay'atini filtrlash va tartiblash
+    const chiefEditor = EDITORIAL_MEMBERS.find(m => m.role === 'Bosh muharrir');
+    const executiveSecretary = EDITORIAL_MEMBERS.find(m => m.role === 'Muharrir kotib');
+    const members = EDITORIAL_MEMBERS.filter(m => m.role === 'Muharrir').sort((a, b) =>
         a.fullName.localeCompare(b.fullName, 'uz')
-);
+    );
 
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
-            <CustomBreadcrumbs currentPage="Tahririyat Hayʼati" />
+            <CustomBreadcrumbs currentPage="Tahririyat hayʼati" />
 
             <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 4, textAlign: 'center', fontWeight: 700, color: 'primary.dark' }}>
-                Tahririyat Hayʼati
+                Tahririyat hayʼati
             </Typography>
 
             <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.dark', mt: 4, mb: 3, borderBottom: '2px solid #FFCC00', pb: 1 }}>
-                Rahbariyat
+                Bosh muharrir
             </Typography>
             <Box
                 sx={{
@@ -164,9 +165,14 @@ const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief
                     mb: 5,
                 }}
             >
+                {/* Bosh muharrir va kotibni alohida katta kartalar bilan ko'rsatish */}
                 {chiefEditor && (
                     <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 12px)' }, flexGrow: 1 }}>
-                        <ScientificMemberCard member={{ ...chiefEditor, email: 'rectorursu@gmail.com', phone: '+998622246700' }} roleType="Chief" />
+                        {/* Example: real email/phone added here */}
+                        <ScientificMemberCard 
+                            member={{ ...chiefEditor, email: 'rectorursu@gmail.com', phone: '+998622246700' }} 
+                            roleType="Chief" 
+                        />
                     </Box>
                 )}
                 {executiveSecretary && (
@@ -177,7 +183,7 @@ const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief
             </Box>
 
             <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.dark', mt: 4, mb: 3, borderBottom: '2px solid #FFCC00', pb: 1 }}>
-                Tahririyat Aʼzolari
+                Tahririyat aʼzolari
             </Typography>
 
             <Box
@@ -186,11 +192,14 @@ const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief
                     gridTemplateColumns: {
                         xs: '1fr',
                         sm: 'repeat(2, 1fr)',
+                        // Katta ekranlar uchun 3 ustun qilish mumkin
+                        // md: 'repeat(3, 1fr)', 
                     },
                     gap: 3,
                 }}
             >
                 {members.map(member => (
+                    // Oddiy a'zolar uchun 'Member' turi
                     <ScientificMemberCard key={member.id} member={member} roleType="Member" />
                 ))}
             </Box>

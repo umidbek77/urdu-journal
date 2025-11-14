@@ -7,8 +7,10 @@ export const MOCK_ISSUES: Issue[] = [
         number: 'Nº1',
         series: '1-seriya',
         publishedDate: '15-noyabr 2025',
-        seriesName: "Texnik va amaliy fanlar",
+        seriesName: "Axborot texnologiyalari", // seriesName ni title o'rnida ishlatamiz
         coverImage: '/img_1.png',
+        pdfUrl: '/files/issues/issue_1_2025.pdf', // !!! ISSUE PDF URL QO'SHILDI
+        doi: '10.xxxx/jkhit.v1i1', // DOI ixtiyoriy
     },
 ];
 
@@ -29,28 +31,29 @@ export const CONTACT_INFO: ContactInfo = {
 
 
 export const EDITORIAL_MEMBERS: EditorialMember[] = [
-    { id: 0, fullName: 'Ismoilov Shukurulloh Habibulla o‘g‘li', degree: 'f.-m.f.n.', city: '(Urganch)', role: 'Bosh muharrir', imageUrl: '/pdfs/1. Ismoilov Shukurulloh Habibulloh o‘g‘li.JPG' },
-    { id: 1, fullName: 'Allamov Oybek To‘raboyevich', degree: 'PhD', city: '(Urganch)', role: 'Bosh muharrir', imageUrl: '/pdfs/2. Allamov Oybek To‘raboyevich.jpg' },
-    { id: 2, fullName: 'Xalmuratov Omonboy Utamuratovich', degree: 'PhD', city: '(Urganch)', role: 'Axborot xavfsizligi seksiyasi bosh muharriri', imageUrl: '/pdfs/3. Xalmuratov Omonboy Utamuratovich.jpg' },
-    { id: 3, fullName: 'Matyokubov O‘tkir Karimovich', degree: 'PhD', city: '(Urganch)', role: 'Infokommunikatsiya texnologiyalar seksiyasi bosh muharriri', imageUrl: '/pdfs/4. Matyokubov O‘tkir Karimovich.jpg' },
-    { id: 4, fullName: 'Abduraxmonova Nilufar Zaynobiddin qizi', degree: 'DSc', city: '(Urganch)', role: 'Tabiiy tillar bilan qayta ishlash seksiyasi bosh muharriri', imageUrl: '/pdfs/5. Abduraxmonova Nilufar Zaynobiddin qizi.jpg' },
-    { id: 5, fullName: 'Xo‘jayev Otabek Qadamboyevich', degree: 'PhD', city: '(Urganch)', role: 'Internet narsalar va sun’iy intellekt seksiyasi bosh muharriri', imageUrl: '/pdfs/6. Xo‘jayev Otabek Qadamboyevich.jpg' },
-    { id: 6, fullName: 'Mengliyev Davlatyor Baxtiyarovich', degree: 'PhD', city: '(Seoul)', role: 'Muharrir kotib', imageUrl: '/pdfs/7. Mengliyev Davlatyor Baxtiyarovich.jpg' },
-    { id: 7, fullName: 'Nishanov Axram Xasanovich', degree: 'DSc', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/8. Nishanov Axram Xasanovich.jpg' },
-    { id: 8, fullName: 'Djumanov Jamoljon Xudayqulovich', degree: 'DSc', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/9. Djumanov Jamoljon Xudayqulovich.jpg' },
-    { id: 9, fullName: 'Madatov Xabibulla Axmedovich', degree: 'f.-m.f.n.', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/10. Madatov Xabibulla Axmedovich.jpg' },
-    { id: 10, fullName: 'Raximbayev Xikmat Jumanazarovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/11. Raximbayev Xikmat Jumanazarovich.jpg' },
-    { id: 11, fullName: 'Xudaybergenov Timur Arturovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/12. Xudaybergenov Timur Arturovich.JPG' },
-    { id: 12, fullName: 'Palvanov Bozorboy Yusupovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/13. Palvanov Bozorboy Yusupovich.jpg' },
-    { id: 13, fullName: 'Setmetov Ne’matjon Urunboyevich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/14. Setmetov Ne’matjon Urunboyevich.jpg' },
-    { id: 14, fullName: 'Yusupov Firnafas', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/14. Yusupov Firnafas.jpg' },
-    { id: 15, fullName: 'Samandarov Bunyod G‘ayratovich', degree: 'DSc', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/15. Samandarov Bunyod G‘ayratovich.jpg' },
-    { id: 16, fullName: 'Bobojanov Suxrob G‘ayratovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/16. Bobojanov Suxrob G‘ayratovich.jpg' },
-    { id: 17, fullName: 'Madaminov Uktamjon Ataxanovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/17. Madaminov Uktamjon Ataxanovich.jpg' },
-    { id: 18, fullName: 'Xudayberganov Temur Rustamovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/19. Xudayberganov Temur Rustamovich.png' },
-    { id: 19, fullName: 'Ismoilov Shavkat Ko‘ziboyevich', degree: 'f.-m.f.n.', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/20. Ismoilov Shavkat Ko‘ziboyevich.jpg' },
-    { id: 20, fullName: 'Abidjanov Alisher Saxibovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/21. Abidjanov Alisher Saxibovich.jpg' },
-    { id: 21, fullName: 'Kayumov Shuxrat Shukurovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '/pdfs/22. Kayumov Shuxrat Shukurovich.jpg' },
+    { id: 0, fullName: 'Ismoilov Shukurulloh Habibulla o‘g‘li', degree: 'f.-m.f.n.', city: '(Urganch)', role: 'Bosh muharrir', imageUrl: '1. Ismoilov Shukurullox Xabibulloh o‘g‘li.JPG' },
+    { id: 1, fullName: 'Allamov Oybek To‘raboyevich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '2. Allamov Oybek To‘raboyevich.jpg' },
+    { id: 2, fullName: 'Xalmuratov Omonboy Utamuratovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '3. Xalmuratov Omonboy Utamuratovich.jpg' },
+    { id: 3, fullName: 'Matyokubov O‘tkir Karimovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '4. Matyokubov O‘tkir Karimovich.jpg' },
+    { id: 4, fullName: 'Abduraxmonova Nilufar Zaynobiddin qizi', degree: 'DSc', city: '(Urganch)', role: 'Muharrir', imageUrl: '5. Abduraxmonova Nilufar Zaynobiddin qizi.jpg' },
+    { id: 5, fullName: 'Xo‘jayev Otabek Qadamboyevich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '6. Xo‘jayev Otabek Qadamboyevich.jpg' },
+    { id: 6, fullName: 'Mengliyev Davlatyor Baxtiyarovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '7. Mengliyev Davlatyor Baxtiyarovich.jpg' },
+    { id: 7, fullName: 'Nishanov Axram Xasanovich', degree: 'DSc', city: '(Urganch)', role: 'Muharrir', imageUrl: '8. Nishanov Axram Xasanovich.jpg' },
+    { id: 8, fullName: 'Djumanov Jamoljon Xudayqulovich', degree: 'DSc', city: '(Urganch)', role: 'Muharrir', imageUrl: '9. Djumanov Jamoljon Xudayqulovich.jpg' },
+    { id: 9, fullName: 'Madatov Xabibulla Axmedovich', degree: 'f.-m.f.n.', city: '(Urganch)', role: 'Muharrir', imageUrl: '10. Madatov Xabibulla Axmedovich.jpg' },
+    { id: 10, fullName: 'Raximbayev Xikmat Jumanazarovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '11. Rаximbаev Xikmаt Jumаnаzаrovich.jpg' },
+    { id: 11, fullName: 'Xudaybergenov Timur Arturovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '12. Xudaybergenov Timur Arturovich.JPG' },
+    { id: 12, fullName: 'Palvanov Bozorboy Yusupovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '13. Palvanov  Bozorboy Yusupovich.jpg' },
+    { id: 13, fullName: 'Setmetov Ne’matjon Urunboyevich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '14. Setmetov Ne’matjon Urunboyevich.jpg' },
+    { id: 14, fullName: 'Yusupov Firnafas', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '14. Yusupov Firnafas.jpg' },
+    { id: 15, fullName: 'Samandarov Bunyod G‘ayratovich', degree: 'DSc', city: '(Urganch)', role: 'Muharrir', imageUrl: '15. Samandarov Bunyod G‘ayratovich.jpg' },
+    { id: 16, fullName: 'Bobojanov Suxrob G‘ayratovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '16. Bobojanov  Suxrob G’ayratovich.jpg' },
+    { id: 17, fullName: 'Madaminov Uktamjon Ataxanovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '17. Madaminov Uktamjon Ataxanovich.png' },
+    { id: 18, fullName: 'Xudayberganov Temur Rustamovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '19. Xudayberganov Temur Rustamovich.png' },
+    { id: 19, fullName: 'Ismoilov Shavkat Ko‘ziboyevich', degree: 'f.-m.f.n.', city: '(Urganch)', role: 'Muharrir', imageUrl: '20. Ismoilov Shavkat Ko‘ziboyevich.jpg' },
+    { id: 20, fullName: 'Abidjanov Alisher Saxibovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '21. Abidjanov Alisher Saxibovich.jpg' },
+    { id: 21, fullName: 'Kayumov Shuxrat Shukurovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '22. Kayumov Shuxrat Shukurovich.jpg' },
 ];
+
 
 

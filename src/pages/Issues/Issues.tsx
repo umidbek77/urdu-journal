@@ -5,6 +5,7 @@ import { Container, Typography, Box } from '@mui/material';
 import { MOCK_ISSUES } from '../../utils/mockData';
 import ArticleCard from '../../components/articles/ArticleCard';
 import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
+import UsefulLinks from '../../components/common/UsefulLinks';
 
 const Issues: React.FC = () => {
     // Eng yangi sondan boshlab tartiblash (ID bo'yicha)
@@ -12,10 +13,10 @@ const Issues: React.FC = () => {
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
-            <CustomBreadcrumbs currentPage="Sonlar Arxivi" /> {/* Breadcrumb tarjimasi */}
+            <CustomBreadcrumbs currentPage="Sonlar arxivi" /> {/* Breadcrumb tarjimasi */}
 
             <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 4 }}>
-                Sonlar Arxivi
+                Sonlar arxivi
             </Typography>
 
             <Box sx={{ mb: 4 }}>
@@ -49,6 +50,7 @@ const Issues: React.FC = () => {
                     </Box>
                 ))}
             </Box>
+        <UsefulLinks />
         </Container>
     );
 };

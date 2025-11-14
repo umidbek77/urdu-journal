@@ -31,14 +31,14 @@ const UsefulLinks: React.FC = () => {
                 gutterBottom
                 sx={{
                     fontWeight: 800,
+                    fontSize: { xs: '1.4rem', md: '1.9rem' },
                     mb: 5,
                     textAlign: 'center',
                     color: theme.palette.primary.dark,
                     letterSpacing: '0.05em',
-                    textTransform: 'uppercase'
                 }}
             >
-                Foydali Havolalar
+                Foydali havolalar
             </Typography>
 
             {/* Aylanma Ticker uchun Cheklangan Konteyner */}

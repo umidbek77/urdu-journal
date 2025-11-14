@@ -6,6 +6,8 @@ export interface Issue {
     publishedDate: string;
     seriesName: string;
     coverImage: string;
+    pdfUrl: string; // Endi bu IssueCard va MOCK_ISSUES'da talab qilinadi
+    doi?: string;   // Ixtiyoriy, MOCK_ISSUES'da ishlatilgani uchun qo'shildi
 }
 
 export interface Link {
@@ -20,7 +22,6 @@ export interface ContactInfo {
     address: string;
 }
 
-// YANGI: Tahririyat kengashi a'zolari uchun
 export interface EditorialMember {
     id: number;
     fullName: string;
@@ -36,5 +37,5 @@ export interface EditorialMember {
         | 'Bosh muharrir o‘rinbosari'
         | 'Muharrir kotib'
         | 'Muharrir'
-        | string; // <--- BUNGA E’TIBOR BER! Hammasini qabul qiladi
+        | string;
 }

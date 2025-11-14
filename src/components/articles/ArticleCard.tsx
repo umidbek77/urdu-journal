@@ -31,7 +31,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
             <Box
                 sx={{
                     width: '100%',
-                    height: 420,
+                    height: 370,
                     position: 'relative',
                     overflow: 'hidden',
                     backgroundColor: theme.palette.grey[100],
@@ -56,14 +56,14 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
                         gutterBottom
                         variant="h6"
                         component="div"
-                        sx={{ fontWeight: 600, color: 'primary.main', minHeight: 48 }}
+                        sx={{ fontWeight: 600, color: 'primary.main', minHeight: 20 }}
                     >
                         {`Jild ${issue.year}, Son ${issue.number}`}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontSize: '1rem' }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: .5, fontSize: '1rem' }}>
                         Seriyasi: {issue.seriesName}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
                         Nashr qilingan: {issue.publishedDate}
                     </Typography>
                 </Box>
