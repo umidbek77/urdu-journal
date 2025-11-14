@@ -7,10 +7,10 @@ export const MOCK_ISSUES: Issue[] = [
         number: 'Nº1',
         series: '1-seriya',
         publishedDate: '15-noyabr 2025',
-        seriesName: "Axborot texnologiyalari", // seriesName ni title o'rnida ishlatamiz
+        seriesName: "Axborot texnologiyalari",
         coverImage: '/img_1.png',
-        pdfUrl: '/files/issues/issue_1_2025.pdf', // !!! ISSUE PDF URL QO'SHILDI
-        doi: '10.xxxx/jkhit.v1i1', // DOI ixtiyoriy
+        pdfUrl: '/files/issues/issue_1_2025.pdf',
+        doi: '10.xxxx/jkhit.v1i1',
     },
 ];
 

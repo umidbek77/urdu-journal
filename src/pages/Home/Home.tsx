@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Container, Typography, Button, useTheme } from '@mui/material';
-// import LatestIssuesSection from '../../components/articles/LatestIssuesSection'; // Import tiklandi
+// import LatestIssuesSection from '../../components/articles/LatestIssuesSection';
 import UsefulLinks from '../../components/common/UsefulLinks';
 import CurrentIssue from '../Issues/CurrentIssue';
 import { Link } from 'react-router-dom';
@@ -11,7 +11,6 @@ const Home: React.FC = () => {
 
     return (
         <Box>
-            {/* 1. HERO SECTION - Ilmiy va Jozibali Ko'rinish */}
             <Box
                 sx={{
                     position: 'relative',
@@ -92,17 +91,14 @@ const Home: React.FC = () => {
                 </Container>
             </Box>
 
-            {/* 2. Joriy Son Seksiyasi */}
             <Box sx={{ py: { xs: 4, md: 6 }, backgroundColor: 'background.paper' }}>
                 <CurrentIssue />
             </Box>
 
-            {/* 3. So'nggi Sonlar Seksiyasi (TIKLANDI) */}
             {/*<Box sx={{ py: { xs: 4, md: 6 }, backgroundColor: '#f9fafb' }}>*/}
             {/*    <LatestIssuesSection />*/}
             {/*</Box>*/}
 
-            {/* 4. Maqola chop etishga taklif (TIKLANDI va O'ZBEKCHAGA O'TKAZILDI) */}
             <Box
                 sx={{
                     backgroundColor: 'primary.main',
@@ -114,7 +110,6 @@ const Home: React.FC = () => {
                 <ResearchCallout/>
             </Box>
 
-            {/* 5. Foydali Havolalar Seksiyasi */}
             <Box sx={{ py: { xs: 4, md: 6 }, backgroundColor: 'background.paper' }}>
                 <UsefulLinks />
             </Box>

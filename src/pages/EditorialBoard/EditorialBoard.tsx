@@ -138,7 +138,6 @@ const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief
 };
 
 const EditorialBoard: React.FC = () => {
-    // Tahririyat hay'atini filtrlash va tartiblash
     const chiefEditor = EDITORIAL_MEMBERS.find(m => m.role === 'Bosh muharrir');
     const executiveSecretary = EDITORIAL_MEMBERS.find(m => m.role === 'Muharrir kotib');
     const members = EDITORIAL_MEMBERS.filter(m => m.role === 'Muharrir').sort((a, b) =>
@@ -165,10 +164,8 @@ const EditorialBoard: React.FC = () => {
                     mb: 5,
                 }}
             >
-                {/* Bosh muharrir va kotibni alohida katta kartalar bilan ko'rsatish */}
                 {chiefEditor && (
                     <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 12px)' }, flexGrow: 1 }}>
-                        {/* Example: real email/phone added here */}
                         <ScientificMemberCard 
                             member={{ ...chiefEditor, email: 'rectorursu@gmail.com', phone: '+998622246700' }} 
                             roleType="Chief" 
@@ -192,14 +189,11 @@ const EditorialBoard: React.FC = () => {
                     gridTemplateColumns: {
                         xs: '1fr',
                         sm: 'repeat(2, 1fr)',
-                        // Katta ekranlar uchun 3 ustun qilish mumkin
-                        // md: 'repeat(3, 1fr)', 
                     },
                     gap: 3,
                 }}
             >
                 {members.map(member => (
-                    // Oddiy a'zolar uchun 'Member' turi
                     <ScientificMemberCard key={member.id} member={member} roleType="Member" />
                 ))}
             </Box>

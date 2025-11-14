@@ -17,7 +17,6 @@ const navItems = [
 
 const Header: React.FC = () => {
     const theme = useTheme();
-    // Navigatsiya tugmachalari 1280px dan kichik bo'lsa mobil rejimga o'tadi
     const isSmallDesktop = useMediaQuery(theme.breakpoints.down('lg'));
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const location = useLocation();
@@ -39,15 +38,13 @@ const Header: React.FC = () => {
                 zIndex: theme.zIndex.appBar + 1
             }}
         >
-            <Container maxWidth="xl"> {/* Kontentni kengaytirish uchun maxWidth "xl" ga o'zgartirildi */}
+            <Container maxWidth="xl">
                 <Toolbar sx={{
                     justifyContent: 'space-between',
                     px: { xs: 1, sm: 2 },
-                    // Kichik desktoplarda kontentni sig'dirish uchun paddingni kamaytiramiz
                     py: { xs: 1, lg: 0.5 }
                 }}>
 
-                    {/* Logo / Sayt nomi qismi */}
                     <Box
                         component={Link}
                         to="/"
@@ -56,24 +53,21 @@ const Header: React.FC = () => {
                             alignItems: 'center',
                             textDecoration: 'none',
                             color: 'primary.main',
-                            // Logotip uzunligini kamaytirish uchun flexGrow ni olib tashladik
                             flexShrink: 0,
                             mr: 2,
                         }}
                     >
-                        {/* 1. Logo Rasmi */}
                         <Box
                             component="img"
                             src="https://urdu.uz/martxa/martxa/assets/images/logoursu.png"
                             alt="Universitet Logosi"
                             sx={{
-                                height: { xs: 35, md: 45 }, // Mobil ko'rinishda kichraytirdik
+                                height: { xs: 35, md: 45 },
                                 mr: 1.5,
                                 flexShrink: 0
                             }}
                         />
 
-                        {/* 2. Qisqartirilgan Matn */}
                         <Box sx={{ lineHeight: 1.2 }}>
                             <Typography
                                 variant={isMobile ? "subtitle2" : "h6"}
@@ -90,14 +84,12 @@ const Header: React.FC = () => {
                                     lineHeight: 1.2
                                 }}
                             >
-                                {/* To'liq nomi pastda ko'rsatiladi, agar joy bo'lsa */}
                                 Xorazm axborot texnologiyalari jurnali
                             </Typography>
                         </Box>
                     </Box>
 
                     {isSmallDesktop ? (
-                        /* Mobile va Tablet Navigatsiya (LG breakpointgacha) */
                         <Box>
                             <IconButton size="large" onClick={handleMenu} color="primary">
                                 <MenuIcon />
@@ -125,7 +117,6 @@ const Header: React.FC = () => {
                             </Menu>
                         </Box>
                     ) : (
-                        /* Desktop Navigatsiya (LG breakpointdan yuqori) */
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             {navItems.map((item) => (
                                 <Button
@@ -134,11 +125,10 @@ const Header: React.FC = () => {
                                     to={item.path}
                                     color={isActive(item.path) ? 'secondary' : 'primary'}
                                     sx={{
-                                        // Tugmalar orasidagi bo'shliqni qisqartirdik
                                         mx: 0.3,
-                                        px: 1, // Tugma ichidagi padding
+                                        px: 1,
                                         fontWeight: 600,
-                                        fontSize: '0.875rem', // Matn hajmini biroz kichraytirdik
+                                        fontSize: '0.875rem',
                                         borderBottom: isActive(item.path) ? `2px solid ${theme.palette.secondary.main}` : 'none',
                                         borderRadius: 0,
                                         whiteSpace: 'nowrap'
@@ -149,7 +139,7 @@ const Header: React.FC = () => {
                             ))}
                             <Button
                                 variant="outlined"
-                                size="small" // Tugmani kichraytirdik
+                                size="small"
                                 sx={{
                                     ml: 2,
                                     fontWeight: 600,

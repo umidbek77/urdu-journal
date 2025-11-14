@@ -1,11 +1,10 @@
 import React from 'react';
 import { Box, Container, Typography, Paper, Link as MuiLink } from '@mui/material';
-import { USEFUL_LINKS } from '../../utils/mockData'; // Tuzatilgan import yo'li
+import { USEFUL_LINKS } from '../../utils/mockData';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { keyframes } from '@mui/system'; // Keyframes yaratish uchun
-import { useTheme } from '@mui/material/styles'; // Theme'ni ishlatish uchun
+import { keyframes } from '@mui/system';
+import { useTheme } from '@mui/material/styles';
 
-// 1. CSS Animatsiya keyframes (o'ngdan chapga siljish)
 const scroll = keyframes`
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); } /* Ro'yxat o'zining 50% uzunligiga siljishi uchun (chunki biz uni 2 marta takrorlaymiz) */
@@ -13,14 +12,9 @@ const scroll = keyframes`
 
 const UsefulLinks: React.FC = () => {
     const theme = useTheme();
-    // Cheksiz aylanma effektini yaratish uchun ro'yxatni takrorlaymiz
     const infiniteLinks = [...USEFUL_LINKS, ...USEFUL_LINKS];
-
-    // Har bir kartaning kengligini dinamik hisoblash uchun
     const CARD_WIDTH = 320;
-
-    // Animatsiya davomiyligini kartalar soniga qarab belgilaymiz (Sekund)
-    const SCROLL_DURATION = USEFUL_LINKS.length * 6; // 6 ta karta * 6 sekund = 36 sekund (yengilroq harakat uchun)
+    const SCROLL_DURATION = USEFUL_LINKS.length * 6;
 
     return (
         <Container maxWidth="lg" sx={{ py: 1 }}>
@@ -41,28 +35,22 @@ const UsefulLinks: React.FC = () => {
                 Foydali havolalar
             </Typography>
 
-            {/* Aylanma Ticker uchun Cheklangan Konteyner */}
             <Box
                 sx={{
-                    overflow: 'hidden', // Faqat Konteyner ichidagini ko'rsatish
-                    whiteSpace: 'nowrap', // Kartalarni bir qatorda ushlab turish
-                    py: 2, // Yuqori va pastki padding
-                    // Max-width 100% bo'lishi uchun Container ichidagi paddingni yopish
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    py: 2,
                     mx: { xs: -2, md: 0 },
                 }}
             >
-                {/* Animatsiyani bajaruvchi ichki Box */}
                 <Box
                     className="links-scroller"
                     sx={{
                         display: 'flex',
-                        // Umumiy kenglikni belgilash
                         width: `${CARD_WIDTH * infiniteLinks.length}px`,
-                        // Animatsiya
                         animation: `${scroll} ${SCROLL_DURATION}s linear infinite`,
                         gap: 3,
 
-                        // Hover bo'lganda animatsiyani to'xtatish
                         '&:hover': {
                             animationPlayState: 'paused',
                         }
@@ -98,7 +86,6 @@ const UsefulLinks: React.FC = () => {
                                     },
                                 }}
                             >
-                                {/* Logo maydoni */}
                                 <Box sx={{ minHeight: 70, mb: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <Box
                                         component="img"
@@ -106,16 +93,13 @@ const UsefulLinks: React.FC = () => {
                                         alt={link.name}
                                         onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                                             (e.target as HTMLImageElement).onerror = null;
-                                            // Agar logotip yuklanmasa, o'rniga text yozish
                                             (e.target as HTMLImageElement).style.display = 'none';
-                                            // Fallback sifatida matnni to'liqroq chiqarish
                                             ((e.target as HTMLImageElement).parentElement as HTMLElement).innerHTML = `<Typography variant="subtitle1" color="primary.main" sx={{p:1}}>${link.name}</Typography>`;
                                         }}
                                         sx={{ maxWidth: '80%', maxHeight: 60, objectFit: 'contain' }}
                                     />
                                 </Box>
 
-                                {/* Havola nomi */}
                                 <MuiLink
                                     href={link.url}
                                     target="_blank"

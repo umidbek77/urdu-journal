@@ -724,7 +724,7 @@ const ARTICLE_STRUCTURE_RULES: StructureItem[] = [
 const ArticleStructure: React.FC = () => {
     const [expanded, setExpanded] = useState<string | false>('author-info');
 
-    const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    const handleChange = (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
     };
 

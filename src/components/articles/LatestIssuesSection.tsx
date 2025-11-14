@@ -1,5 +1,3 @@
-// src/components/articles/LatestIssuesSection.tsx (Grid o'rniga Box/Flexbox ishlatildi)
-
 import React from 'react';
 import { Container, Typography, Button, Box } from '@mui/material';
 import { MOCK_ISSUES } from '../../utils/mockData';
@@ -18,8 +16,6 @@ const LatestIssuesSection: React.FC = () => {
             >
                 Latest Issues
             </Typography>
-
-            {/* Grid container o'rniga Box (Flex container) ishlatildi */}
             <Box
                 sx={{
                     display: 'flex',
@@ -29,7 +25,6 @@ const LatestIssuesSection: React.FC = () => {
                 }}
             >
                 {latestIssues.map((issue) => (
-                    // Grid item (xs=12, sm=6, md=4) o'rniga Box ishlatildi
                     <Box
                         key={issue.id}
                         sx={{
@@ -50,8 +45,6 @@ const LatestIssuesSection: React.FC = () => {
                     </Box>
                 ))}
             </Box>
-
-            {/* Barcha sonlarga o'tish tugmasi */}
             <Box sx={{ textAlign: 'center', mt: 5 }}>
                 <Button
                     variant="outlined"

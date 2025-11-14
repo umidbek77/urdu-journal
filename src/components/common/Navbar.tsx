@@ -1,5 +1,3 @@
-// src/components/common/Navbar.tsx
-
 import React from 'react';
 import { Box, Link as MuiLink } from '@mui/material';
 import { Link } from 'react-router-dom';

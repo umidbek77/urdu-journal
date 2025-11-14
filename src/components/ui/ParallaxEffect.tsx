@@ -1,10 +1,5 @@
-// src/components/ui/ParallaxEffect.tsx
-
 import React from 'react';
 import { Box } from '@mui/material';
-
-// Haqiqiy Parallax uchun 'react-scroll-parallax' kabi kutubxona kerak,
-// ammo biz hozir MUI bilan oddiy vizual effekt yaratamiz.
 
 interface ParallaxProps {
     children: React.ReactNode;
@@ -18,7 +13,7 @@ const ParallaxEffect: React.FC<ParallaxProps> = ({ children, backgroundImage, he
             sx={{
                 height: height,
                 backgroundImage: `url(${backgroundImage})`,
-                backgroundAttachment: 'fixed', // Parallax effektining asosiy xossasi
+                backgroundAttachment: 'fixed',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
@@ -27,7 +22,6 @@ const ParallaxEffect: React.FC<ParallaxProps> = ({ children, backgroundImage, he
                 justifyContent: 'center',
                 position: 'relative',
                 overflow: 'hidden',
-                // Overlay qo'shish (Matnni o'qish uchun)
                 '&::before': {
                     content: '""',
                     position: 'absolute',
@@ -35,7 +29,7 @@ const ParallaxEffect: React.FC<ParallaxProps> = ({ children, backgroundImage, he
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.4)', // To'q rangli overlay
+                    backgroundColor: 'rgba(0, 0, 0, 0.4)',
                 },
             }}
         >

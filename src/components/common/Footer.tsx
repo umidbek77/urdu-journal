@@ -43,7 +43,6 @@ const Footer: React.FC = () => {
                         rowGap: 5,
                     }}
                 >
-                    {/* 🔹 1. Logo va jurnal nomi (header bilan bir xil) */}
                     <Box
                         sx={{
                             display: 'flex',
@@ -83,8 +82,6 @@ const Footer: React.FC = () => {
                             </Typography>
                         </Box>
                     </Box>
-
-                    {/* 🔹 2. Tezkor Havolalar */}
                     <Box
                         sx={{
                             width: { xs: '100%', md: '33%' },
@@ -136,8 +133,6 @@ const Footer: React.FC = () => {
                             ))}
                         </Box>
                     </Box>
-
-                    {/* 🔹 3. Aloqa ma'lumotlari */}
                     <Box
                         sx={{
                             width: { xs: '100%', md: '33%' },
@@ -182,7 +177,6 @@ const Footer: React.FC = () => {
                     </Box>
                 </Box>
 
-                {/* 🔹 Pastki chiziq */}
                 <Divider
                     sx={{
                         my: 3,

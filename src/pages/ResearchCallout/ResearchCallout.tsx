@@ -21,7 +21,6 @@ const ResearchCallout: React.FC = () => {
                 }}
             >
                 <Box>
-                    {/* Matn qismi */}
                     <Typography
                         variant="h5"
                         component="h2"
@@ -57,7 +56,6 @@ const ResearchCallout: React.FC = () => {
                         yetakchi sifatida tanilish imkoniyatini taqdim etadi.
                     </Typography>
 
-                    {/* Tugma markazda */}
                     <Box
                         sx={{
                             display: 'flex',

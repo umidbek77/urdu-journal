@@ -6,8 +6,8 @@ export interface Issue {
     publishedDate: string;
     seriesName: string;
     coverImage: string;
-    pdfUrl: string; // Endi bu IssueCard va MOCK_ISSUES'da talab qilinadi
-    doi?: string;   // Ixtiyoriy, MOCK_ISSUES'da ishlatilgani uchun qo'shildi
+    pdfUrl: string;
+    doi?: string;
 }
 
 export interface Link {

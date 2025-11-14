@@ -1,14 +1,8 @@
-// src/Router.tsx
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-// // Layout Components
-// import Header from './components/common/Header';
-// import Footer from './components/common/Footer';
-import App from './App'; // Asosiy layout
+import App from './App';
 
-// Page Components
 import Home from './pages/Home/Home';
 import About from './pages/About/About';
 import Issues from './pages/Issues/Issues';
@@ -21,7 +15,6 @@ import IssueDetail from "./pages/Issues/IssueDetail.tsx";
 const Router: React.FC = () => {
     return (
         <BrowserRouter>
-            {/* App komponenti Header va Footer'ni o'z ichiga oladi */}
             <Routes>
                 <Route path="/" element={<App />}>
                     <Route index element={<Home />} />

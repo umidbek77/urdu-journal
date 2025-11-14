@@ -4,7 +4,6 @@ import DownloadIcon from '@mui/icons-material/Download';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link } from 'react-router-dom';
 
-// MOCK_ISSUES
 interface Issue {
     id: string;
     year: number;

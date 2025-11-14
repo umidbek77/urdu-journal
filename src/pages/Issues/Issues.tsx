@@ -1,5 +1,3 @@
-// src/pages/Issues/Issues.tsx (O'zbek tiliga tarjima qilindi)
-
 import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
 import { MOCK_ISSUES } from '../../utils/mockData';
@@ -8,12 +6,11 @@ import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
 import UsefulLinks from '../../components/common/UsefulLinks';
 
 const Issues: React.FC = () => {
-    // Eng yangi sondan boshlab tartiblash (ID bo'yicha)
     const sortedIssues = [...MOCK_ISSUES].sort((a, b) => b.id - a.id);
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
-            <CustomBreadcrumbs currentPage="Sonlar arxivi" /> {/* Breadcrumb tarjimasi */}
+            <CustomBreadcrumbs currentPage="Sonlar arxivi" />
 
             <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 4 }}>
                 Sonlar arxivi

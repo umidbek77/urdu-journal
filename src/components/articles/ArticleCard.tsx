@@ -1,4 +1,3 @@
-// src/components/articles/ArticleCard.tsx (Optimallashtirilgan)
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography, Button, Box, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -27,7 +26,6 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
             }}
             elevation={3}
         >
-            {/* Vertikal rasm konteyneri */}
             <Box
                 sx={{
                     width: '100%',

@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 
 interface CustomBreadcrumbsProps {
     currentPage: string;
-    // Agar boshqa sahifadan kelgan bo'lsa (masalan, ArticleDetail sahifasi uchun)
     parentPage?: { name: string; path: string };
 }
 
@@ -19,7 +18,6 @@ const CustomBreadcrumbs: React.FC<CustomBreadcrumbsProps> = ({ currentPage, pare
                 separator={<NavigateNextIcon fontSize="small" />}
                 aria-label="breadcrumb"
             >
-                {/* Bosh sahifa (Home) */}
                 <MuiLink
                     component={Link}
                     underline="hover"
@@ -31,7 +29,6 @@ const CustomBreadcrumbs: React.FC<CustomBreadcrumbsProps> = ({ currentPage, pare
                     Home
                 </MuiLink>
 
-                {/* Ota sahifa (agar mavjud bo'lsa) */}
                 {parentPage && (
                     <MuiLink
                         component={Link}
@@ -43,7 +40,6 @@ const CustomBreadcrumbs: React.FC<CustomBreadcrumbsProps> = ({ currentPage, pare
                     </MuiLink>
                 )}
 
-                {/* Joriy sahifa */}
                 <Typography color="text.primary" sx={{ fontWeight: 600 }}>
                     {currentPage}
                 </Typography>

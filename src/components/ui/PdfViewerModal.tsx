@@ -1,5 +1,3 @@
-// src/components/ui/PdfViewerModal.tsx
-
 import React from 'react';
 import { Dialog, DialogTitle, DialogContent, IconButton, Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -15,18 +13,17 @@ const PdfViewerModal: React.FC<PdfViewerModalProps> = ({ open, onClose, pdfUrl, 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  // PDF manzilining haqiqiy URL ekanligini tekshirish
   const isUrlValid = pdfUrl && pdfUrl !== '#';
 
   return (
     <Dialog
       open={open}
       onClose={onClose}
-      fullScreen={fullScreen} // Kichik ekranlarda to'liq ekran
-      maxWidth="lg" // Katta ekranlarda maksimal kenglik
+      fullScreen={fullScreen}
+      maxWidth="lg"
       fullWidth
       aria-labelledby="pdf-viewer-dialog-title"
-      sx={{ '& .MuiDialog-paper': { height: '90vh', maxHeight: 900 } }} // Modal balandligini sozlash
+      sx={{ '& .MuiDialog-paper': { height: '90vh', maxHeight: 900 } }}
     >
       <DialogTitle id="pdf-viewer-dialog-title" sx={{ m: 0, p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="h6">{title}</Typography>
@@ -42,7 +39,6 @@ const PdfViewerModal: React.FC<PdfViewerModalProps> = ({ open, onClose, pdfUrl, 
       </DialogTitle>
       <DialogContent dividers sx={{ p: 0 }}>
         {isUrlValid ? (
-          // iframe PDF-faylni brauzer ichida ko'rsatish uchun ishlatiladi
           <Box sx={{ width: '100%', height: '100%' }}>
             <iframe
               src={pdfUrl}

@@ -51,7 +51,6 @@ const Contacts: React.FC = () => {
                 setSuccess(true);
                 setFormData({ fullName: '', email: '', phone: '', message: '' });
 
-                // 3 soniya keyin muvaffaqiyat xabarini yashirish
                 setTimeout(() => setSuccess(false), 3000);
             } else {
                 console.error('Telegramga yuborishda xato:', response.statusText);
@@ -146,7 +145,6 @@ const Contacts: React.FC = () => {
                     </Paper>
                 </Box>
 
-                {/* Aloqa ma'lumotlari va xarita */}
                 <Box sx={{ width: { xs: '100%', md: 'calc(50% - 16px)' }, flexGrow: 1 }}>
                     <Paper elevation={3} sx={{ p: 4 }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 3, fontWeight: 600 }}>
