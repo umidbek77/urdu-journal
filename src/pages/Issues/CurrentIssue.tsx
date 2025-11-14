@@ -18,7 +18,7 @@ interface Issue {
 
 const MOCK_ISSUES: Issue[] = [
     {
-        id: "2025-1",
+        id: "1",
         year: 2025,
         number: 1,
         seriesName: "Xorazm axborot texnologiyalari jurnali",

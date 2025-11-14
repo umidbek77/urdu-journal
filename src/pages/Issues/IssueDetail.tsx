@@ -5,89 +5,124 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { MOCK_ISSUES } from '../../utils/mockData';
 import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
 
-type Article = {
+// ===== TIPLAR =====
+interface Article {
     id: number;
     title: string;
-    authors?: string;
+    authors: string;
     abstract?: string;
-    doi?: string;
     pageRange?: string;
-    pdfLink?: string;
+    doi?: string;
     keywords?: string[];
-};
-
-type Issue = {
-    id: number;
-    number: number | string;
-    year?: number | string;
-    publishedDate?: string;
-    coverImage?: string;
     pdfLink?: string;
-    seriesName?: string;
-    series?: string;
-    articles?: Article[];
-};
+}
 
+interface Issue {
+    id: number;
+    number: string;
+    year: number;
+    publishedDate: string;
+    seriesName: string;
+    series: string;
+    coverImage: string;
+    pdfLink?: string;
+    articles?: Article[];
+}
+
+// ===== COMPONENT =====
 const IssueDetail: React.FC = () => {
     const { issueId } = useParams<{ issueId?: string }>();
-    const issue = (MOCK_ISSUES as Issue[]).find((i) => i.id === Number(issueId));
+    const issue: Issue | undefined = MOCK_ISSUES.find(i => i.id === Number(issueId));
 
     if (!issue) {
         return (
-            <Container maxWidth="lg" sx={{ py: 4, minHeight: '50vh' }}>
-                <Typography variant="h5" color="error" align="center">Issue not found.</Typography>
+            <Container maxWidth="lg" sx={{ py: 4 }}>
+                <Typography variant="h5" color="error" align="center">
+                    Jurnal soni topilmadi.
+                </Typography>
             </Container>
         );
     }
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
-            <CustomBreadcrumbs currentPage={`Issue ${issue.number}`} parentPage={{ name: "Issues Archive", path: "/issues" }} />
+            <CustomBreadcrumbs
+                currentPage={`Jurnal soni: ${issue.number}`}
+                parentPage={{ name: "Arxiv", path: "/issues" }}
+            />
 
-            <Typography variant="h4" component="h1" gutterBottom>
-                Issue Content: {issue.number}
+            <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1 }}>
+                Xorazm Axborot Texnologiyalari Jurnali — {issue.number}
             </Typography>
+
             <Typography variant="h6" color="text.secondary" sx={{ mb: 3 }}>
-                Volume {issue.year} - Published: {issue.publishedDate}
+                {issue.year}-yil | Nashr sanasi: {issue.publishedDate}
             </Typography>
 
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4, mb: 4, alignItems: 'flex-start' }}>
-
-                <Box sx={{ width: { xs: '100%', sm: '33.3333%' }, flexShrink: 0 }}>
+            {/* Left = Cover image | Right = Info */}
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4, mb: 5 }}>
+                {/* COVER + PDF DOWNLOAD */}
+                <Box sx={{ width: { xs: '100%', sm: '33%' } }}>
                     <Paper elevation={3} sx={{ p: 2, borderRadius: 2 }}>
                         <img
                             src={issue.coverImage}
-                            alt={`Cover of Issue ${issue.number}`}
-                            style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '4px' }}
+                            alt={`Jurnal muqovasi ${issue.number}`}
+                            style={{ width: '100%', borderRadius: '6px', display: 'block' }}
                         />
+
                         <Button
                             component="a"
                             variant="contained"
-                            color="primary"
-                            startIcon={<DownloadIcon />}
+                            fullWidth
                             href={issue.pdfLink ?? undefined}
                             target="_blank"
-                            fullWidth
+                            startIcon={<DownloadIcon />}
                             sx={{ mt: 2, fontWeight: 600 }}
                         >
-                            Download Full Issue PDF
+                            To‘liq jurnal PDF yuklab olish
                         </Button>
                     </Paper>
                 </Box>
 
-                <Box sx={{ width: { xs: '100%', sm: 'calc(66.6667% - 16px)' }, flexGrow: 1 }}>
-                    <Paper elevation={1} sx={{ p: 4, height: '100%' }}>
-                        <Typography variant="h5" color="primary" sx={{ mb: 2, fontWeight: 600 }}>
+                {/* INFO ABOUT ISSUE */}
+                <Box sx={{ width: { xs: '100%', sm: '63%' } }}>
+                    <Paper elevation={1} sx={{ p: 4 }}>
+                        <Typography variant="h5" color="primary" sx={{ fontWeight: 700, mb: 2 }}>
                             {issue.seriesName}
                         </Typography>
-                        <Typography variant="body1">
-                            \*\*Series Code:\*\* {issue.series}
+
+                        <Typography variant="body1" sx={{ mb: 1 }}>
+                            <strong>Seriya kodi:</strong> {issue.series}
                         </Typography>
-                        <Typography variant="body1">
-                            \*\*Total Articles:\*\* {issue.articles?.length ?? 0}
+
+                        <Typography variant="body1" sx={{ mb: 1 }}>
+                            <strong>Maqolalar soni:</strong> {issue.articles?.length ?? 0}
                         </Typography>
-                        <Typography variant="body1" sx={{ mt: 2, fontStyle: 'italic' }}>
-                            "This issue brings together leading research in {issue.seriesName?.toLowerCase()}."
+
+                        <Typography variant="body1" sx={{ mt: 2, lineHeight: 1.7, textAlign: 'justify' }}>
+                            Ushbu jurnal sonida Xorazm viloyati va O‘zbekiston bo‘ylab axborot texnologiyalari sohasidagi ilmiy-amaliy tadqiqotlar, innovatsion ishlanmalar va raqamli yechimlar jamlangan. Nashr zamonaviy IT yo‘nalishidagi dolzarb mavzularni yoritadi va tadqiqotchilar hamjamiyatiga xizmat qiladi.
+
+Maqolalar milliy PhD/DSc standartlariga mos bo‘lishi, Times New Roman shriftida, 11 hajmda va kamida 6 sahifadan iborat bo‘lishi kerak. Tahririyat maqolalarni qisqartirish va tahrir qilish huquqiga ega.
+
+Maqolada quyidagi bo‘limlar mavjud bo‘lishi zarur:
+
+Muallif ma’lumotlari: ism-familiya, lavozim, ilmiy daraja, e-mail va telefon.
+
+Maqola mavzusi: tadqiqot yo‘nalishini ifodalovchi qisqa sarlavha.
+
+Annotatsiya (Abstract): tadqiqot muammosi, metodologiyasi va natijalari qisqacha bayon qilinadi.
+
+Kalit so‘zlar (Keywords): maqola mazmunini ochib beruvchi asosiy so‘zlar.
+
+Kirish (Introduction): tadqiqot muammosi va maqsadlari.
+
+Adabiyotlar tahlili (Literature review): mavzuga oid ilmiy manbalar va ularning tahlili.
+
+Metodologiya (Research Methodology): tadqiqot usullari, dizayni va axborot manbalari.
+
+Foydalanilgan adabiyotlar (References): barcha manbalar ketma-ket raqam bilan ko‘rsatiladi.
+
+Jurnal tadqiqotchilar va IT sohasidagi mutaxassislarga ilmiy-amaliy manba sifatida xizmat qiladi.
                         </Typography>
                     </Paper>
                 </Box>
@@ -95,33 +130,49 @@ const IssueDetail: React.FC = () => {
 
             <Divider sx={{ my: 4 }} />
 
-            <Typography variant="h5" sx={{ mb: 3, fontWeight: 700, borderLeft: '5px solid', pl: 2, borderColor: 'secondary.main' }}>
-                Articles in this Issue
+            {/* ARTICLES */}
+            <Typography
+                variant="h5"
+                sx={{
+                    mb: 3,
+                    fontWeight: 700,
+                    borderLeft: '6px solid',
+                    pl: 2,
+                    borderColor: 'secondary.main'
+                }}
+            >
+                Ushbu son tarkibidagi maqolalar
             </Typography>
 
             <Box>
                 {issue.articles?.map((article: Article, index: number) => (
                     <Paper key={article.id} elevation={1} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
-                        <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 0.5 }}>
+                        
+                        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
                             {article.pageRange} | DOI: {article.doi}
                         </Typography>
-                        <Typography variant="h6" color="primary" sx={{ fontWeight: 600, lineHeight: 1.4, mb: 1 }}>
+
+                        <Typography variant="h6" color="primary" sx={{ fontWeight: 700, mb: 1 }}>
                             {index + 1}. {article.title}
                         </Typography>
-                        <Typography variant="body2" sx={{ mb: 1.5, fontStyle: 'italic' }}>
-                            \*\*Authors:\*\* {article.authors}
+
+                        <Typography variant="body2" sx={{ mb: 1 }}>
+                            <strong>Mualliflar:</strong> {article.authors}
                         </Typography>
 
                         <Typography variant="body2" sx={{ mb: 2 }}>
-                            \*\*Abstract:\*\* {article.abstract ? `${article.abstract.substring(0, 150)}...` : ''}
+                            <strong>Annotatsiya:</strong>{" "}
+                            {article.abstract ? `${article.abstract.substring(0, 200)}...` : ''}
                         </Typography>
 
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-                            {article.keywords?.map((keyword: string) => (
-                                <Chip key={`${article.id}-${keyword}`} label={keyword} size="small" color="default" variant="outlined" />
+                        {/* Keywords */}
+                        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
+                            {article.keywords?.map((k: string) => (
+                                <Chip key={k} label={k} size="small" variant="outlined" />
                             ))}
                         </Box>
 
+                        {/* PDF + DETAILS */}
                         <Button
                             component="a"
                             variant="text"
@@ -131,8 +182,9 @@ const IssueDetail: React.FC = () => {
                             startIcon={<DownloadIcon />}
                             sx={{ fontWeight: 600 }}
                         >
-                            Download Article PDF
+                            Maqola PDF yuklab olish
                         </Button>
+
                         <Button
                             variant="outlined"
                             size="small"
@@ -140,11 +192,13 @@ const IssueDetail: React.FC = () => {
                             component={Link}
                             to={`/articles/${article.id}`}
                         >
-                            View Details
+                            Batafsil ko‘rish
                         </Button>
+
                     </Paper>
                 ))}
             </Box>
+
         </Container>
     );
 };

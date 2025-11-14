@@ -1,6 +1,4 @@
-// src/pages/Contacts/Contacts.tsx
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Typography, TextField, Button, Box, Paper, useTheme } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -13,8 +11,57 @@ const CONTACT_INFO = {
     email: "uktamjon@urdu.uz"
 };
 
+const TELEGRAM_BOT_TOKEN = '7701762434:AAFum6dli-GRi3QuqfKjsOg3NkDkno11b7Q';
+const TELEGRAM_CHAT_ID = '8540928406';
+
 const Contacts: React.FC = () => {
     useTheme();
+
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        phone: '',
+        message: ''
+    });
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+
+        const text = `Yangi xabar:\n\nIsm: ${formData.fullName}\nEmail: ${formData.email}\nTelefon: ${formData.phone}\nXabar: ${formData.message}`;
+
+        try {
+            const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text,
+                }),
+            });
+
+            if (response.ok) {
+                setSuccess(true);
+                setFormData({ fullName: '', email: '', phone: '', message: '' });
+
+                // 3 soniya keyin muvaffaqiyat xabarini yashirish
+                setTimeout(() => setSuccess(false), 3000);
+            } else {
+                console.error('Telegramga yuborishda xato:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Xatolik:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const ContactItem: React.FC<{ icon: React.ReactNode, title: string, content: string }> = ({ icon, title, content }) => (
         <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 3 }}>
             <Box sx={{ color: 'primary.main', mr: 2, mt: 0.5 }}>{icon}</Box>
@@ -39,13 +86,60 @@ const Contacts: React.FC = () => {
                         <Typography variant="h5" color="primary" sx={{ mb: 3, fontWeight: 600 }}>
                             Bizga xabar yuboring
                         </Typography>
-                        <form>
-                            <TextField fullWidth label="To'liq ism" margin="normal" required />
-                            <TextField fullWidth label="Elektron pochta" margin="normal" type="email" required />
-                            <TextField fullWidth label="Telefon" margin="normal" />
-                            <TextField fullWidth label="Xabar" margin="normal" multiline rows={4} required />
-                            <Button variant="contained" color="primary" type="submit" sx={{ mt: 2 }}>
-                                Yuborish
+
+                        {success && (
+                            <Typography color="success.main" sx={{ mb: 2, textAlign: 'center', fontWeight: 600 }}>
+                                Xabaringiz muvaffaqiyatli yuborildi!
+                            </Typography>
+                        )}
+
+                        <form onSubmit={handleSubmit}>
+                            <TextField
+                                fullWidth
+                                label="To'liq ism"
+                                name="fullName"
+                                margin="normal"
+                                required
+                                value={formData.fullName}
+                                onChange={handleChange}
+                            />
+                            <TextField
+                                fullWidth
+                                label="Elektron pochta"
+                                name="email"
+                                margin="normal"
+                                type="email"
+                                required
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
+                            <TextField
+                                fullWidth
+                                label="Telefon"
+                                name="phone"
+                                margin="normal"
+                                value={formData.phone}
+                                onChange={handleChange}
+                            />
+                            <TextField
+                                fullWidth
+                                label="Xabar"
+                                name="message"
+                                margin="normal"
+                                multiline
+                                rows={4}
+                                required
+                                value={formData.message}
+                                onChange={handleChange}
+                            />
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                                sx={{ mt: 2 }}
+                                disabled={loading}
+                            >
+                                {loading ? 'Yuborilmoqda...' : 'Yuborish'}
                             </Button>
                         </form>
                     </Paper>
@@ -62,7 +156,6 @@ const Contacts: React.FC = () => {
                         <ContactItem icon={<PhoneIcon />} title="Telefon" content={CONTACT_INFO.phone} />
                         <ContactItem icon={<EmailIcon />} title="Elektron pochta" content={CONTACT_INFO.email} />
 
-                        {/* Google Maps Embed */}
                         <Box sx={{ mt: 3, borderRadius: 1, overflow: 'hidden' }}>
                             <iframe
                                 title="Urgench Office"

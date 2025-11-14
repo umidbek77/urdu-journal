@@ -9,8 +9,8 @@ import {
 // ====================================================================
 // TELEGRAM MA’LUMOTLARI
 // ====================================================================
-const TELEGRAM_BOT_TOKEN = '7701762434:AAHXxVMHAYyklqIwag2YgnUjXIdSLTRddAM';
-const TELEGRAM_CHAT_ID = '5995539756';
+const TELEGRAM_BOT_TOKEN = '7701762434:AAFum6dli-GRi3QuqfKjsOg3NkDkno11b7Q';
+const TELEGRAM_CHAT_ID = '8540928406';
 
 // ====================================================================
 // QO‘LLANMA VA QADAMLAR (dizayn uchun)

@@ -24,7 +24,17 @@ export interface ContactInfo {
 export interface EditorialMember {
     id: number;
     fullName: string;
-    degree: string; // Masalan: f.m.i.d., prof.
-    city: string; // (Nukus), (Tashkent)
-    role?: 'Editor-in-Chief' | 'Executive Secretary' | 'Member';
+    degree: string;
+    imageUrl?: string;
+    city: string;
+
+    role?:
+        | 'Editor-in-Chief'
+        | 'Executive Secretary'
+        | 'Member'
+        | 'Bosh muharrir'
+        | 'Bosh muharrir o‘rinbosari'
+        | 'Muharrir kotib'
+        | 'Muharrir'
+        | string; // <--- BUNGA E’TIBOR BER! Hammasini qabul qiladi
 }

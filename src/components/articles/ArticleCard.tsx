@@ -40,7 +40,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
             >
                 <CardMedia
                     component="img"
-                    image={issue.coverImage}
+                    image={'/img_1.png'}
                     alt={`${issue.number}-son muqovasi`}
                     sx={{
                         width: '100%',
