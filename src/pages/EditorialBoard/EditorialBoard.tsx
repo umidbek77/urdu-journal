@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, Box, Paper, Avatar, Button, Link as MuiLink } from '@mui/material';
+import { Container, Typography, Box, Paper, Avatar, Link as MuiLink } from '@mui/material';
 import { EDITORIAL_MEMBERS } from '../../utils/mockData';
 import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
 import PersonIcon from '@mui/icons-material/Person';
@@ -7,7 +7,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import PublicIcon from '@mui/icons-material/Public';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 interface EditorialMember {
     id: number | string;

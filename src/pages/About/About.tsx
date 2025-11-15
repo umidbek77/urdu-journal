@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Typography, Box, List, ListItem, ListItemIcon, ListItemText, Paper, Divider, Button } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DescriptionIcon from '@mui/icons-material/Description';
-import BookIcon from '@mui/icons-material/Book';
+// import BookIcon from '@mui/icons-material/Book';
 import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
 import UsefulLinks from '../../components/common/UsefulLinks';
 import PdfViewerModal from '../../components/ui/PdfViewerModal'; 
@@ -25,16 +25,16 @@ const About: React.FC = () => {
     };
 
     const GUVOHNOMA_URL = "/pdfs/Журнал гувохнома.pdf"; 
-    const JURNAL_PDF_URL = "/pdfs/xorazm-jurnali-2025-1.pdf"; 
+    // const JURNAL_PDF_URL = "/pdfs/xorazm-jurnali-2025-1.pdf"; 
     const JOURNAL_COVER_IMG = "img_1.png"; 
 
     const handleOpenCertificate = () => {
         handleOpenModal(GUVOHNOMA_URL, "Jurnal Guvohnomasi PDF");
     };
 
-    const handleOpenJournal = () => {
-        handleOpenModal(JURNAL_PDF_URL, "Jurnalning Oxirgi Soni PDF");
-    };
+    // const handleOpenJournal = () => {
+    //     handleOpenModal(JURNAL_PDF_URL, "Jurnalning Oxirgi Soni PDF");
+    // };
 
     const missionText = `
     Abu Rayhon Beruniy nomidagi Urganch Davlat Universitetining ilmiy-uslubiy jurnali "Journal of Khwarazm Information Technologies" 2024-yilda asos solingan. Bizning asosiy maqsadimiz — milliy va xalqaro tadqiqotchilar o'rtasida ilmiy tajriba almashinuvi uchun samarali jurnal yaratishdir. Jurnal fundamental va amaliy tadqiqotlarning eng dolzarb natijalarini nashr etishga qaratilgan bo‘lib, milliy va xalqaro akademik hamjamiyat standartlariga javob beradigan, ochiq kirish (Open Access) tamoyillariga asoslangan nufuzli ilmiy jurnal bo‘lib xizmat qiladi.
@@ -71,13 +71,13 @@ const About: React.FC = () => {
         { label: "Telefon", value: "+99(897)-090-95-27" },
     ];
     
-    const bankInfo = [
-        { label: "Bank", value: "MB 55 XXXM Urganch shahri" },
-        { label: "Hisob varag'i", value: "2340 2000 3001 0000 1010" },
-        { label: "MFO", value: "00014" },
-        { label: "INN", value: "201 123 456" },
-        { label: "Shaxsiy hisob varag'i", value: "0001 1080 0350 0100 0000 0300 000" },
-    ];
+    // const bankInfo = [
+    //     { label: "Bank", value: "MB 55 XXXM Urganch shahri" },
+    //     { label: "Hisob varag'i", value: "2340 2000 3001 0000 1010" },
+    //     { label: "MFO", value: "00014" },
+    //     { label: "INN", value: "201 123 456" },
+    //     { label: "Shaxsiy hisob varag'i", value: "0001 1080 0350 0100 0000 0300 000" },
+    // ];
 
 
     return (
