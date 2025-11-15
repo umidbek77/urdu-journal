@@ -26,7 +26,6 @@ const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief
     const isChief = roleType === 'Chief';
 
     const avatarSize = isChief ? 170 : 120;
-    
     const cardPadding = isChief ? 4 : 3; 
 
     const cardStyles = {
@@ -72,18 +71,6 @@ const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief
                         e.currentTarget.src = DEFAULT_AVATAR;
                     }}
                 />
-
-
-                {isChief && (
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        endIcon={<KeyboardArrowDownIcon />}
-                        sx={{ mt: 1, width: '100%', fontWeight: 600 }}
-                    >
-                        Avtobiografiya
-                    </Button>
-                )}
             </Box>
 
             <Box sx={{ flexGrow: 1, width: '100%', textAlign: { xs: 'center', sm: 'left' } }}>
@@ -93,7 +80,7 @@ const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief
                         color="primary.main"
                         sx={{ fontWeight: 700, mb: 1, borderBottom: '1px solid #ddd', pb: 1 }}
                     >
-                        Tahririyat hayʼati (Jild 2025-yil)
+                        Tahririyat hayʼati
                     </Typography>
                 )}
 
@@ -140,10 +127,17 @@ const ScientificMemberCard: React.FC<{ member: EditorialMember; roleType: 'Chief
 const EditorialBoard: React.FC = () => {
     const chiefEditor = EDITORIAL_MEMBERS.find(m => m.role === 'Bosh muharrir');
     const executiveSecretary = EDITORIAL_MEMBERS.find(m => m.role === 'Muharrir kotib');
-    const members = EDITORIAL_MEMBERS.filter(m => m.role === 'Muharrir').sort((a, b) =>
-        a.fullName.localeCompare(b.fullName, 'uz')
-    );
 
+    // Muharrirlar ro'yxati
+    const members = EDITORIAL_MEMBERS.filter(m => m.role === 'Muharrir')
+        .sort((a, b) => a.fullName.localeCompare(b.fullName, 'uz'));
+
+    // Yusupov Firnafasni birinchi o'ringa qo'yish
+    const yusupovIndex = members.findIndex(m => m.fullName === 'Yusupov Firnafas');
+    if (yusupovIndex > -1) {
+        const [yusupov] = members.splice(yusupovIndex, 1);
+        members.unshift(yusupov);
+    }
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -156,18 +150,11 @@ const EditorialBoard: React.FC = () => {
             <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.dark', mt: 4, mb: 3, borderBottom: '2px solid #FFCC00', pb: 1 }}>
                 Bosh muharrir
             </Typography>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: 3,
-                    mb: 5,
-                }}
-            >
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mb: 5 }}>
                 {chiefEditor && (
                     <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 12px)' }, flexGrow: 1 }}>
                         <ScientificMemberCard 
-                            member={{ ...chiefEditor, email: 'rectorursu@gmail.com', phone: '+998622246700' }} 
+                            member={{ ...chiefEditor, email: 'uriu@urgiu.uz', phone: '+998 97 441 85 20' }} 
                             roleType="Chief" 
                         />
                     </Box>
@@ -183,16 +170,7 @@ const EditorialBoard: React.FC = () => {
                 Tahririyat aʼzolari
             </Typography>
 
-            <Box
-                sx={{
-                    display: 'grid',
-                    gridTemplateColumns: {
-                        xs: '1fr',
-                        sm: 'repeat(2, 1fr)',
-                    },
-                    gap: 3,
-                }}
-            >
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 3 }}>
                 {members.map(member => (
                     <ScientificMemberCard key={member.id} member={member} roleType="Member" />
                 ))}

@@ -31,7 +31,7 @@ export const CONTACT_INFO: ContactInfo = {
 
 
 export const EDITORIAL_MEMBERS: EditorialMember[] = [
-    { id: 0, fullName: 'Ismoilov Shukurulloh Habibulla o‘g‘li', degree: 'f.-m.f.n.', city: '(Urganch)', role: 'Bosh muharrir', imageUrl: '1. Ismoilov Shukurullox Xabibulloh o‘g‘li.JPG' },
+    { id: 0, fullName: 'Ismoilov Shukurulloh Habibulla o‘g‘li f.-m.f.n., dotsent', degree: '', city: '(Urganch)', role: 'Bosh muharrir', imageUrl: '1. Ismoilov Shukurullox Xabibulloh o‘g‘li.JPG' },
     { id: 1, fullName: 'Allamov Oybek To‘raboyevich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '2. Allamov Oybek To‘raboyevich.jpg' },
     { id: 2, fullName: 'Xalmuratov Omonboy Utamuratovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '3. Xalmuratov Omonboy Utamuratovich.jpg' },
     { id: 3, fullName: 'Matyokubov O‘tkir Karimovich', degree: 'PhD', city: '(Urganch)', role: 'Muharrir', imageUrl: '4. Matyokubov O‘tkir Karimovich.jpg' },

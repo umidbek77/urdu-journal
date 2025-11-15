@@ -9,7 +9,7 @@ import UsefulLinks from '../../components/common/UsefulLinks';
 const CONTACT_INFO = {
     address: "220100. Urganch sh., Al - Хorazmiy ko‘chasi, 110.",
     phone: "+99 897 090 95 27",
-    email: "uktamjon@urdu.uz"
+    email: "kitjournal@urdu.uz"
 };
 
 const TELEGRAM_BOT_TOKEN = '7701762434:AAFum6dli-GRi3QuqfKjsOg3NkDkno11b7Q';

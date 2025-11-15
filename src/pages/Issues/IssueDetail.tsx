@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Container, Typography, Box, Paper, Divider, Button, Alert } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import PdfViewerModal from '../../components/ui/PdfViewerModal';
+import CurrentIssue from './CurrentIssue';
 
 
 const MOCK_ISSUES = [
@@ -124,7 +125,7 @@ const IssueDetail: React.FC = () => {
                 parentPage={{ name: "Arxiv", path: "/issues" }}
             />
 
-            <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1, color: '#1A237E' }}>
+            {/* <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1, color: '#1A237E' }}>
                 Xorazm axborot texnologiyalari jurnali — {issue.number}
             </Typography>
 
@@ -199,9 +200,12 @@ const IssueDetail: React.FC = () => {
                         </Typography>
                     </Paper>
                 </Box>
+            </Box> */}
+            <Box sx={{ py: { xs: 4, md: 6 }, backgroundColor: 'background.paper' }}>
+                <CurrentIssue />
             </Box>
 
-            <Divider sx={{ my: 4 }} />
+            {/* <Divider sx={{ my: 4 }} />
 
             <Typography
                 variant="h5"
@@ -270,7 +274,7 @@ const IssueDetail: React.FC = () => {
                     pdfUrl={selectedArticle.pdfLink || ''} 
                     title={`Maqola: ${selectedArticle.title}`}
                 />
-            )}
+            )} */}
         </Container>
     );
 };

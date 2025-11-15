@@ -10,7 +10,7 @@ import { Link, useLocation } from 'react-router-dom';
 const navItems = [
     { name: 'Jurnal haqida', path: '/about' },
     { name: 'Sonlar', path: '/issues' },
-    { name: 'Tahririyat kengashi', path: '/editorial-board' },
+    { name: 'Tahririyat hay`ati', path: '/editorial-board' },
     { name: 'Mualliflar uchun', path: '/for-authors' },
     { name: 'Kontaktlar', path: '/contacts' },
 ];

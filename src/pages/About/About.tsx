@@ -64,9 +64,8 @@ const About: React.FC = () => {
     ];
 
     const organizationalInfo = [
-        { label: "Tashkilotchisi qo'mita rahbari", value: "Ismoilov Shukurulloh Habibulla o‘g‘li" },
-        { label: "Bosh muharrir", value: "Matyokubov O‘tkir Karimovich" }, 
-        { label: "Mas'ul kotib", value: "Madaminov Uktamjon Ataxanovich" }, 
+        { label: "Bosh muharrir", value: "Ismoilov Shukurulloh Habibulla o‘g‘li" }, 
+        { label: "Mas'ul kotib", value: "Mengliyev Davlatyor Baxtiyarovich" }, 
         { label: "Tahririyat manzili", value: "Urganch shahri, Al - Хorazmiy ko‘chasi, 110" },
         { label: "Indeks", value: "210100" },
         { label: "Telefon", value: "+99(897)-090-95-27" },
@@ -106,13 +105,13 @@ const About: React.FC = () => {
                     
                     <Paper elevation={1} sx={{ p: 4, mb: 4 }}>
                         <Typography variant="h5" component="h2" gutterBottom sx={{ color: 'primary.main', fontWeight: 600 }}>
-                            "Journal of Khwarazm Information Technologies" haqida
+                            "Journal of Khwarazm Information Technologies" jurnali haqida
                         </Typography>
                         <Typography variant="body1" paragraph sx={{ textAlign: 'justify', whiteSpace: 'pre-line' }}>
                             {missionText}
                         </Typography>
                         <Divider sx={{ my: 3 }} />
-                        <Typography variant="h6" component="h3" gutterBottom sx={{ mt: 3, mb: 1, fontWeight: 600, color: 'text.secondary' }}>
+                        <Typography variant="h6" component="h4" gutterBottom sx={{ mt: 3, mb: 1, fontWeight: 600, color: 'text.secondary' }}>
                             Jurnalda nashr etiladigan ilmiy yo'nalishlar:
                         </Typography>
                         <List dense disablePadding>
@@ -167,15 +166,6 @@ const About: React.FC = () => {
                             >
                                 Guvohnoma PDF
                             </Button>
-                            <Button 
-                                variant="outlined" 
-                                color="primary" 
-                                startIcon={<BookIcon />} 
-                                fullWidth
-                                onClick={handleOpenJournal} 
-                            >
-                                Jurnal PDF
-                            </Button>
                         </Box>
                         
                     </Paper>
@@ -194,7 +184,7 @@ const About: React.FC = () => {
 
                         <Divider sx={{ my: 2 }} />
                         
-                        <Typography variant="h6" component="h4" gutterBottom sx={{ fontWeight: 600, color: 'primary.main' }}>
+                        {/* <Typography variant="h6" component="h4" gutterBottom sx={{ fontWeight: 600, color: 'primary.main' }}>
                             Jurnal hisob varag'i
                         </Typography>
                         {bankInfo.map((item, index) => (
@@ -202,7 +192,7 @@ const About: React.FC = () => {
                                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>{item.label}:</Typography>
                                 <Typography variant="body1">{item.value}</Typography>
                             </Box>
-                        ))}
+                        ))} */}
                     </Paper>
                 </Box>
             </Box>

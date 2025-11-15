@@ -155,7 +155,7 @@ const UsefulLinks = () => {
             sx={{ border: `1px solid ${PRIMARY_COLOR}`, boxShadow: 'none' }}
         >
             <Typography variant="h6" sx={{ fontWeight: 700, color: PRIMARY_COLOR, mb: 1 }}>
-                <MenuBookIcon sx={{ verticalAlign: 'middle', mr: 1 }} /> Rasmiy Resurslar
+                <MenuBookIcon sx={{ verticalAlign: 'middle', mr: 1 }} /> Maqola namunasi
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
                 Maqolani formatlash bo'yicha rasmiy namunaviy fayllarni (.docx) yuklab olishingiz mumkin.
@@ -796,10 +796,10 @@ const ArticleStructure: React.FC = () => {
             <Box mt={3} p={4} borderRadius={2} border={`2px solid ${PRIMARY_COLOR}`} bgcolor="#F0F8FF" textAlign="left" boxShadow="0 0 8px rgba(26,35,126,0.1)">
                 <Typography variant="h6" sx={{ fontWeight: 700, color: PRIMARY_COLOR, mb: 1 }}>
                     <CheckCircleOutlineIcon sx={{ verticalAlign: 'middle', mr: 1, fontSize: 30 }} />
-                    Nashr etish muddatlari
+                    Nashr qilish turi
                 </Typography>
                 <Typography variant="body1" color="text.primary">
-                    Qabul qilingan maqolalar jo‘natilgan paytidan boshlab, taqriz jarayoni vaqtini hisobga olgan holda, odatda 1–1,5 oy ichida jurnali mizda nashr qilinishi mumkin.
+                    Online
                 </Typography>
             </Box>
         </Paper>
@@ -930,11 +930,11 @@ const ForAuthors: React.FC = () => {
     }
 
     const submissionSteps = [
-        "Rasmiy Qoidalarni Ko'rib Chiqish",
-        "Qo'lyozmani Ilmiy Tayyorlash",
-        "Onlayn Yuborish (Tizim orqali)",
-        "Taqriz Jarayonini Kutish",
-        "Nashr Etishga Ruxsat Olish",
+        "Rasmiy qoidalarni ko'rib chiqish",
+        "Qo'lyozmani ilmiy tayyorlash",
+        "Onlayn yuborish (Tizim orqali)",
+        "Taqriz jarayonini kutish",
+        "Nashr etishga ruxsat olish",
     ];
 
     return (
@@ -961,10 +961,10 @@ const ForAuthors: React.FC = () => {
                 }
             }}>
                 <Typography variant="h5" sx={{ mb: 2, fontWeight: 700, color: SECONDARY_COLOR }}>
-                         Rasmiy yuborish platformasi
+                         Maqolani rasmiy yuborish platformasi
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-                    Jarayonni professional tizim orqali boshlash uchun quyidagi tugmani bosing.
+                    Jarayonni tizim orqali boshlash uchun quyidagi tugmani bosing.
                 </Typography>
                 <Button
                     variant="contained"
@@ -982,7 +982,7 @@ const ForAuthors: React.FC = () => {
                         '&:hover': { bgcolor: '#FFD700' }
                     }}
                 >
-                    Maqolani Yuborishni Boshlash
+                    Maqolani yuborish
                 </Button>
             </Paper>
 
