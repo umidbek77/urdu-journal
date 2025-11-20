@@ -85,8 +85,8 @@ const SUBMISSION_STEPS = [
     "Yakuniy yuborish"
 ];
 
-const TELEGRAM_BOT_TOKEN = '7701762434:AAFum6dli-GRi3QuqfKjsOg3NkDkno11b7Q';
-const TELEGRAM_CHAT_ID = '8540928406';
+const TELEGRAM_BOT_TOKEN = '7701762434:AAHXxVMHAYyklqIwag2YgnUjXIdSLTRddAM';
+const TELEGRAM_CHAT_ID = '5995539756';
 const TEMPLATE_FILE_URL = '/path/to/your/article_template.docx'; 
 
 
@@ -139,7 +139,7 @@ const UsefulLinks = () => {
     const handleDownload = () => {
         const link = document.createElement('a');
         link.href = TEMPLATE_FILE_URL;
-        link.download = 'Maqola_Shablon.docx'; 
+        link.download = "/public/To'plam 11.2025 №1.pdf"; 
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

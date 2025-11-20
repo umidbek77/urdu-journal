@@ -24,7 +24,7 @@ const MOCK_ISSUES: Issue[] = [
         publishedDate: "2025-11-15",
         series: "Texnik va amaliy fanlar",
         coverImage: "/img_1.png",
-        pdfFile: "/public/pdfs/xorazm-jurnali-2025-1.pdf",
+        pdfFile: "/public/To'plam 11.2025 №1.pdf",
     }
 ];
 
