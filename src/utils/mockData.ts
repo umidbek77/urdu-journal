@@ -25,7 +25,7 @@ export const USEFUL_LINKS: Link[] = [
 
 export const CONTACT_INFO: ContactInfo = {
     phone: '+998970909527',
-    email: 'uktamjon@urdu.uz',
+    email: 'kitjournal@urdu.uz',
     address: "Urganch shahri, Al - Хorazmiy ko‘chasi, 110 - uy., indeks 220100, O‘zbekiston", // Tarjima
 };
 

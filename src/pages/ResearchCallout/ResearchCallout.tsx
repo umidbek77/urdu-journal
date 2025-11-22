@@ -64,7 +64,7 @@ const ResearchCallout: React.FC = () => {
                     >
                         <Button
                             variant="contained"
-                            color="secondary"
+                            color="primary"
                             size="large"
                             component={Link}
                             to="/for-authors"
@@ -75,7 +75,8 @@ const ResearchCallout: React.FC = () => {
                                 borderRadius: 3,
                                 boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
                                 '&:hover': {
-                                    backgroundColor: theme.palette.secondary.dark,
+                                    backgroundColor: 'primary.dark',
+                                    color:'white',
                                     transform: 'translateY(-2px)',
                                     boxShadow: '0 8px 20px rgba(0,0,0,0.3)',
                                     transition: '0.3s ease-in-out',

@@ -7,8 +7,7 @@ import { Link } from 'react-router-dom';
 import ResearchCallout from "../ResearchCallout/ResearchCallout";
 
 const Home: React.FC = () => {
-    const theme = useTheme();
-
+    useTheme();
     return (
         <Box>
             <Box
@@ -52,11 +51,11 @@ const Home: React.FC = () => {
                     }} />
 
                     <Typography
-                        variant="h5"
+                        variant="h3"
                         component="h2"
                         sx={{
                             mb: 5,
-                            color: theme.palette.secondary.light,
+                            color:'white',
                             textShadow: '1px 1px 5px rgba(0,0,0,0.8)',
                             fontSize: { xs: '1.1rem', sm: '1.4rem' },
                             fontWeight: 500,
@@ -68,7 +67,7 @@ const Home: React.FC = () => {
 
                     <Button
                         variant="contained"
-                        color="secondary"
+                        color="primary"
                         size="large"
                         sx={{
                             fontWeight: 700,
@@ -78,7 +77,8 @@ const Home: React.FC = () => {
                             boxShadow: '0 6px 25px rgba(255, 204, 0, 0.4)',
                             transition: 'all 0.3s ease',
                             '&:hover': {
-                                backgroundColor: 'secondary.dark',
+                                backgroundColor: 'primary.dark',
+                                color:'white',
                                 transform: 'scale(1.05) translateY(-2px)',
                                 boxShadow: '0 8px 30px rgba(255, 204, 0, 0.6)',
                             },
