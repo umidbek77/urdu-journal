@@ -86,7 +86,7 @@ const SUBMISSION_STEPS = [
 
 const TELEGRAM_BOT_TOKEN = '8540928406:AAFum6dli-GRi3QuqfKjsOg3NkDkno11b7Q';
 const TELEGRAM_CHAT_ID = '959288654';
-const TEMPLATE_FILE_URL = "/public/Template.docx";
+const TEMPLATE_FILE_URL = "/public/Template.pdf";
 
 
 const validateEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
