@@ -85,8 +85,8 @@ const SUBMISSION_STEPS = [
     "Yakuniy yuborish"
 ];
 
-const TELEGRAM_BOT_TOKEN = '7701762434:AAHXxVMHAYyklqIwag2YgnUjXIdSLTRddAM';
-const TELEGRAM_CHAT_ID = '5995539756';
+const TELEGRAM_BOT_TOKEN = '8540928406:AAFum6dli-GRi3QuqfKjsOg3NkDkno11b7Q';
+const TELEGRAM_CHAT_ID = '959288654';
 const TEMPLATE_FILE_URL = '/path/to/your/article_template.docx'; 
 
 
