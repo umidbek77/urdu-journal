@@ -17,7 +17,7 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import ScienceIcon from '@mui/icons-material/Science';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
-import LightbulbIcon from '@mui/icons-material/Lightbulb'; 
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import SendIcon from '@mui/icons-material/Send';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -26,20 +26,19 @@ import InfoIcon from '@mui/icons-material/Info';
 import WarningIcon from '@mui/icons-material/Warning';
 import SchoolIcon from '@mui/icons-material/School';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import DownloadIcon from '@mui/icons-material/Download'; 
-import GavelIcon from '@mui/icons-material/Gavel'; 
-import EditNoteIcon from '@mui/icons-material/EditNote'; 
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'; 
-import TimerIcon from '@mui/icons-material/Timer'; 
-import VerifiedIcon from '@mui/icons-material/Verified'; 
+import DownloadIcon from '@mui/icons-material/Download';
+import GavelIcon from '@mui/icons-material/Gavel';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import TimerIcon from '@mui/icons-material/Timer';
+import VerifiedIcon from '@mui/icons-material/Verified';
 import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
+import PdfViewerModal from '../../components/ui/PdfViewerModal';
 
 
-const PRIMARY_COLOR = '#1A237E'; 
-const SECONDARY_COLOR = '#FFC107'; 
-const LIGHT_BACKGROUND = '#F8F9FA'; 
-
-<CustomBreadcrumbs currentPage="Mualliflar uchun" />
+const PRIMARY_COLOR = '#1A237E';
+const SECONDARY_COLOR = '#FFC107';
+const LIGHT_BACKGROUND = '#F8F9FA';
 
 interface FormData {
     rulesAgreed: boolean;
@@ -53,12 +52,12 @@ interface FormData {
     articleFile: File | null;
 }
 type ChangeEventType = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>;
-interface StepProps { 
-    formData: FormData; 
-    nextStep: () => void; 
-    prevStep: () => void; 
-    handleChange: (e: ChangeEventType) => void; 
-    errors: Record<keyof FormData, string>; 
+interface StepProps {
+    formData: FormData;
+    nextStep: () => void;
+    prevStep: () => void;
+    handleChange: (e: ChangeEventType) => void;
+    errors: Record<keyof FormData, string>;
 }
 interface StepFourProps extends Omit<StepProps, 'handleChange'> { setFormData: React.Dispatch<React.SetStateAction<FormData>>; }
 interface StepFiveProps extends Omit<StepProps, 'handleChange'> { submitForm: (data: FormData) => void; }
@@ -87,7 +86,7 @@ const SUBMISSION_STEPS = [
 
 const TELEGRAM_BOT_TOKEN = '8540928406:AAFum6dli-GRi3QuqfKjsOg3NkDkno11b7Q';
 const TELEGRAM_CHAT_ID = '959288654';
-const TEMPLATE_FILE_URL = '/path/to/your/article_template.docx'; 
+const TEMPLATE_FILE_URL = "/public/Template.docx";
 
 
 const validateEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
@@ -95,7 +94,7 @@ const validatePhone = (phone: string) => /^\+?\d[\d\s-]{7,20}$/.test(phone);
 const isFilled = (value: string | File | null | boolean): boolean => {
     if (typeof value === 'boolean') return value;
     if (value === null) return false;
-    if (typeof value === 'object' && 'name' in value) return !!value.name; 
+    if (typeof value === 'object' && 'name' in value) return !!value.name;
     return value.toString().trim().length > 0;
 };
 
@@ -104,29 +103,29 @@ const validateStep = (step: number, formData: FormData): Record<keyof FormData, 
 
     if (step === 0) {
         if (!formData.rulesAgreed) errors.rulesAgreed = "Qoidalarni tasdiqlash majburiy.";
-    } 
-    
+    }
+
     else if (step === 1) {
         if (!isFilled(formData.titleUz)) errors.titleUz = "Sarlavha kiritilishi shart.";
         if (!isFilled(formData.authorName)) errors.authorName = "Muallif F.I.Sh kiritilishi shart.";
-        
+
         if (!isFilled(formData.authorEmail)) {
             errors.authorEmail = "Email kiritilishi shart.";
         } else if (!validateEmail(formData.authorEmail)) {
             errors.authorEmail = "Email formati noto'g'ri.";
         }
-        
+
         if (isFilled(formData.authorPhone) && !validatePhone(formData.authorPhone)) {
-             errors.authorPhone = "Telefon raqami formati noto'g'ri. (+998XX...)";
+            errors.authorPhone = "Telefon raqami formati noto'g'ri. (+998XX...)";
         }
-    } 
-    
+    }
+
     else if (step === 2) {
         if (!isFilled(formData.abstract)) errors.abstract = "Abstrakt (xulosa) kiritilishi shart.";
         if (formData.abstract.length > 3000) errors.abstract = "Abstrakt juda uzun (3000 belgidan kam bo'lishi kerak).";
         if (!isFilled(formData.keywords)) errors.keywords = "Kalit so'zlar kiritilishi shart.";
-    } 
-    
+    }
+
     else if (step === 3) {
         if (!isFilled(formData.articleFile)) errors.articleFile = "Qo'lyozma faylini yuklash majburiy.";
     }
@@ -136,44 +135,60 @@ const validateStep = (step: number, formData: FormData): Record<keyof FormData, 
 
 
 const UsefulLinks = () => {
-    const handleDownload = () => {
-        const link = document.createElement('a');
-        link.href = TEMPLATE_FILE_URL;
-        link.download = "/public/To'plam 11.2025 №1.pdf"; 
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentPdfUrl, setCurrentPdfUrl] = useState('');
+    const [currentPdfTitle, setCurrentPdfTitle] = useState('');
+
+    const handleOpenTemplate = () => {
+        setCurrentPdfUrl(TEMPLATE_FILE_URL);
+        setCurrentPdfTitle("Shablonni Yuklab Olish");
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setCurrentPdfUrl('');
+        setCurrentPdfTitle('');
     };
 
     return (
-        <Box 
-            mt={4} 
-            p={4} 
-            bgcolor="#E8EAF6" 
-            borderRadius={2} 
-            textAlign="center" 
-            sx={{ border: `1px solid ${PRIMARY_COLOR}`, boxShadow: 'none' }}
-        >
-            <Typography variant="h6" sx={{ fontWeight: 700, color: PRIMARY_COLOR, mb: 1 }}>
-                <MenuBookIcon sx={{ verticalAlign: 'middle', mr: 1 }} /> Maqola namunasi
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                Maqolani formatlash bo'yicha rasmiy namunaviy fayllarni (.docx) yuklab olishingiz mumkin.
-            </Typography>
-            <Button
-                variant="contained"
-                onClick={handleDownload}
-                startIcon={<DownloadIcon />}
-                sx={{
-                    bgcolor: SECONDARY_COLOR,
-                    color: PRIMARY_COLOR,
-                    fontWeight: 700,
-                    '&:hover': { bgcolor: '#FFD700' }
-                }}
+        <>
+            <Box
+                mt={4}
+                p={4}
+                bgcolor="#E8EAF6"
+                borderRadius={2}
+                textAlign="center"
+                sx={{ border: `1px solid ${PRIMARY_COLOR}`, boxShadow: 'none' }}
             >
-                Shablonni Yuklab Olish
-            </Button>
-        </Box>
+                <Typography variant="h6" sx={{ fontWeight: 700, color: PRIMARY_COLOR, mb: 1 }}>
+                    <MenuBookIcon sx={{ verticalAlign: 'middle', mr: 1 }} /> Maqola namunasi
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                    Maqolani formatlash bo'yicha rasmiy namunaviy fayllarni (.docx) yuklab olishingiz mumkin.
+                </Typography>
+                <Button
+                    variant="contained"
+                    onClick={handleOpenTemplate}
+                    startIcon={<DownloadIcon />}
+                    sx={{
+                        bgcolor: SECONDARY_COLOR,
+                        color: PRIMARY_COLOR,
+                        fontWeight: 700,
+                        '&:hover': { bgcolor: '#FFD700' }
+                    }}
+                >
+                    Shablonni Yuklab Olish
+                </Button>
+            </Box>
+
+            <PdfViewerModal
+                open={isModalOpen}
+                onClose={handleCloseModal}
+                pdfUrl={currentPdfUrl}
+                title={currentPdfTitle}
+            />
+        </>
     );
 };
 
@@ -245,7 +260,7 @@ const StepOne: React.FC<StepProps> = ({ formData, handleChange, nextStep, errors
             }
             label={
                 <Typography variant="body1" sx={{ fontWeight: 500, color: errors.rulesAgreed ? 'error.main' : 'text.primary' }}>
-                    Men barcha jurnal qoidalari va formatlash shartlariga rioya qilishga **to'liq rozilik bildiraman**.
+                    Men barcha jurnal qoidalari va formatlash shartlariga **to'liq rozilik bildiraman**.
                 </Typography>
             }
             sx={{ mb: 3 }}
@@ -258,12 +273,12 @@ const StepOne: React.FC<StepProps> = ({ formData, handleChange, nextStep, errors
         <Box display="flex" justifyContent="flex-end" pt={2}>
             <Button
                 variant="contained"
-                sx={{ 
-                    bgcolor: PRIMARY_COLOR, 
+                sx={{
+                    bgcolor: PRIMARY_COLOR,
                     '&:hover': { bgcolor: SECONDARY_COLOR, color: PRIMARY_COLOR },
-                    borderRadius: '8px', 
-                    py: 1.2, 
-                    px: 4, 
+                    borderRadius: '8px',
+                    py: 1.2,
+                    px: 4,
                     fontWeight: 600,
                 }}
                 onClick={nextStep}
@@ -357,12 +372,12 @@ const StepTwo: React.FC<StepProps> = ({ formData, handleChange, nextStep, prevSt
                 </Button>
                 <Button
                     variant="contained"
-                    sx={{ 
-                        bgcolor: PRIMARY_COLOR, 
+                    sx={{
+                        bgcolor: PRIMARY_COLOR,
                         '&:hover': { bgcolor: SECONDARY_COLOR, color: PRIMARY_COLOR },
-                        borderRadius: '8px', 
-                        py: 1.2, 
-                        px: 4, 
+                        borderRadius: '8px',
+                        py: 1.2,
+                        px: 4,
                         fontWeight: 600,
                     }}
                     onClick={nextStep}
@@ -378,7 +393,7 @@ const StepTwo: React.FC<StepProps> = ({ formData, handleChange, nextStep, prevSt
 
 const StepThree: React.FC<StepProps> = ({ formData, handleChange, nextStep, prevStep, errors }) => {
     const isStepValid = !errors.abstract && !errors.keywords && isFilled(formData.abstract) && isFilled(formData.keywords);
-    
+
     return (
         <Paper elevation={4} sx={{ p: 5, bgcolor: 'white', borderRadius: 2, borderLeft: `5px solid ${PRIMARY_COLOR}` }}>
             <Typography variant="h5" sx={{ mb: 4, fontWeight: 700, color: PRIMARY_COLOR }}>
@@ -423,12 +438,12 @@ const StepThree: React.FC<StepProps> = ({ formData, handleChange, nextStep, prev
                 </Button>
                 <Button
                     variant="contained"
-                    sx={{ 
-                        bgcolor: PRIMARY_COLOR, 
+                    sx={{
+                        bgcolor: PRIMARY_COLOR,
                         '&:hover': { bgcolor: SECONDARY_COLOR, color: PRIMARY_COLOR },
-                        borderRadius: '8px', 
-                        py: 1.2, 
-                        px: 4, 
+                        borderRadius: '8px',
+                        py: 1.2,
+                        px: 4,
                         fontWeight: 600,
                     }}
                     onClick={nextStep}
@@ -455,7 +470,7 @@ const StepFour: React.FC<StepFourProps> = ({ formData, setFormData, nextStep, pr
                 return;
             }
         } else {
-             setFileMessage("Qo'lyozma faylini yuklash majburiy.");
+            setFileMessage("Qo'lyozma faylini yuklash majburiy.");
         }
         setFormData(prev => ({ ...prev, articleFile: file }));
     };
@@ -527,12 +542,12 @@ const StepFour: React.FC<StepFourProps> = ({ formData, setFormData, nextStep, pr
                 </Button>
                 <Button
                     variant="contained"
-                    sx={{ 
-                        bgcolor: PRIMARY_COLOR, 
+                    sx={{
+                        bgcolor: PRIMARY_COLOR,
                         '&:hover': { bgcolor: SECONDARY_COLOR, color: PRIMARY_COLOR },
-                        borderRadius: '8px', 
-                        py: 1.2, 
-                        px: 4, 
+                        borderRadius: '8px',
+                        py: 1.2,
+                        px: 4,
                         fontWeight: 600,
                     }}
                     onClick={nextStep}
@@ -638,14 +653,14 @@ const SubmissionSuccess: React.FC<SubmissionSuccessProps> = ({ goBack, formData 
 
             <Button
                 variant="contained"
-                sx={{ 
-                    bgcolor: PRIMARY_COLOR, 
+                sx={{
+                    bgcolor: PRIMARY_COLOR,
                     '&:hover': { bgcolor: SECONDARY_COLOR, color: PRIMARY_COLOR },
-                    borderRadius: '8px', 
-                    py: 1.2, 
-                    px: 5, 
-                    mt: 2, 
-                    fontWeight: 600 
+                    borderRadius: '8px',
+                    py: 1.2,
+                    px: 5,
+                    mt: 2,
+                    fontWeight: 600
                 }}
                 size="large"
                 onClick={goBack}
@@ -703,22 +718,84 @@ interface StructureItem {
     id: string;
     title: string;
     icon: React.ReactElement;
-    languages?: 'O‘zbek, Rus, Ingliz' | 'Yo‘q';
+    languages?: string;
     description: string;
-    note?: string; 
+    note?: string;
 }
 
 const ARTICLE_STRUCTURE_RULES: StructureItem[] = [
-    { id: 'author-info', title: 'Muallif to‘g‘risida ma’lumot', icon: <PersonIcon sx={{ color: PRIMARY_COLOR }} />, languages: 'O‘zbek, Rus, Ingliz', description: 'Muallif(lar)ning ism-familiyasi va otasining ismi to‘liq yozilishi, lavozimi, ilmiy unvoni va darjasi, e-maili, telefon raqami hamda maqola taqrizchisi (reviewer) yozilishi shart.', note: 'Barcha maʼlumotlar uch tilda taqdim etilishi kerak.' },
-    { id: 'title', title: 'Maqola mavzusi (Title)', icon: <TitleIcon sx={{ color: PRIMARY_COLOR }} />, languages: 'O‘zbek, Rus, Ingliz', description: 'Mavzu qisqa, lo‘nda shakllantirilgan bo‘lib, tadqiqot yo‘nalishini aniq ifoda etishi lozim.' },
-    { id: 'abstract', title: 'Maqola annotatsiyasi (Abstract)', icon: <DescriptionIcon sx={{ color: PRIMARY_COLOR }} />, languages: 'O‘zbek, Rus, Ingliz', description: '5 qatordan kam, 15 qatordan oshmagan holda beriladi. Unda tadqiqot muammosi, dolzarbligi, metodologiya, tadqiqot natijalari va ilmiy/amaliy hissa qisqacha bayon qilinadi.', note: 'Annotatsiya strukturasi: Muammo > Dolzarblik > Metodologiya > Natijalar > Xulosa.' },
-    { id: 'keywords', title: 'Kalit so‘zlar (Key words)', icon: <VpnKeyIcon sx={{ color: PRIMARY_COLOR }} />, languages: 'O‘zbek, Rus, Ingliz', description: 'Maqola mazmuni va maqsadini ochib beruvchi kalit so‘zlar hisoblanadi. Har biri asosiy matnda ko‘proq takrorlanishi tavsiya etiladi.' },
-    { id: 'introduction', title: 'Kirish (Introduction)', icon: <LaunchIcon sx={{ color: PRIMARY_COLOR }} />, languages: 'Yo‘q', description: 'Tadqiqot muammosi, uning maqsad va vazifalari yoritiladi. Mavzuning tanlanish asosi, dolzarbligi va ilmiy ahamiyati tushuntiriladi.' },
-    { id: 'lit-review', title: 'Mavzuga oid adabiyotlarning tahlili', icon: <MenuBookIcon sx={{ color: PRIMARY_COLOR }} />, languages: 'Yo‘q', description: 'Tadqiq etilayotgan muammo yuzasidan muallifning bilim darajasi, mavjud intellektual hududni baholash va tanqidiy tahlil orqali tadqiqot savollarini oydinlashtirishni ko‘rsatadi.' },
-    { id: 'methodology', title: 'Tadqiqot metodologiyasi', icon: <ScienceIcon sx={{ color: PRIMARY_COLOR }} />, languages: 'Yo‘q', description: 'Tadqiqotning umumiy xaritasi, falsafasi (deduksion/induksion), dizayni, ma’lumot olish yo‘llari, tadqiqot obyektining tanlovi (sampling), strategiya (eksperiment, keys-stadi va h.k.) va tadqiqot etikasini belgilash. Metodologiya ishonchlilik (reliability) va aniqlilikni (validity) asoslashi kerak.' },
-    { id: 'analysis-results', title: 'Tahlil va natijalar', icon: <AnalyticsIcon sx={{ color: PRIMARY_COLOR }} />, languages: 'Yo‘q', description: 'Metodologiyada belgilangan tahlil usullari orqali yig‘ilgan ma’lumotlarning tahlilini amalga oshiradi. Faqat tahlil usulining natijalari ifoda etiladi, muhokama keyingi qismda bo‘ladi.' },
-    { id: 'conclusion', title: 'Xulosa va takliflar', icon: <LightbulbIcon sx={{ color: PRIMARY_COLOR }} />, languages: 'Yo‘q', description: 'Tadqiqot maqsad va vazifalarining bajarilganligi, tadqiqot savollarining javob topganligi, asosiy natijalar bo‘yicha umumiy xulosalar, takliflar va kelajak tadqiqot yo‘nalishlari maqolaning asosini tashkil etishi lozim.' },
-    { id: 'references', title: 'Foydalanilgan adabiyotlar ro‘yxati', icon: <BookmarksIcon sx={{ color: PRIMARY_COLOR }} />, languages: 'Yo‘q', description: 'Tadqiqotda foydalanilgan barcha adabiyotlarning ro‘yxati [1], [2] ketma-ketligida qo‘yiladi. Matnda havola [1; 25–26-b.] shaklida berilishi kerak. Kitob va maqola ma’lumotlari to‘liq ko‘rsatilishi shart.' },
+    {
+        id: "author-info",
+        title: "Muallif to'g'risida ma'lumot",
+        icon: <PersonIcon sx={{ color: PRIMARY_COLOR }} />,
+        languages: "O'zbek, Rus, Ingliz",
+        description: "Muallif(lar)ning ism-familiyasi va otasining ismi to'liq yozilishi, lavozimi, ilmiy unvoni va darjasi, e-maili, telefon raqami hamda maqola taqrizchisi (reviewer) yozilishi shart.",
+        note: "Barcha maʼlumotlar uch tilda taqdim etilishi kerak."
+    },
+    {
+        id: "title",
+        title: "Maqola mavzusi (Title)",
+        icon: <TitleIcon sx={{ color: PRIMARY_COLOR }} />,
+        languages: "O'zbek, Rus, Ingliz",
+        description: "Mavzu qisqa, lo'nda shakllantirilgan bo'lib, tadqiqat yo'nalishini aniq ifoda etishi lozim."
+    },
+    {
+        id: "abstract",
+        title: "Maqola annotatsiyasi (Abstract)",
+        icon: <DescriptionIcon sx={{ color: PRIMARY_COLOR }} />,
+        languages: "O'zbek, Rus, Ingliz",
+        description: "5 qatordan kam, 15 qatordan oshmagan holda beriladi. Unda tadqiqat muammosi, dolzarbligi, metodologiya, tadqiqat natijalari va ilmiy/amaliy hissa qisqacha bayon qilinadi.",
+        note: "Annotatsiya strukturasi: Muammo > Dolzarblik > Metodologiya > Natijalar > Xulosa."
+    },
+    {
+        id: "keywords",
+        title: "Kalit so'zlar (Key words)",
+        icon: <VpnKeyIcon sx={{ color: PRIMARY_COLOR }} />,
+        languages: "O'zbek, Rus, Ingliz",
+        description: "Maqola mazmuni va maqsadini ochib beruvchi kalit so'zlar hisoblanadi. Har biri asosiy matnda ko'proq takrorlanishi tavsiya etiladi."
+    },
+    {
+        id: "introduction",
+        title: "Kirish (Introduction)",
+        icon: <LaunchIcon sx={{ color: PRIMARY_COLOR }} />,
+        languages: "Yo'q",
+        description: "Tadqiqat muammosi, uning maqsad va vazifalari yoritiladi. Mavzuning tanlanish asosi, dolzarbligi va ilmiy ahamiyati tushuntiriladi."
+    },
+    {
+        id: "lit-review",
+        title: "Mavzuga oid adabiyotlarning tahlili",
+        icon: <MenuBookIcon sx={{ color: PRIMARY_COLOR }} />,
+        languages: "Yo'q",
+        description: "Tadqiq etilayotgan muammo yuzasidan muallifning bilim darajasi, mavjud intellektual hududni baholash va tanqidiy tahlil orqali tadqiqat savollarini oydinlashtirishni ko'rsatadi."
+    },
+    {
+        id: "methodology",
+        title: "Tadqiqat metodologiyasi",
+        icon: <ScienceIcon sx={{ color: PRIMARY_COLOR }} />,
+        languages: "Yo'q",
+        description: "Tadqiqatning umumiy xaritasi, falsafasi (deduksion/induksion), dizayni, ma'lumot olish yo'llari, tadqiqat obyektining tanlovi (sampling), strategiya (eksperiment, keys-stadi va h.k.) va tadqiqat etikasini belgilash. Metodologiya ishonchlilik (reliability) va aniqlilikni (validity) asoslashi kerak."
+    },
+    {
+        id: "analysis-results",
+        title: "Tahlil va natijalar",
+        icon: <AnalyticsIcon sx={{ color: PRIMARY_COLOR }} />,
+        languages: "Yo'q",
+        description: "Metodologiyada belgilangan tahlil usullari orqali yig'ilgan ma'lumotlarning tahlilini amalga oshiradi. Faqat tahlil usulining natijalari ifoda etiladi, muhokama keyingi qismda bo'ladi."
+    },
+    {
+        id: "conclusion",
+        title: "Xulosa va takliflar",
+        icon: <LightbulbIcon sx={{ color: PRIMARY_COLOR }} />,
+        languages: "Yo'q",
+        description: "Tadqiqat maqsad va vazifalarining bajarilganligi, tadqiqat savollarining javob topganligi, asosiy natijalar bo'yicha umumiy xulosalar, takliflar va kelajak tadqiqot yo'nalishlari maqolaning asosini tashkil etishi lozim."
+    },
+    {
+        id: "references",
+        title: "Foydalanilgan adabiyotlar ro'yxati",
+        icon: <BookmarksIcon sx={{ color: PRIMARY_COLOR }} />,
+        languages: "Yo'q",
+        description: "Tadqiqatda foydalanilgan barcha adabiyotlarning ro'yxati [1], [2] ketma-ketligida qo'yiladi. Matnda havola [1; 25–26-b.] shaklida berilishi kerak. Kitob va maqola ma'lumotlari to'liq ko'rsatilishi shart."
+    }
 ];
 
 const ArticleStructure: React.FC = () => {
@@ -731,9 +808,9 @@ const ArticleStructure: React.FC = () => {
     return (
         <Paper elevation={4} sx={{ p: 5, mb: 4, bgcolor: 'white', borderRadius: 2, border: `1px solid #E0E0E0` }}>
             <Typography variant="h5" sx={{ mb: 4, fontWeight: 800, color: PRIMARY_COLOR, borderBottom: `3px solid ${PRIMARY_COLOR}`, pb: 1 }}>
-                     Maqola tuzilmasining rasmiy talablari
+                Maqola tuzilmasining rasmiy talablari
             </Typography>
-            
+
             {ARTICLE_STRUCTURE_RULES.map((item) => (
                 <Accordion
                     key={item.id}
@@ -782,17 +859,17 @@ const ArticleStructure: React.FC = () => {
                     </AccordionDetails>
                 </Accordion>
             ))}
-            
+
             <Box mt={5} p={4} borderRadius={2} border={`2px solid #D32F2F`} bgcolor="#FFF3F3" textAlign="left" boxShadow="0 0 8px rgba(211,47,47,0.1)">
                 <Typography variant="h6" sx={{ fontWeight: 700, color: '#D32F2F', mb: 1 }}>
                     <WarningIcon sx={{ verticalAlign: 'middle', mr: 1, fontSize: 30 }} />
                     RASMIY OGOHLANTIRISH
                 </Typography>
                 <Typography variant="body1" sx={{ fontWeight: 500, color: 'text.primary' }}>
-                    Yuqoridagi rasmiy talablar va tuzilmaga to‘liq javob bermagan qo‘lyozmalar, tahririyat tomonidan ko‘rib chiqilmasdan rad etilishi mumkin. Iltimos, barcha qoidalarga qat'iy rioya qiling.
+                    Yuqoridagi rasmiy talablar va tuzilmaga to'liq javob bermagan qo'lyozmalar, tahririyat tomonidan ko'rib chiqilmasdan rad etilishi mumkin. Iltimos, barcha qoidalarga qat'iy rioya qiling.
                 </Typography>
             </Box>
-            
+
             <Box mt={3} p={4} borderRadius={2} border={`2px solid ${PRIMARY_COLOR}`} bgcolor="#F0F8FF" textAlign="left" boxShadow="0 0 8px rgba(26,35,126,0.1)">
                 <Typography variant="h6" sx={{ fontWeight: 700, color: PRIMARY_COLOR, mb: 1 }}>
                     <CheckCircleOutlineIcon sx={{ verticalAlign: 'middle', mr: 1, fontSize: 30 }} />
@@ -812,14 +889,14 @@ const SubmissionFormContainer: React.FC<SubmissionFormContainerProps> = ({ goBac
     const [formData, setFormData] = useState<FormData>(initialFormData);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSending, setIsSending] = useState(false);
-    
+
     const errors = useMemo(() => {
         return validateStep(activeStep, formData);
     }, [formData, activeStep]);
 
     const handleChange = useCallback((e: ChangeEventType) => {
         const target = (e as SelectChangeEvent<string>).target || (e as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>).target;
-        
+
         const name = target.name as keyof FormData;
         if (!name) return;
 
@@ -835,7 +912,7 @@ const SubmissionFormContainer: React.FC<SubmissionFormContainerProps> = ({ goBac
     const nextStep = () => {
         const stepErrors = validateStep(activeStep, formData);
         if (Object.keys(stepErrors).length === 0) {
-             setActiveStep(prev => prev + 1);
+            setActiveStep(prev => prev + 1);
         } else {
             console.log("Validatsiya xatolari mavjud:", stepErrors);
         }
@@ -844,7 +921,7 @@ const SubmissionFormContainer: React.FC<SubmissionFormContainerProps> = ({ goBac
 
     const submitForm = async (data: FormData) => {
         setIsSending(true);
-        await new Promise(resolve => setTimeout(resolve, 1500)); 
+        await new Promise(resolve => setTimeout(resolve, 1500));
         await sendToTelegram(data);
         setIsSending(false);
         setIsSubmitted(true);
@@ -888,8 +965,8 @@ const SubmissionFormContainer: React.FC<SubmissionFormContainerProps> = ({ goBac
                         <Stepper activeStep={activeStep} orientation="vertical" connector={<Divider orientation="vertical" flexItem sx={{ mx: 'auto', bgcolor: PRIMARY_COLOR }} />}>
                             {SUBMISSION_STEPS.map((label) => (
                                 <Step key={label}>
-                                    <StepLabel StepIconProps={{ 
-                                        style: { color: activeStep >= SUBMISSION_STEPS.indexOf(label) ? PRIMARY_COLOR : '#E0E0E0' } 
+                                    <StepLabel StepIconProps={{
+                                        style: { color: activeStep >= SUBMISSION_STEPS.indexOf(label) ? PRIMARY_COLOR : '#E0E0E0' }
                                     }}>
                                         <Typography variant="body1" fontWeight={activeStep >= SUBMISSION_STEPS.indexOf(label) ? 700 : 500} sx={{ color: activeStep >= SUBMISSION_STEPS.indexOf(label) ? PRIMARY_COLOR : 'text.secondary' }}>
                                             {label}
@@ -939,8 +1016,8 @@ const ForAuthors: React.FC = () => {
 
     return (
         <Container maxWidth="lg" sx={{ py: 6 }}>
-            <CustomBreadcrumbs currentPage="Mualliflar uchun" /> 
-            
+            <CustomBreadcrumbs currentPage="Mualliflar uchun" />
+
             <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 2, fontWeight: 900, color: PRIMARY_COLOR }}>
                 <SchoolIcon sx={{ fontSize: 45, verticalAlign: 'middle', mr: 2, color: PRIMARY_COLOR }} /> Akademik qo'lyozma taqdim etish
             </Typography>
@@ -948,11 +1025,11 @@ const ForAuthors: React.FC = () => {
                 Universitetimizning nufuzli ilmiy jurnali orqali o'z tadqiqotingizni nashr etish bo'yicha yo'riqnoma.
             </Typography>
 
-            <Paper elevation={8} sx={{ 
-                p: 6, 
-                mb: 6, 
-                backgroundColor: PRIMARY_COLOR, 
-                borderRadius: 2, 
+            <Paper elevation={8} sx={{
+                p: 6,
+                mb: 6,
+                backgroundColor: PRIMARY_COLOR,
+                borderRadius: 2,
                 color: 'white',
                 border: `3px solid ${SECONDARY_COLOR}`,
                 transition: 'all 0.3s',
@@ -961,7 +1038,7 @@ const ForAuthors: React.FC = () => {
                 }
             }}>
                 <Typography variant="h5" sx={{ mb: 2, fontWeight: 700, color: SECONDARY_COLOR }}>
-                         Maqolani rasmiy yuborish platformasi
+                    Maqolani rasmiy yuborish platformasi
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
                     Jarayonni tizim orqali boshlash uchun quyidagi tugmani bosing.
@@ -995,8 +1072,8 @@ const ForAuthors: React.FC = () => {
                     {submissionSteps.map((label, index) => (
                         <Step key={label}>
                             <StepLabel StepIconComponent={CustomStepIcon} icon={index + 1}>
-                                <Typography 
-                                    variant="body2" 
+                                <Typography
+                                    variant="body2"
                                     sx={{ fontWeight: 600, color: PRIMARY_COLOR }}
                                 >
                                     {label}

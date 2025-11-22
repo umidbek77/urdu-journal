@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Container, Typography, Button, Paper, useTheme } from '@mui/material';
-import DownloadIcon from '@mui/icons-material/Download';
+// import DownloadIcon from '@mui/icons-material/Download';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import PdfViewerModal from '../../components/ui/PdfViewerModal'; // === YANGI QO‘SHILDI ===
 
 interface Issue {
     id: string;
@@ -24,7 +25,7 @@ const MOCK_ISSUES: Issue[] = [
         publishedDate: "2025-11-15",
         series: "Texnik va amaliy fanlar",
         coverImage: "/img_1.png",
-        pdfFile: "/public/To'plam 11.2025 №1.pdf",
+        pdfFile: "/To'plam 11.2025 №1.pdf", // === TO‘G‘RILANDI (public/ olib tashlandi) ===
     }
 ];
 
@@ -32,14 +33,33 @@ const CurrentIssue: React.FC = () => {
     const currentIssue = MOCK_ISSUES[0];
     const theme = useTheme();
     if (!currentIssue) return null;
+
     const gradientBackground = `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${theme.palette.grey[50]} 100%)`;
 
-    const handleDownload = () => {
-        const link = document.createElement('a');
-        link.href = currentIssue.pdfFile;
-        link.download = `Jurnal-${currentIssue.year}-${currentIssue.number}.pdf`;
-        link.click();
+    // === PDF MODAL UCHUN YANGI STATE VA FUNKSIYALAR ===
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentPdfUrl, setCurrentPdfUrl] = useState('');
+    const [currentPdfTitle, setCurrentPdfTitle] = useState('');
+
+    const handleOpenPdf = () => {
+        setCurrentPdfUrl(currentIssue.pdfFile);
+        setCurrentPdfTitle(`Jurnal ${currentIssue.year} - ${currentIssue.number}`);
+        setIsModalOpen(true);
     };
+
+    const handleClosePdf = () => {
+        setIsModalOpen(false);
+        setCurrentPdfUrl('');
+        setCurrentPdfTitle('');
+    };
+    // === YANGI QISM TUGADI ===
+
+    // const handleDownload = () => {
+    //     const link = document.createElement('a');
+    //     link.href = currentIssue.pdfFile;
+    //     link.download = `Jurnal-${currentIssue.year}-${currentIssue.number}.pdf`;
+    //     link.click();
+    // };
 
     return (
         <Container maxWidth="lg" sx={{ my: { xs: 2, md: 1 } }}>
@@ -134,10 +154,14 @@ const CurrentIssue: React.FC = () => {
 
                         <Box sx={{ mb: 4, color: theme.palette.text.secondary }}>
                             <Typography variant="body1" sx={{ mb: 1.5 }}>
-                                <Box component="span" sx={{ fontWeight: 600, color: theme.palette.text.primary }}>Nashr qilingan sana:</Box> {currentIssue.publishedDate}
+                                <Box component="span" sx={{ fontWeight: 600, color: theme.palette.text.primary }}>
+                                    Nashr qilingan sana:
+                                </Box> {currentIssue.publishedDate}
                             </Typography>
                             <Typography variant="body1">
-                                <Box component="span" sx={{ fontWeight: 600, color: theme.palette.text.primary }}>Seriya/Mavzu:</Box> {currentIssue.series}
+                                <Box component="span" sx={{ fontWeight: 600, color: theme.palette.text.primary }}>
+                                    Seriya/Mavzu:
+                                </Box> {currentIssue.series}
                             </Typography>
                         </Box>
 
@@ -146,27 +170,36 @@ const CurrentIssue: React.FC = () => {
                                 variant="contained"
                                 color="primary"
                                 size="large"
-                                component={Link}
-                                to={`/issues/${currentIssue.id}`}
                                 startIcon={<VisibilityIcon />}
                                 sx={{ fontWeight: 700, textTransform: 'none' }}
+                                onClick={handleOpenPdf} // === YANGILANDI ===
                             >
-                                Kontentni to'liq ko'rish
+                                To‘liq PDF ko‘rish
                             </Button>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                size="large"
-                                startIcon={<DownloadIcon />}
-                                onClick={handleDownload}
-                                sx={{ fontWeight: 600, textTransform: 'none' }}
-                            >
-                                To'liq PDF yuklab olish
-                            </Button>
+
+                            {/*<Button*/}
+                            {/*    variant="outlined"*/}
+                            {/*    color="primary"*/}
+                            {/*    size="large"*/}
+                            {/*    startIcon={<DownloadIcon />}*/}
+                            {/*    onClick={handleDownload}*/}
+                            {/*    sx={{ fontWeight: 600, textTransform: 'none' }}*/}
+                            {/*>*/}
+                            {/*    To'liq PDF yuklab olish*/}
+                            {/*</Button>*/}
                         </Box>
                     </Box>
                 </Box>
             </Paper>
+
+            {/* === PDF MODAL QO‘SHILDI === */}
+            <PdfViewerModal
+                open={isModalOpen}
+                onClose={handleClosePdf}
+                pdfUrl={currentPdfUrl}
+                title={currentPdfTitle}
+            />
+            {/* === TUGADI === */}
         </Container>
     );
 };
