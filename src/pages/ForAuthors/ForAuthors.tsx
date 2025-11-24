@@ -189,7 +189,7 @@ const UsefulLinks = () => {
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
                     Maqolani formatlash bo'yicha rasmiy namunaviy faylni (.docx) yuklab olishingiz mumkin
                 </Typography>
-                <a href='/public/Template.docx' download={"Template.docx"} >
+                <a href='https://docs.google.com/document/d/1gQfx5Iuv3CtAoWdOGD30WvvbDUBF3_57iI5R-5uZDs4/edit?usp=sharing' target='blank' download={"Template.docx"} >
                 <Button
                     variant="contained"
                     //  onClick={downloadLocalDocx}
