@@ -86,7 +86,7 @@ const Home: React.FC = () => {
                         component={Link}
                         to="/about"
                     >
-                        Jurnal haqida batafsil !
+                        Jurnal haqida batafsil!
                     </Button>
                 </Container>
             </Box>
