@@ -139,11 +139,33 @@ const UsefulLinks = () => {
     const [currentPdfUrl, setCurrentPdfUrl] = useState('');
     const [currentPdfTitle, setCurrentPdfTitle] = useState('');
 
-    const handleOpenTemplate = () => {
-        setCurrentPdfUrl(TEMPLATE_FILE_URL);
-        setCurrentPdfTitle("Shablonni Yuklab Olish");
-        setIsModalOpen(true);
-    };
+    // const handleOpenTemplate = () => {
+    //     setCurrentPdfUrl(TEMPLATE_FILE_URL);
+    //     setCurrentPdfTitle("Shablonni Yuklab Olish");
+    //     setIsModalOpen(true);
+    // };
+
+
+
+    function downloadLocalDocx() {
+    const filePath = "/public/Template.docx"; // lokal docx manzili
+    const fileName = "Template.docx";  // yuklab olish nomi
+
+    fetch(filePath)
+        .then(response => response.blob())
+        .then(blob => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 500);
+        })
+        .catch(err => console.error("Fayl yuklanmadi:", err));
+    }
+
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
@@ -165,11 +187,11 @@ const UsefulLinks = () => {
                     <MenuBookIcon sx={{ verticalAlign: 'middle', mr: 1 }} /> Maqola namunasi
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                    Maqolani formatlash bo'yicha rasmiy namunaviy fayllarni (.docx) yuklab olishingiz mumkin.
+                    Maqolani formatlash bo'yicha rasmiy namunaviy faylni (.docx) yuklab olishingiz mumkin
                 </Typography>
                 <Button
                     variant="contained"
-                    onClick={handleOpenTemplate}
+                     onClick={downloadLocalDocx}
                     startIcon={<DownloadIcon />}
                     sx={{
                         bgcolor: SECONDARY_COLOR,
@@ -178,7 +200,7 @@ const UsefulLinks = () => {
                         '&:hover': { bgcolor: '#FFD700' }
                     }}
                 >
-                    Shablonni Yuklab Olish
+                    Shablonni yuklab olish
                 </Button>
             </Box>
 
@@ -191,6 +213,8 @@ const UsefulLinks = () => {
         </>
     );
 };
+
+
 
 const sendToTelegram = async (data: FormData) => {
     const message = `
