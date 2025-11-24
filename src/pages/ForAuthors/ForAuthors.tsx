@@ -729,7 +729,7 @@ const ARTICLE_STRUCTURE_RULES: StructureItem[] = [
         title: "Muallif to'g'risida ma'lumot",
         icon: <PersonIcon sx={{ color: PRIMARY_COLOR }} />,
         languages: "O'zbek, Rus, Ingliz",
-        description: "Muallif(lar)ning ism-familiyasi va otasining ismi to'liq yozilishi, lavozimi, ilmiy unvoni va darjasi, e-maili, telefon raqami hamda maqola taqrizchisi (reviewer) yozilishi shart.",
+        description: "Muallif(lar)ning ism-familiyasi va otasining ismi to'liq yozilishi, lavozimi, ilmiy unvoni va darjasi, e-maili, telefon raqami yozilishi shart.",
         note: "Barcha maʼlumotlar uch tilda taqdim etilishi kerak."
     },
     {
@@ -737,14 +737,14 @@ const ARTICLE_STRUCTURE_RULES: StructureItem[] = [
         title: "Maqola mavzusi (Title)",
         icon: <TitleIcon sx={{ color: PRIMARY_COLOR }} />,
         languages: "O'zbek, Rus, Ingliz",
-        description: "Mavzu qisqa, lo'nda shakllantirilgan bo'lib, tadqiqat yo'nalishini aniq ifoda etishi lozim."
+        description: "Mavzu qisqa, lo'nda shakllantirilgan bo'lib, tadqiqot yo'nalishini aniq ifoda etishi lozim."
     },
     {
         id: "abstract",
         title: "Maqola annotatsiyasi (Abstract)",
         icon: <DescriptionIcon sx={{ color: PRIMARY_COLOR }} />,
         languages: "O'zbek, Rus, Ingliz",
-        description: "5 qatordan kam, 15 qatordan oshmagan holda beriladi. Unda tadqiqat muammosi, dolzarbligi, metodologiya, tadqiqat natijalari va ilmiy/amaliy hissa qisqacha bayon qilinadi.",
+        description: "5 qatordan kam, 15 qatordan oshmagan holda beriladi. Unda tadqiqat muammosi, dolzarbligi, metodologiya, tadqiqat natijalari va ilmiy/amaliy hissasi qisqacha bayon qilinadi.",
         note: "Annotatsiya strukturasi: Muammo > Dolzarblik > Metodologiya > Natijalar > Xulosa."
     },
     {
@@ -1019,10 +1019,10 @@ const ForAuthors: React.FC = () => {
             <CustomBreadcrumbs currentPage="Mualliflar uchun" />
 
             <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 2, fontWeight: 900, color: PRIMARY_COLOR }}>
-                <SchoolIcon sx={{ fontSize: 45, verticalAlign: 'middle', mr: 2, color: PRIMARY_COLOR }} /> Akademik qo'lyozma taqdim etish
+                <SchoolIcon sx={{ fontSize: 45, verticalAlign: 'middle', mr: 2, color: PRIMARY_COLOR }} /> Ilmiy maqolani taqdim etish
             </Typography>
             <Typography variant="h6" color="text.secondary" sx={{ mb: 5, fontWeight: 400 }}>
-                Universitetimizning nufuzli ilmiy jurnali orqali o'z tadqiqotingizni nashr etish bo'yicha yo'riqnoma.
+                Ilmiy maqolani tadqim qilish bo'yicha yo'riqnoma
             </Typography>
 
             <Paper elevation={8} sx={{
@@ -1038,10 +1038,10 @@ const ForAuthors: React.FC = () => {
                 }
             }}>
                 <Typography variant="h5" sx={{ mb: 2, fontWeight: 700, color: SECONDARY_COLOR }}>
-                    Maqolani rasmiy yuborish platformasi
+                    Maqolani yuborish tizimi
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-                    Jarayonni tizim orqali boshlash uchun quyidagi tugmani bosing.
+                    Jarayonni  boshlash uchun quyidagi tugmani bosing
                 </Typography>
                 <Button
                     variant="contained"
@@ -1065,7 +1065,7 @@ const ForAuthors: React.FC = () => {
 
             <Paper elevation={4} sx={{ p: 5, mb: 6, borderRadius: 2, bgcolor: LIGHT_BACKGROUND }}>
                 <Typography variant="h6" color={PRIMARY_COLOR} sx={{ mb: 4, fontWeight: 700, textAlign: 'center' }}>
-                    Tadqiqotni taqdim etish bosqichlari
+                    Tadqiqotni taqdim qilish bosqichlari
                 </Typography>
 
                 <Stepper alternativeLabel connector={<Divider sx={{ bgcolor: PRIMARY_COLOR }} />}>
