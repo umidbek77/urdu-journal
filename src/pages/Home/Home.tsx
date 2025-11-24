@@ -40,7 +40,7 @@ const Home: React.FC = () => {
                             letterSpacing: 1.5,
                         }}
                     >
-                        Journal of Khwarazm Information Technologies
+                        "Journal of Khwarazm Information Technologies" LAST
                     </Typography>
 
                     <Box sx={{
