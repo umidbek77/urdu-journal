@@ -147,24 +147,24 @@ const UsefulLinks = () => {
 
 
 
-    function downloadLocalDocx() {
-    const filePath = "/public/Template.docx"; // lokal docx manzili
-    const fileName = "Template.docx";  // yuklab olish nomi
+    // function downloadLocalDocx() {
+    // const filePath = "/public/Template.docx"; // lokal docx manzili
+    // const fileName = "Template.docx";  // yuklab olish nomi
 
-    fetch(filePath)
-        .then(response => response.blob())
-        .then(blob => {
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 500);
-        })
-        .catch(err => console.error("Fayl yuklanmadi:", err));
-    }
+    // fetch(filePath)
+    //     .then(response => response.blob())
+    //     .then(blob => {
+    //     const url = URL.createObjectURL(blob);
+    //     const link = document.createElement("a");
+    //     link.href = url;
+    //     link.download = fileName;
+    //     document.body.appendChild(link);
+    //     link.click();
+    //     link.remove();
+    //     setTimeout(() => URL.revokeObjectURL(url), 500);
+    //     })
+    //     .catch(err => console.error("Fayl yuklanmadi:", err));
+    // }
 
 
     const handleCloseModal = () => {
@@ -189,9 +189,10 @@ const UsefulLinks = () => {
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
                     Maqolani formatlash bo'yicha rasmiy namunaviy faylni (.docx) yuklab olishingiz mumkin
                 </Typography>
+                <a href='/public/Template.docx' download={"Template.docx"} >
                 <Button
                     variant="contained"
-                     onClick={downloadLocalDocx}
+                    //  onClick={downloadLocalDocx}
                     startIcon={<DownloadIcon />}
                     sx={{
                         bgcolor: SECONDARY_COLOR,
@@ -200,8 +201,10 @@ const UsefulLinks = () => {
                         '&:hover': { bgcolor: '#FFD700' }
                     }}
                 >
+                    
                     Shablonni yuklab olish
                 </Button>
+                </a>
             </Box>
 
             <PdfViewerModal
