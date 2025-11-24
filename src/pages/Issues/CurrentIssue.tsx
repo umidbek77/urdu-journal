@@ -166,16 +166,18 @@ const CurrentIssue: React.FC = () => {
                         </Box>
 
                         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                            <a href="../public/To'plam 11.2025 №1.pdf" target='blank'>
                             <Button
                                 variant="contained"
                                 color="primary"
                                 size="large"
                                 startIcon={<VisibilityIcon />}
                                 sx={{ fontWeight: 700, textTransform: 'none' }}
-                                onClick={handleOpenPdf} // === YANGILANDI ===
+                                //onClick={handleOpenPdf} // === YANGILANDI ===
                             >
-                                To‘liq PDF ko‘rish
+                                To‘plam faylini ko‘rish
                             </Button>
+                            </a>
 
                             {/*<Button*/}
                             {/*    variant="outlined"*/}
