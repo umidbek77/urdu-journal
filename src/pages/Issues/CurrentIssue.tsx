@@ -1,9 +1,9 @@
-//import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Container, Typography, Button, Paper, useTheme } from '@mui/material';
 // import DownloadIcon from '@mui/icons-material/Download';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 // import { Link } from 'react-router-dom';
-//import PdfViewerModal from '../../components/ui/PdfViewerModal'; // === YANGI QO‘SHILDI ===
+import PdfViewerModal from '../../components/ui/PdfViewerModal'; // === YANGI QO‘SHILDI ===
 
 interface Issue {
     id: string;
@@ -37,21 +37,21 @@ const CurrentIssue: React.FC = () => {
     const gradientBackground = `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${theme.palette.grey[50]} 100%)`;
 
     // === PDF MODAL UCHUN YANGI STATE VA FUNKSIYALAR ===
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [currentPdfUrl, setCurrentPdfUrl] = useState('');
-    // const [currentPdfTitle, setCurrentPdfTitle] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentPdfUrl, setCurrentPdfUrl] = useState('');
+    const [currentPdfTitle, setCurrentPdfTitle] = useState('');
 
-    // // const handleOpenPdf = () => {
-    // //     setCurrentPdfUrl(currentIssue.pdfFile);
-    // //     setCurrentPdfTitle(`Jurnal ${currentIssue.year} - ${currentIssue.number}`);
-    // //     setIsModalOpen(true);
-    // // };
+    const handleOpenPdf = () => {
+        setCurrentPdfUrl(currentIssue.pdfFile);
+        setCurrentPdfTitle(`Jurnal ${currentIssue.year} - ${currentIssue.number}`);
+        setIsModalOpen(true);
+    };
 
-    // const handleClosePdf = () => {
-    //     setIsModalOpen(false);
-    //     setCurrentPdfUrl('');
-    //     setCurrentPdfTitle('');
-    // };
+    const handleClosePdf = () => {
+        setIsModalOpen(false);
+        setCurrentPdfUrl('');
+        setCurrentPdfTitle('');
+    };
     // === YANGI QISM TUGADI ===
 
     // const handleDownload = () => {
@@ -166,18 +166,16 @@ const CurrentIssue: React.FC = () => {
                         </Box>
 
                         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                            <a href="../public/To'plam 11.2025 №1.pdf" target='blank'>
                             <Button
                                 variant="contained"
                                 color="primary"
                                 size="large"
                                 startIcon={<VisibilityIcon />}
                                 sx={{ fontWeight: 700, textTransform: 'none' }}
-                                // onClick={handleOpenPdf} // === YANGILANDI ===
+                                onClick={handleOpenPdf} // === YANGILANDI ===
                             >
                                 To‘plam faylini ko‘rish
                             </Button>
-                            </a>
 
                             {/*<Button*/}
                             {/*    variant="outlined"*/}
@@ -195,12 +193,12 @@ const CurrentIssue: React.FC = () => {
             </Paper>
 
             {/* === PDF MODAL QO‘SHILDI === */}
-            {/* <PdfViewerModal
+            <PdfViewerModal
                 open={isModalOpen}
                 onClose={handleClosePdf}
                 pdfUrl={currentPdfUrl}
                 title={currentPdfTitle}
-            /> */}
+            />
             {/* === TUGADI === */}
         </Container>
     );
