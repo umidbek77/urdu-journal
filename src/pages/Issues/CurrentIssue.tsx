@@ -174,7 +174,7 @@ const CurrentIssue: React.FC = () => {
                                 sx={{ fontWeight: 700, textTransform: 'none' }}
                                 onClick={handleOpenPdf} // === YANGILANDI ===
                             >
-                                To‘plam faylini ko‘rish
+                                To‘plam faylni ko‘rish
                             </Button>
 
                             {/*<Button*/}
