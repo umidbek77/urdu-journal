@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom/client';
 import Router from './Router';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { theme } from './theme/theme';
+import { AuthProvider } from './contexts/AuthContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Router />
+            <AuthProvider>
+                <Router />
+            </AuthProvider>
         </ThemeProvider>
     </React.StrictMode>,
 );
