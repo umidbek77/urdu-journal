@@ -5,7 +5,6 @@ import {
   Button,
   Typography,
   Paper,
-  Divider,
   Alert,
 } from "@mui/material";
 import { api } from "../../api/axios";
