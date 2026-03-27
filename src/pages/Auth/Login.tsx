@@ -26,8 +26,8 @@ const Login = () => {
 
       setUser(user);
 
-      if (user.role === "SUPER_ADMIN") navigate("/admin");
-      else if (user.role === "EDITOR") navigate("/editor");
+      if (user.role === "SUPER_ADMIN") navigate("/admin-dashboard");
+      else if (user.role === "EDITOR") navigate("/editor-dashboard");
       else navigate("/dashboard");
     } catch {
       alert("Login xato");

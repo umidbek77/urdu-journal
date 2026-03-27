@@ -49,27 +49,79 @@ const EditorArticles = () => {
 
   return (
     <Box p={3}>
-      <Typography variant="h4" mb={3}>
+      <Typography variant="h4" mb={3} fontWeight={700}>
         Articles For Review
       </Typography>
 
-      <Paper>
+      <Paper
+        elevation={0}
+        sx={{
+          borderRadius: 3,
+          overflow: "hidden",
+          border: "1px solid #e5e7eb",
+        }}
+      >
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell>Title</TableCell>
+            <TableRow sx={{ backgroundColor: "#f8fafc" }}>
+              <TableCell
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "0.95rem",
+                  color: "text.primary",
+                  borderBottom: "1px solid #e5e7eb",
+                }}
+              >
+                Title
+              </TableCell>
 
-              <TableCell>Status</TableCell>
+              <TableCell
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "0.95rem",
+                  color: "text.primary",
+                  borderBottom: "1px solid #e5e7eb",
+                }}
+              >
+                Status
+              </TableCell>
 
-              <TableCell>Review</TableCell>
+              <TableCell
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "0.95rem",
+                  color: "text.primary",
+                  borderBottom: "1px solid #e5e7eb",
+                }}
+              >
+                Review
+              </TableCell>
 
-              <TableCell>Actions</TableCell>
+              <TableCell
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "0.95rem",
+                  color: "text.primary",
+                  borderBottom: "1px solid #e5e7eb",
+                }}
+              >
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {articles.map((a) => (
-              <TableRow key={a.id}>
+              <TableRow
+                key={a.id}
+                hover
+                sx={{
+                  "& td": {
+                    fontWeight: 500,
+                    borderBottom: "1px solid #f1f5f9",
+                  },
+                }}
+              >
                 <TableCell>{a.title}</TableCell>
 
                 <TableCell>{a.status}</TableCell>
@@ -85,17 +137,31 @@ const EditorArticles = () => {
 
                 <TableCell>
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     color="success"
-                    sx={{ mr: 1 }}
+                    size="small"
+                    sx={{
+                      mr: 1,
+                      minWidth: "90px",
+                      textTransform: "none",
+                      fontWeight: 600,
+                      borderRadius: "10px",
+                    }}
                     onClick={() => handleReview(a.id, "ACCEPTED")}
                   >
                     Accept
                   </Button>
 
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     color="error"
+                    size="small"
+                    sx={{
+                      minWidth: "90px",
+                      textTransform: "none",
+                      fontWeight: 600,
+                      borderRadius: "10px",
+                    }}
                     onClick={() => handleReview(a.id, "REJECTED")}
                   >
                     Reject

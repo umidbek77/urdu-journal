@@ -24,14 +24,23 @@ const AdminIssues = () => {
 
   return (
     <Box p={3}>
-      <Typography variant="h4" mb={3}>
+      <Typography variant="h4" mb={3} fontWeight={700}>
         Create Journal Issue
       </Typography>
 
-      <Paper sx={{ p: 3, maxWidth: 500 }}>
+      <Paper
+        sx={{
+          p: 3,
+          maxWidth: 500,
+          border: "1px solid #e5e7eb",
+          borderRadius: 3,
+          boxShadow: "none",
+        }}
+      >
         <TextField
           label="Volume"
           fullWidth
+          size="small"
           sx={{ mb: 2 }}
           value={volume}
           onChange={(e) => setVolume(e.target.value)}
@@ -40,6 +49,7 @@ const AdminIssues = () => {
         <TextField
           label="Number"
           fullWidth
+          size="small"
           sx={{ mb: 2 }}
           value={number}
           onChange={(e) => setNumber(e.target.value)}
@@ -48,12 +58,22 @@ const AdminIssues = () => {
         <TextField
           label="Year"
           fullWidth
+          size="small"
           sx={{ mb: 3 }}
           value={year}
           onChange={(e) => setYear(e.target.value)}
         />
 
-        <Button variant="contained" onClick={handleCreate}>
+        <Button
+          variant="outlined"
+          sx={{
+            textTransform: "none",
+            fontWeight: 600,
+            borderRadius: "10px",
+            px: 2.5,
+          }}
+          onClick={handleCreate}
+        >
           Create Issue
         </Button>
       </Paper>

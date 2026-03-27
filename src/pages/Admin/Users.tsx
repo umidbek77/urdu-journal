@@ -39,18 +39,28 @@ const AdminUsers = () => {
 
   return (
     <Box p={3}>
-      <Typography variant="h4" mb={3}>
+      <Typography variant="h4" mb={3} fontWeight={700}>
         Users
       </Typography>
 
-      <Paper>
+      <Paper
+        sx={{
+          border: "1px solid #e5e7eb",
+          borderRadius: 3,
+          overflow: "hidden",
+          boxShadow: "none",
+        }}
+      >
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Affiliation</TableCell>
-              <TableCell>Created</TableCell>
+            <TableRow sx={{ backgroundColor: "#f8fafc" }}>
+              <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
+
+              <TableCell sx={{ fontWeight: 700 }}>Email</TableCell>
+
+              <TableCell sx={{ fontWeight: 700 }}>Affiliation</TableCell>
+
+              <TableCell sx={{ fontWeight: 700 }}>Created</TableCell>
             </TableRow>
           </TableHead>
 
@@ -65,7 +75,16 @@ const AdminUsers = () => {
               </TableRow>
             ) : (
               users.map((u) => (
-                <TableRow key={u.id}>
+                <TableRow
+                  key={u.id}
+                  hover
+                  sx={{
+                    "& td": {
+                      fontWeight: 500,
+                      borderBottom: "1px solid #f1f5f9",
+                    },
+                  }}
+                >
                   <TableCell>{u.name}</TableCell>
 
                   <TableCell>{u.email}</TableCell>

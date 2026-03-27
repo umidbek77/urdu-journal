@@ -69,73 +69,119 @@ const AdminEditors = () => {
 
   return (
     <Box p={3}>
-      <Typography variant="h4" mb={3}>
+      <Typography variant="h4" mb={3} fontWeight={700}>
         Editors Management
       </Typography>
 
-
-      <Paper sx={{ p: 3, mb: 4 }}>
-        <Typography variant="h6" mb={2}>
+      <Paper
+        sx={{
+          p: 3,
+          mb: 4,
+          border: "1px solid #e5e7eb",
+          borderRadius: 3,
+          boxShadow: "none",
+        }}
+      >
+        <Typography variant="h6" mb={2} fontWeight={600}>
           Create Editor
         </Typography>
 
-        <TextField
-          label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          sx={{ mr: 2 }}
-        />
+        <Box display="flex" flexWrap="wrap" gap={2}>
+          <TextField
+            label="Name"
+            value={name}
+            size="small"
+            onChange={(e) => setName(e.target.value)}
+          />
 
-        <TextField
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          sx={{ mr: 2 }}
-        />
+          <TextField
+            label="Email"
+            value={email}
+            size="small"
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <TextField
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          sx={{ mr: 2 }}
-        />
+          <TextField
+            label="Password"
+            type="password"
+            value={password}
+            size="small"
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <Button variant="contained" onClick={handleCreate}>
-          Create
-        </Button>
+          <Button
+            variant="outlined"
+            sx={{
+              textTransform: "none",
+              fontWeight: 600,
+              borderRadius: "10px",
+              px: 2,
+            }}
+            onClick={handleCreate}
+          >
+            Create
+          </Button>
+        </Box>
       </Paper>
 
-      <Paper>
+      <Paper
+        sx={{
+          border: "1px solid #e5e7eb",
+          borderRadius: 3,
+          overflow: "hidden",
+          boxShadow: "none",
+        }}
+      >
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Action</TableCell>
+            <TableRow sx={{ backgroundColor: "#f8fafc" }}>
+              <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
+
+              <TableCell sx={{ fontWeight: 700 }}>Email</TableCell>
+
+              <TableCell sx={{ fontWeight: 700 }}>Password</TableCell>
+
+              <TableCell sx={{ fontWeight: 700 }}>Action</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={3}>Loading...</TableCell>
+                <TableCell colSpan={4}>Loading...</TableCell>
               </TableRow>
             ) : editors.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={3}>No editors found</TableCell>
+                <TableCell colSpan={4}>No editors found</TableCell>
               </TableRow>
             ) : (
               editors.map((e) => (
-                <TableRow key={e.id}>
+                <TableRow
+                  key={e.id}
+                  hover
+                  sx={{
+                    "& td": {
+                      fontWeight: 500,
+                      borderBottom: "1px solid #f1f5f9",
+                    },
+                  }}
+                >
                   <TableCell>{e.name}</TableCell>
 
                   <TableCell>{e.email}</TableCell>
 
+                  <TableCell>{e.password}</TableCell>
+
                   <TableCell>
                     <Button
                       color="error"
-                      variant="contained"
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        textTransform: "none",
+                        fontWeight: 600,
+                        borderRadius: "10px",
+                      }}
                       onClick={() => handleDelete(e.id)}
                     >
                       Delete

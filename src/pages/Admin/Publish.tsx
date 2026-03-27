@@ -9,9 +9,12 @@ import {
   TableBody,
   Button,
   Paper,
+  TextField,
+  MenuItem,
 } from "@mui/material";
 
 import { getAcceptedArticles, publishArticle } from "../../api/admin.api";
+import { api } from "../../api/axios";
 
 const AdminPublish = () => {
   const [articles, setArticles] = useState<any[]>([]);
@@ -26,42 +29,108 @@ const AdminPublish = () => {
     loadArticles();
   }, []);
 
-  const handlePublish = async (id: string) => {
-    const issueId = prompt("Enter issue id");
+  const [issues, setIssues] = useState<any[]>([]);
+  const [selectedIssues, setSelectedIssues] = useState<Record<string, string>>(
+    {},
+  );
 
-    if (!issueId) return;
+  useEffect(() => {
+    api.get("/issues").then((res) => {
+      setIssues(res.data);
+    });
+  }, []);
 
-    await publishArticle(id, issueId);
+  const handlePublish = async (articleId: string) => {
+    const issueId = selectedIssues[articleId];
 
-    loadArticles();
+    if (!issueId) {
+      alert("Issue tanlang!");
+      return;
+    }
+
+    try {
+      await publishArticle(articleId, issueId);
+      loadArticles();
+    } catch (err) {
+      console.error(err);
+      alert("Publish error");
+    }
   };
 
   return (
     <Box p={3}>
-      <Typography variant="h4" mb={3}>
+      <Typography variant="h4" mb={3} fontWeight={700}>
         Accepted Articles
       </Typography>
 
-      <Paper>
+      <Paper
+        sx={{
+          border: "1px solid #e5e7eb",
+          borderRadius: 3,
+          overflow: "hidden",
+          boxShadow: "none",
+        }}
+      >
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Publish</TableCell>
+            <TableRow sx={{ backgroundColor: "#f8fafc" }}>
+              <TableCell sx={{ fontWeight: 700 }}>Title</TableCell>
+
+              <TableCell sx={{ fontWeight: 700 }}>Status</TableCell>
+
+              <TableCell sx={{ fontWeight: 700 }}>Issue</TableCell>
+
+              <TableCell sx={{ fontWeight: 700 }}>Publish</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {articles.map((a) => (
-              <TableRow key={a.id}>
+              <TableRow
+                key={a.id}
+                hover
+                sx={{
+                  "& td": {
+                    fontWeight: 500,
+                    borderBottom: "1px solid #f1f5f9",
+                  },
+                }}
+              >
                 <TableCell>{a.title}</TableCell>
 
                 <TableCell>{a.status}</TableCell>
 
                 <TableCell>
+                  <TextField
+                    select
+                    size="small"
+                    value={selectedIssues[a.id] || ""}
+                    onChange={(e) =>
+                      setSelectedIssues((prev) => ({
+                        ...prev,
+                        [a.id]: e.target.value,
+                      }))
+                    }
+                    sx={{ minWidth: 180 }}
+                  >
+                    {issues.map((issue) => (
+                      <MenuItem key={issue.id} value={issue.id}>
+                        {issue.volume}-{issue.number} ({issue.year})
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </TableCell>
+
+                <TableCell>
                   <Button
-                    variant="contained"
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                      textTransform: "none",
+                      fontWeight: 600,
+                      borderRadius: "10px",
+                      minWidth: "90px",
+                    }}
                     onClick={() => handlePublish(a.id)}
                   >
                     Publish
