@@ -10,14 +10,17 @@ import {
   TableHead,
   TableRow,
   Chip,
+  Button,
 } from "@mui/material";
-import { getMyArticles } from "../../api/articles.api";
+import { getMyArticles, uploadPayment } from "../../api/articles.api";
 
 interface Article {
   id: string;
   title: string;
   status: string;
   createdAt: string;
+  reviewFileUrl?: string;
+  paymentReceiptUrl?: string;
 }
 
 const MyArticles = () => {
@@ -35,6 +38,34 @@ const MyArticles = () => {
   useEffect(() => {
     fetchArticles();
   }, []);
+
+  const handlePaymentUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: string,
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      await uploadPayment(id, file);
+      fetchArticles(); // refresh
+    } catch (err) {
+      console.error("Upload error", err);
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "ACCEPTED":
+        return "#16a34a";
+      case "REJECTED":
+        return "#dc2626";
+      case "PUBLISHED":
+        return "#2563eb";
+      default:
+        return "#64748b";
+    }
+  };
 
   return (
     <Box p={3}>
@@ -55,10 +86,9 @@ const MyArticles = () => {
           <TableHead>
             <TableRow sx={{ backgroundColor: "#f8fafc" }}>
               <TableCell sx={{ fontWeight: 700 }}>Title</TableCell>
-
               <TableCell sx={{ fontWeight: 700 }}>Status</TableCell>
-
               <TableCell sx={{ fontWeight: 700 }}>Date</TableCell>
+              <TableCell sx={{ fontWeight: 700 }}>Actions</TableCell>
             </TableRow>
           </TableHead>
 
@@ -79,14 +109,46 @@ const MyArticles = () => {
                 <TableCell>
                   <Chip
                     label={article.status}
-                    color="primary"
                     size="small"
-                    sx={{ fontWeight: 600 }}
+                    sx={{
+                      fontWeight: 600,
+                      backgroundColor: getStatusColor(article.status),
+                      color: "#fff",
+                    }}
                   />
                 </TableCell>
 
                 <TableCell>
                   {new Date(article.createdAt).toLocaleDateString()}
+                </TableCell>
+
+                <TableCell>
+                  {article.status === "ACCEPTED" &&
+                    !article.paymentReceiptUrl && (
+                      <Button
+                        variant="contained"
+                        component="label"
+                        size="small"
+                      >
+                        Upload Payment
+                        <input
+                          type="file"
+                          hidden
+                          onChange={(e) => handlePaymentUpload(e, article.id)}
+                        />
+                      </Button>
+                    )}
+
+                  {article.paymentReceiptUrl && (
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      href={article.paymentReceiptUrl}
+                      target="_blank"
+                    >
+                      View Receipt
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

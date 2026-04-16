@@ -23,6 +23,8 @@ const EditorArticles = () => {
   const [openPreview, setOpenPreview] = useState(false);
   const [selectedFile, setSelectedFile] = useState("");
 
+  const [selectedFiles, setSelectedFiles] = useState<Record<string, File>>({});
+
   const loadArticles = () => {
     getSubmittedArticles().then((res) => {
       setArticles(res.data);
@@ -33,10 +35,20 @@ const EditorArticles = () => {
     loadArticles();
   }, []);
 
+  const handleFileChange = (id: string, file: File) => {
+    setSelectedFiles((prev) => ({
+      ...prev,
+      [id]: file,
+    }));
+  };
+
   const handleReview = async (id: string, status: string) => {
+    const file = selectedFiles[id];
+
     await reviewArticle(id, {
       status,
       feedback: "Reviewed by editor",
+      file,
     });
 
     loadArticles();
@@ -64,64 +76,16 @@ const EditorArticles = () => {
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: "#f8fafc" }}>
-              <TableCell
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  color: "text.primary",
-                  borderBottom: "1px solid #e5e7eb",
-                }}
-              >
-                Title
-              </TableCell>
-
-              <TableCell
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  color: "text.primary",
-                  borderBottom: "1px solid #e5e7eb",
-                }}
-              >
-                Status
-              </TableCell>
-
-              <TableCell
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  color: "text.primary",
-                  borderBottom: "1px solid #e5e7eb",
-                }}
-              >
-                Review
-              </TableCell>
-
-              <TableCell
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  color: "text.primary",
-                  borderBottom: "1px solid #e5e7eb",
-                }}
-              >
-                Actions
-              </TableCell>
+              <TableCell sx={{ fontWeight: 700 }}>Title</TableCell>
+              <TableCell sx={{ fontWeight: 700 }}>Status</TableCell>
+              <TableCell sx={{ fontWeight: 700 }}>Review</TableCell>
+              <TableCell sx={{ fontWeight: 700 }}>Actions</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {articles.map((a) => (
-              <TableRow
-                key={a.id}
-                hover
-                sx={{
-                  "& td": {
-                    fontWeight: 500,
-                    borderBottom: "1px solid #f1f5f9",
-                  },
-                }}
-              >
+              <TableRow key={a.id} hover>
                 <TableCell>{a.title}</TableCell>
 
                 <TableCell>{a.status}</TableCell>
@@ -136,6 +100,32 @@ const EditorArticles = () => {
                 </TableCell>
 
                 <TableCell>
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    id={`file-${a.id}`}
+                    onChange={(e) => {
+                      if (e.target.files?.[0]) {
+                        handleFileChange(a.id, e.target.files[0]);
+                      }
+                    }}
+                  />
+
+                  <label htmlFor={`file-${a.id}`}>
+                    <Button
+                      component="span"
+                      variant="contained"
+                      size="small"
+                      sx={{
+                        mr: 1,
+                        textTransform: "none",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      Upload Review
+                    </Button>
+                  </label>
+
                   <Button
                     variant="outlined"
                     color="success"

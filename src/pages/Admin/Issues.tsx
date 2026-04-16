@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Box, Typography, Paper, TextField, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Paper,
+  TextField,
+  Button,
+  Stack,
+} from "@mui/material";
 
 import { api } from "../../api/axios";
 
@@ -7,19 +14,48 @@ const AdminIssues = () => {
   const [volume, setVolume] = useState("");
   const [number, setNumber] = useState("");
   const [year, setYear] = useState("");
+  const [publishedDate, setPublishedDate] = useState("");
+  const [series, setSeries] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [coverImage, setCoverImage] = useState<File | null>(null);
 
   const handleCreate = async () => {
-    await api.post("/issues", {
-      volume: Number(volume),
-      number: Number(number),
-      year: Number(year),
-    });
+    try {
+      const formData = new FormData();
 
-    setVolume("");
-    setNumber("");
-    setYear("");
+      formData.append("volume", volume);
+      formData.append("number", number);
+      formData.append("year", year);
+      formData.append("publishedDate", publishedDate);
+      formData.append("series", series);
 
-    alert("Issue created");
+      if (file) {
+        formData.append("file", file);
+      }
+
+      if (coverImage) {
+        formData.append("coverImage", coverImage);
+      }
+
+      await api.post("/issues", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setVolume("");
+      setNumber("");
+      setYear("");
+      setPublishedDate("");
+      setSeries("");
+      setFile(null);
+      setCoverImage(null);
+
+      alert("Issue created successfully 🚀");
+    } catch (err) {
+      console.error(err);
+      alert("Error creating issue");
+    }
   };
 
   return (
@@ -59,18 +95,81 @@ const AdminIssues = () => {
           label="Year"
           fullWidth
           size="small"
-          sx={{ mb: 3 }}
+          sx={{ mb: 2 }}
           value={year}
           onChange={(e) => setYear(e.target.value)}
         />
 
+        <TextField
+          label="Published Date"
+          type="date"
+          fullWidth
+          size="small"
+          sx={{ mb: 2 }}
+          InputLabelProps={{ shrink: true }}
+          value={publishedDate}
+          onChange={(e) => setPublishedDate(e.target.value)}
+        />
+
+        <TextField
+          label="Series"
+          fullWidth
+          size="small"
+          sx={{ mb: 2 }}
+          value={series}
+          onChange={(e) => setSeries(e.target.value)}
+        />
+        <Stack direction="row" justifyContent={'space-between'} spacing={2} mb={2}>
+          <Button
+            variant="outlined"
+            component="label"
+            sx={{
+              mb: 2,
+              textTransform: "none",
+              borderRadius: "10px",
+            }}
+          >
+            {file ? file.name : "Upload Issue PDF"}
+            <input
+              hidden
+              type="file"
+              onChange={(e) => {
+                if (e.target.files?.[0]) {
+                  setFile(e.target.files[0]);
+                }
+              }}
+            />
+          </Button>
+
+          <Button
+            variant="outlined"
+            component="label"
+            sx={{
+              mb: 2,
+              textTransform: "none",
+              borderRadius: "10px",
+            }}
+          >
+            {coverImage ? coverImage.name : "Upload Cover Image"}
+            <input
+              hidden
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                if (e.target.files?.[0]) {
+                  setCoverImage(e.target.files[0]);
+                }
+              }}
+            />
+          </Button>
+        </Stack>
         <Button
-          variant="outlined"
+          variant="contained"
+          fullWidth
           sx={{
             textTransform: "none",
             fontWeight: 600,
             borderRadius: "10px",
-            px: 2.5,
           }}
           onClick={handleCreate}
         >

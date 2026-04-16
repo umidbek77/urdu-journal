@@ -1,55 +1,82 @@
-import React from 'react';
-import { Container, Typography, Box } from '@mui/material';
-import { MOCK_ISSUES } from '../../utils/mockData';
-import ArticleCard from '../../components/articles/ArticleCard';
-import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
-import UsefulLinks from '../../components/common/UsefulLinks';
+import React, { useEffect, useState } from "react";
+import { Container, Typography, Box } from "@mui/material";
+import ArticleCard from "../../components/articles/ArticleCard";
+import CustomBreadcrumbs from "../../components/ui/Breadcrumbs";
+import UsefulLinks from "../../components/common/UsefulLinks";
+import { api } from "../../api/axios";
+
+interface Issue {
+  id: string;
+  volume: number;
+  number: number;
+  year: number;
+  series: string;
+  publishedDate: string;
+  coverImageUrl?: string;
+}
 
 const Issues: React.FC = () => {
-    const sortedIssues = [...MOCK_ISSUES].sort((a, b) => b.id - a.id);
+  const [issues, setIssues] = useState<Issue[]>([]);
 
-    return (
-        <Container maxWidth="lg" sx={{ py: 4 }}>
-            <CustomBreadcrumbs currentPage="Sonlar arxivi" />
+  const fetchIssues = async () => {
+    try {
+      const res = await api.get("/issues");
+      setIssues(res.data);
+    } catch (err) {
+      console.error("Issues load error", err);
+    }
+  };
 
-            <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 4 }}>
-                Sonlar arxivi
-            </Typography>
+  useEffect(() => {
+    fetchIssues();
+  }, []);
 
-            <Box sx={{ mb: 4 }}>
-                <Typography variant="h6" color="primary" sx={{ fontWeight: 600 }}>
-                    Jami nashr qilingan sonlar: {MOCK_ISSUES.length}
-                </Typography>
-            </Box>
+  const sortedIssues = [...issues].sort(
+    (a, b) =>
+      new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime(),
+  );
 
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: 4
-                }}
-            >
-                {sortedIssues.map((issue) => (
-                    <Box
-                        key={issue.id}
-                        sx={{
-                            width: {
-                                xs: '100%',
-                                sm: 'calc(50% - 16px)',
-                                md: 'calc(33.3333% - 21.33px)',
-                                lg: 'calc(25% - 24px)'
-                            },
-                            flexGrow: 1,
-                            mb: 2
-                        }}
-                    >
-                        <ArticleCard issue={issue} />
-                    </Box>
-                ))}
-            </Box>
-        <UsefulLinks />
-        </Container>
-    );
+  return (
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <CustomBreadcrumbs currentPage="Sonlar arxivi" />
+
+      <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
+        Sonlar arxivi
+      </Typography>
+
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h6" color="primary" sx={{ fontWeight: 600 }}>
+          Jami nashr qilingan sonlar: {issues.length}
+        </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 3,
+        }}
+      >
+        {sortedIssues.map((issue) => (
+          <Box
+            key={issue.id}
+            sx={{
+              width: {
+                xs: "100%",
+                sm: "calc(50% - 12px)",
+                md: "calc(33.3333% - 16px)",
+                lg: "calc(25% - 18px)",
+              },
+            }}
+          >
+            <ArticleCard issue={issue} />
+          </Box>
+        ))}
+      </Box>
+
+      <UsefulLinks />
+    </Container>
+  );
 };
 
 export default Issues;

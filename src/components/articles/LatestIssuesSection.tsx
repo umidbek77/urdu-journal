@@ -1,63 +1,87 @@
-import React from 'react';
-import { Container, Typography, Button, Box } from '@mui/material';
-import { MOCK_ISSUES } from '../../utils/mockData';
-import ArticleCard from './ArticleCard';
+import React, { useEffect, useState } from "react";
+import { Container, Typography, Button, Box } from "@mui/material";
+import ArticleCard from "./ArticleCard";
+import { api } from "../../api/axios";
+
+interface Issue {
+  id: string;
+  number: number;
+  year: number;
+  series: string;
+  publishedDate: string;
+  coverImageUrl?: string;
+}
 
 const LatestIssuesSection: React.FC = () => {
-    const latestIssues = MOCK_ISSUES.slice(0, 3);
+  const [issues, setIssues] = useState<Issue[]>([]);
 
-    return (
-        <Container maxWidth="lg">
-            <Typography
-                variant="h4"
-                component="h2"
-                align="center"
-                sx={{ fontWeight: 700, mb: 4, color: 'primary.main' }}
-            >
-                Latest Issues
-            </Typography>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: 4,
-                    justifyContent: 'center',
-                }}
-            >
-                {latestIssues.map((issue) => (
-                    <Box
-                        key={issue.id}
-                        sx={{
-                            width: {
-                                xs: '100%',
-                                sm: 'calc(50% - 16px)',
-                                md: 'calc(33.3333% - 21.33px)',
-                            },
-                            flexGrow: 1,
-                            maxWidth: {
-                                xs: 400,
-                                sm: 'calc(50% - 16px)',
-                                md: 'calc(33.3333% - 21.33px)',
-                            },
-                        }}
-                    >
-                        <ArticleCard issue={issue} />
-                    </Box>
-                ))}
-            </Box>
-            <Box sx={{ textAlign: 'center', mt: 5 }}>
-                <Button
-                    variant="outlined"
-                    color="primary"
-                    size="large"
-                    href="/issues"
-                    sx={{ fontWeight: 600, p: '10px 30px' }}
-                >
-                    View All Issues
-                </Button>
-            </Box>
-        </Container>
-    );
+  const fetchIssues = async () => {
+    try {
+      const res = await api.get("/issues");
+
+      const sorted = res.data.sort(
+        (a: Issue, b: Issue) =>
+          new Date(b.publishedDate).getTime() -
+          new Date(a.publishedDate).getTime(),
+      );
+
+      setIssues(sorted.slice(0, 3));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchIssues();
+  }, []);
+
+  return (
+    <Container maxWidth="lg">
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{ fontWeight: 700, mb: 4, color: "primary.main" }}
+      >
+        Latest Issues
+      </Typography>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 3,
+          justifyContent: "center",
+        }}
+      >
+        {issues.map((issue) => (
+          <Box
+            key={issue.id}
+            sx={{
+              width: {
+                xs: "100%",
+                sm: "calc(50% - 12px)",
+                md: "calc(33.3333% - 16px)",
+              },
+              maxWidth: 300,
+            }}
+          >
+            <ArticleCard issue={issue} />
+          </Box>
+        ))}
+      </Box>
+
+      <Box sx={{ textAlign: "center", mt: 5 }}>
+        <Button
+          variant="outlined"
+          size="large"
+          href="/issues"
+          sx={{ fontWeight: 600 }}
+        >
+          View All Issues
+        </Button>
+      </Box>
+    </Container>
+  );
 };
 
 export default LatestIssuesSection;
