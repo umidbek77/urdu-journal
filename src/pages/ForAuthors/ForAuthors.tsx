@@ -1052,7 +1052,7 @@ const ForAuthors: React.FC = () => {
                 Ilmiy maqolani tadqim qilish bo'yicha yo'riqnoma
             </Typography>
 
-            <Paper elevation={8} sx={{
+            {/* <Paper elevation={8} sx={{
                 p: 6,
                 mb: 6,
                 backgroundColor: PRIMARY_COLOR,
@@ -1088,7 +1088,7 @@ const ForAuthors: React.FC = () => {
                 >
                     Maqolani yuborish
                 </Button>
-            </Paper>
+            </Paper> */}
 
             <Paper elevation={4} sx={{ p: 5, mb: 6, borderRadius: 2, bgcolor: LIGHT_BACKGROUND }}>
                 <Typography variant="h6" color={PRIMARY_COLOR} sx={{ mb: 4, fontWeight: 700, textAlign: 'center' }}>

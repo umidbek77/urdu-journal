@@ -36,8 +36,17 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
   const [currentPdfUrl, setCurrentPdfUrl] = useState("");
   const [currentPdfTitle, setCurrentPdfTitle] = useState("");
 
+  // 🔥 FIXED: PDF OPEN (NULL + ENCODE + FALLBACK)
   const handleOpenPdf = () => {
-    setCurrentPdfUrl(currentIssue.pdfUrl || "");
+    if (!currentIssue.pdfUrl) {
+      alert("Bu issue uchun PDF mavjud emas");
+      return;
+    }
+
+    // URL encode (space muammo fix)
+    const safeUrl = encodeURI(currentIssue.pdfUrl);
+
+    setCurrentPdfUrl(safeUrl);
     setCurrentPdfTitle(`Jurnal ${currentIssue.year} - ${currentIssue.number}`);
     setIsModalOpen(true);
   };
@@ -81,6 +90,7 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
             alignItems: "center",
           }}
         >
+          {/* COVER */}
           <Box sx={{ width: { xs: "100%", md: 300 } }}>
             <Box
               sx={{
@@ -91,7 +101,10 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
               }}
             >
               <img
-                src={currentIssue.coverImageUrl || "/img_1.png"}
+                src={
+                  currentIssue.coverImageUrl ||
+                  "/img_1.png" // fallback image
+                }
                 alt="cover"
                 style={{
                   width: "100%",
@@ -102,6 +115,7 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
             </Box>
           </Box>
 
+          {/* INFO */}
           <Box sx={{ flexGrow: 1 }}>
             <Typography
               variant="h5"
@@ -115,18 +129,27 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
             </Typography>
 
             <Typography variant="h4" sx={{ fontWeight: 700, mb: 3 }}>
-              {currentIssue.series}
+              {currentIssue.series || "No series"}
             </Typography>
 
             <Typography sx={{ mb: 3 }}>
               Nashr qilingan:{" "}
-              {new Date(currentIssue.publishedDate).toLocaleDateString()}
+              {currentIssue.publishedDate
+                ? new Date(currentIssue.publishedDate).toLocaleDateString()
+                : "Noma’lum"}
             </Typography>
 
+            {/* 🔥 FIXED BUTTON */}
             <Button
               variant="contained"
               startIcon={<VisibilityIcon />}
               onClick={handleOpenPdf}
+              disabled={!currentIssue.pdfUrl} // 👈 NULL CHECK
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                borderRadius: "10px",
+              }}
             >
               PDF ko‘rish
             </Button>
@@ -134,6 +157,7 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
         </Box>
       </Paper>
 
+      {/* MODAL */}
       <PdfViewerModal
         open={isModalOpen}
         onClose={handleClosePdf}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Sidebar from "./components/layout/Sidebar";
@@ -8,13 +8,33 @@ import { useAuth } from "./hooks/useAuth";
 
 const App: React.FC = () => {
   const { user } = useAuth();
+  const location = useLocation();
+
+  const protectedLayouts = [
+    "/dashboard",
+    "/my-articles",
+    "/submit-article",
+    "/profile",
+    "/editor-dashboard",
+    "/editor-articles",
+    "/admin-dashboard",
+    "/editors",
+    "/users",
+    "/issues-admin",
+    "/publish",
+  ];
+
+  const showSidebar =
+    user && protectedLayouts.some((path) =>
+      location.pathname.startsWith(path)
+    );
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
 
       <Box sx={{ display: "flex", flexGrow: 1 }}>
-        {user && <Sidebar />}
+        {showSidebar && <Sidebar />}
 
         <Box
           component="main"

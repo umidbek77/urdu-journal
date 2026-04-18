@@ -11,8 +11,10 @@ import {
   TableRow,
   Chip,
   Button,
+  Stack,
 } from "@mui/material";
 import { getMyArticles, uploadPayment } from "../../api/articles.api";
+import PdfViewerModal from "../../components/ui/PdfViewerModal";
 
 interface Article {
   id: string;
@@ -25,6 +27,11 @@ interface Article {
 
 const MyArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
+
+  // 🔥 PDF MODAL STATE
+  const [open, setOpen] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState("");
+  const [pdfTitle, setPdfTitle] = useState("");
 
   const fetchArticles = async () => {
     try {
@@ -41,17 +48,34 @@ const MyArticles = () => {
 
   const handlePaymentUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
-    id: string,
+    id: string
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     try {
       await uploadPayment(id, file);
-      fetchArticles(); // refresh
+      fetchArticles();
     } catch (err) {
       console.error("Upload error", err);
     }
+  };
+
+  // 🔥 UNIVERSAL PDF OPEN
+  const handleOpenPdf = (url?: string, title?: string) => {
+    if (!url) return;
+
+    const safeUrl = encodeURI(url);
+
+    setPdfUrl(safeUrl);
+    setPdfTitle(title || "PDF Viewer");
+    setOpen(true);
+  };
+
+  const handleClosePdf = () => {
+    setOpen(false);
+    setPdfUrl("");
+    setPdfTitle("");
   };
 
   const getStatusColor = (status: string) => {
@@ -122,39 +146,78 @@ const MyArticles = () => {
                   {new Date(article.createdAt).toLocaleDateString()}
                 </TableCell>
 
+                {/* 🔥 ACTIONS */}
                 <TableCell>
-                  {article.status === "ACCEPTED" &&
-                    !article.paymentReceiptUrl && (
+                  <Stack direction="row" spacing={1} flexWrap="wrap">
+                    {/* Upload Payment */}
+                    {article.status === "ACCEPTED" &&
+                      !article.paymentReceiptUrl && (
+                        <Button
+                          variant="contained"
+                          component="label"
+                          size="small"
+                        >
+                          Upload Payment
+                          <input
+                            type="file"
+                            hidden
+                            onChange={(e) =>
+                              handlePaymentUpload(e, article.id)
+                            }
+                          />
+                        </Button>
+                      )}
+
+                    {/* View Payment */}
+                    {article.paymentReceiptUrl && (
                       <Button
-                        variant="contained"
-                        component="label"
+                        variant="outlined"
                         size="small"
+                        color="success"
+                        sx={{ textTransform: "none" }}
+                        onClick={() =>
+                          handleOpenPdf(
+                            article.paymentReceiptUrl,
+                            "Payment Receipt"
+                          )
+                        }
                       >
-                        Upload Payment
-                        <input
-                          type="file"
-                          hidden
-                          onChange={(e) => handlePaymentUpload(e, article.id)}
-                        />
+                        Payment
                       </Button>
                     )}
 
-                  {article.paymentReceiptUrl && (
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      href={article.paymentReceiptUrl}
-                      target="_blank"
-                    >
-                      View Receipt
-                    </Button>
-                  )}
+                    {/* 🔥 NEW: View Review */}
+                    {article.reviewFileUrl && (
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        color="secondary"
+                        sx={{ textTransform: "none" }}
+                        onClick={() =>
+                          handleOpenPdf(
+                            article.reviewFileUrl,
+                            "Review File"
+                          )
+                        }
+                      >
+                        Review
+                      </Button>
+                    )}
+                  </Stack>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* 🔥 PDF MODAL */}
+      <PdfViewerModal
+        open={open}
+        onClose={handleClosePdf}
+        pdfUrl={pdfUrl}
+        title={pdfTitle}
+      />
     </Box>
   );
 };

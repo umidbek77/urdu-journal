@@ -54,7 +54,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
       >
         <CardMedia
           component="img"
-          image={issue.coverImageUrl || "/img_1.png"}
+          image={issue.coverImageUrl}
           alt="issue cover"
           sx={{
             width: "100%",

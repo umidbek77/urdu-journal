@@ -11,13 +11,25 @@ import {
   Paper,
   TextField,
   MenuItem,
+  Stack,
+  Chip,
 } from "@mui/material";
 
 import { getAcceptedArticles, publishArticle } from "../../api/admin.api";
 import { api } from "../../api/axios";
+import PdfViewerModal from "../../components/ui/PdfViewerModal";
 
 const AdminPublish = () => {
   const [articles, setArticles] = useState<any[]>([]);
+  const [issues, setIssues] = useState<any[]>([]);
+  const [selectedIssues, setSelectedIssues] = useState<Record<string, string>>(
+    {},
+  );
+
+  // 🔥 PDF MODAL STATE
+  const [open, setOpen] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState("");
+  const [pdfTitle, setPdfTitle] = useState("");
 
   const loadArticles = () => {
     getAcceptedArticles().then((res) => {
@@ -28,11 +40,6 @@ const AdminPublish = () => {
   useEffect(() => {
     loadArticles();
   }, []);
-
-  const [issues, setIssues] = useState<any[]>([]);
-  const [selectedIssues, setSelectedIssues] = useState<Record<string, string>>(
-    {},
-  );
 
   useEffect(() => {
     api.get("/issues").then((res) => {
@@ -55,6 +62,24 @@ const AdminPublish = () => {
       console.error(err);
       alert("Publish error");
     }
+  };
+
+  // 🔥 UNIVERSAL PDF OPEN
+  const handleOpenPdf = (url?: string, title?: string) => {
+    if (!url) return;
+
+    // URL encode fix
+    const safeUrl = encodeURI(url);
+
+    setPdfUrl(safeUrl);
+    setPdfTitle(title || "PDF Viewer");
+    setOpen(true);
+  };
+
+  const handleClosePdf = () => {
+    setOpen(false);
+    setPdfUrl("");
+    setPdfTitle("");
   };
 
   return (
@@ -80,7 +105,7 @@ const AdminPublish = () => {
 
               <TableCell sx={{ fontWeight: 700 }}>Issue</TableCell>
 
-              <TableCell sx={{ fontWeight: 700 }}>Publish</TableCell>
+              <TableCell sx={{ fontWeight: 700 }}>Actions</TableCell>
             </TableRow>
           </TableHead>
 
@@ -98,7 +123,14 @@ const AdminPublish = () => {
               >
                 <TableCell>{a.title}</TableCell>
 
-                <TableCell>{a.status}</TableCell>
+                <TableCell>
+                  <Chip
+                    label={a.status}
+                    color="success"
+                    size="small"
+                    sx={{ fontWeight: 600 }}
+                  />
+                </TableCell>
 
                 <TableCell>
                   <TextField
@@ -121,26 +153,66 @@ const AdminPublish = () => {
                   </TextField>
                 </TableCell>
 
+                {/* 🔥 ACTIONS */}
                 <TableCell>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    sx={{
-                      textTransform: "none",
-                      fontWeight: 600,
-                      borderRadius: "10px",
-                      minWidth: "90px",
-                    }}
-                    onClick={() => handlePublish(a.id)}
-                  >
-                    Publish
-                  </Button>
+                  <Stack direction="row" spacing={1} flexWrap="wrap">
+                    {/* Publish */}
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        textTransform: "none",
+                        fontWeight: 600,
+                        borderRadius: "10px",
+                        minWidth: "90px",
+                      }}
+                      onClick={() => handlePublish(a.id)}
+                    >
+                      Publish
+                    </Button>
+
+                    {/* 🔥 VIEW REVIEW */}
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="secondary"
+                      sx={{ textTransform: "none", borderRadius: "10px" }}
+                      disabled={!a.reviewFileUrl}
+                      onClick={() =>
+                        handleOpenPdf(a.reviewFileUrl, "Review File")
+                      }
+                    >
+                      Review
+                    </Button>
+
+                    {/* 🔥 VIEW PAYMENT */}
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="success"
+                      sx={{ textTransform: "none", borderRadius: "10px" }}
+                      disabled={!a.paymentReceiptUrl}
+                      onClick={() =>
+                        handleOpenPdf(a.paymentReceiptUrl, "Payment Receipt")
+                      }
+                    >
+                      Payment
+                    </Button>
+                  </Stack>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </Paper>
+
+      {/* 🔥 PDF MODAL */}
+      <PdfViewerModal
+        open={open}
+        onClose={handleClosePdf}
+        pdfUrl={pdfUrl}
+        title={pdfTitle}
+      />
     </Box>
   );
 };
