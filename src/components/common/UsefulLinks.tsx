@@ -4,14 +4,17 @@ import { USEFUL_LINKS } from '../../utils/mockData';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { keyframes } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 
 const scroll = keyframes`
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* Ro'yxat o'zining 50% uzunligiga siljishi uchun (chunki biz uni 2 marta takrorlaymiz) */
+  100% { transform: translateX(-50%); }
 `;
 
 const UsefulLinks: React.FC = () => {
     const theme = useTheme();
+    const { t } = useTranslation();
+
     const infiniteLinks = [...USEFUL_LINKS, ...USEFUL_LINKS];
     const CARD_WIDTH = 320;
     const SCROLL_DURATION = USEFUL_LINKS.length * 6;
@@ -32,7 +35,7 @@ const UsefulLinks: React.FC = () => {
                     letterSpacing: '0.05em',
                 }}
             >
-                Foydali havolalar
+                {t("links.title")}
             </Typography>
 
             <Box
@@ -50,7 +53,6 @@ const UsefulLinks: React.FC = () => {
                         width: `${CARD_WIDTH * infiniteLinks.length}px`,
                         animation: `${scroll} ${SCROLL_DURATION}s linear infinite`,
                         gap: 3,
-
                         '&:hover': {
                             animationPlayState: 'paused',
                         }

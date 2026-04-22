@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "about": "About Journal",
+    "issues": "Issues",
+    "editorial": "Editorial Board",
+    "authors": "For Authors",
+    "contacts": "Contacts"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register"
+  },
+  "common": {
+    "language": "Language"
+  },
+  "home": {
+    "hero": {
+      "title": "Journal of Khwarazm Information Technologies",
+      "subtitle": "The Journal of Khwarazm Information Technologies at Urgench State University named after Abu Rayhan Beruni is dedicated to supporting scientific research and innovation",
+      "button": "Learn More"
+    }
+  },
+  "issue": {
+    "current": "Current Issue",
+    "volume": "VOLUME",
+    "number": "NUMBER",
+    "published": "Published",
+    "unknown": "Unknown",
+    "viewPdf": "View PDF",
+    "noPdf": "PDF is not available for this issue",
+    "noSeries": "No series",
+    "title": "Journal {{year}} - {{number}}"
+  },
+  "research": {
+    "title": "Join our scientific journey!",
+    "description": "Dear researchers, scientists, and academic contributors! We invite you to publish your research findings in our journal and present them to the wider scientific community. Our journal encourages all researchers contributing to the advancement of science to share their work. Your article will help highlight important issues, present new ideas and solutions, and give you recognition as a leading expert in your field.",
+    "button": "Guidelines for Authors"
+  },
+  "links": {
+    "title": "Useful Links"
+  },
+  "footer": {
+    "quickLinks": "Quick Links",
+    "contact": "Contact",
+    "nav": {
+      "about": "About",
+      "issues": "Issues",
+      "editorial": "Editorial Board",
+      "authors": "For Authors",
+      "contact": "Contact"
+    },
+    "copy": "©2024-{{year}} Urgench State University named after Abu Rayhan Beruni. All rights reserved."
+  }
+}

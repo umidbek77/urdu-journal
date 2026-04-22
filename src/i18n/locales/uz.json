@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "about": "Jurnal haqida",
+    "issues": "Sonlar",
+    "editorial": "Tahririyat hay`ati",
+    "authors": "Mualliflar uchun",
+    "contacts": "Kontaktlar"
+  },
+  "auth": {
+    "login": "Kirish",
+    "register": "Ro‘yxatdan o‘tish"
+  },
+  "common": {
+    "language": "Til"
+  },
+  "home": {
+    "hero": {
+      "title": "Journal of Khwarazm Information Technologies",
+      "subtitle": "Abu Rayhon Beruniy nomidagi Urganch davlat universiteti “Xorazm axborot texnologiyalari” jurnali ilmiy tadqiqotlar va innovatsiyalarni qo'llab-quvvatlashga bag'ishlangan",
+      "button": "Batafsil"
+    }
+  },
+  "issue": {
+    "current": "Joriy nashr",
+    "volume": "JILD",
+    "number": "SON",
+    "published": "Nashr qilingan",
+    "unknown": "Noma’lum",
+    "viewPdf": "PDF ko‘rish",
+    "noPdf": "Bu issue uchun PDF mavjud emas",
+    "noSeries": "Seriya mavjud emas",
+    "title": "Jurnal {{year}} - {{number}}"
+  },
+  "research": {
+    "title": "Ilm-fan sayohatimizga qo‘shiling!",
+    "description": "Hurmatli tadqiqotchilar, olimlar va ilmiy izlanuvchilar! Sizni ilmiy izlanishlaringiz natijalarini keng ilmiy jamoatchilikka taqdim etish maqsadida jurnalimiz sahifalarida maqolalaringizni e’lon qilishga taklif etamiz. Jurnalimiz ilm-fan taraqqiyotiga hissa qo‘shayotgan barcha tadqiqotchilarni o‘z ilmiy maqolalarini chop ettirishga chorlaydi. Sizning maqolangiz ilm-fanning dolzarb masalalarini yoritish, yangi g‘oyalar va ilmiy yechimlarni taqdim etish orqali ilmiy hamjamiyat e’tiborini qozonish va o‘z sohangizda yetakchi sifatida tanilish imkoniyatini taqdim etadi.",
+    "button": "Mualliflar uchun yo‘riqnoma"
+  },
+  "links": {
+    "title": "Foydali havolalar"
+  },
+  "footer": {
+    "quickLinks": "Tezkor havolalar",
+    "contact": "Aloqa",
+    "nav": {
+      "about": "Jurnal haqida",
+      "issues": "Sonlar",
+      "editorial": "Tahririyat hayʼati",
+      "authors": "Mualliflar uchun",
+      "contact": "Aloqa"
+    },
+    "copy": "©2024-{{year}} Abu Rayhon Beruniy nomidagi Urganch davlat universiteti. Barcha huquqlar himoyalangan."
+  }
+}

@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import PdfViewerModal from "../../components/ui/PdfViewerModal";
+import { useTranslation } from "react-i18next";
 
 interface Issue {
   id: string;
@@ -25,6 +26,7 @@ interface Props {
 }
 
 const CurrentIssue: React.FC<Props> = ({ issue }) => {
+  const { t } = useTranslation();
   const currentIssue = issue;
   const theme = useTheme();
 
@@ -36,18 +38,21 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
   const [currentPdfUrl, setCurrentPdfUrl] = useState("");
   const [currentPdfTitle, setCurrentPdfTitle] = useState("");
 
-  // 🔥 FIXED: PDF OPEN (NULL + ENCODE + FALLBACK)
   const handleOpenPdf = () => {
     if (!currentIssue.pdfUrl) {
-      alert("Bu issue uchun PDF mavjud emas");
+      alert(t("issue.noPdf"));
       return;
     }
 
-    // URL encode (space muammo fix)
     const safeUrl = encodeURI(currentIssue.pdfUrl);
 
     setCurrentPdfUrl(safeUrl);
-    setCurrentPdfTitle(`Jurnal ${currentIssue.year} - ${currentIssue.number}`);
+    setCurrentPdfTitle(
+      t("issue.title", {
+        year: currentIssue.year,
+        number: currentIssue.number,
+      }),
+    );
     setIsModalOpen(true);
   };
 
@@ -70,7 +75,7 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
           textTransform: "uppercase",
         }}
       >
-        Joriy Nashr
+        {t("issue.current")}
       </Typography>
 
       <Paper
@@ -101,10 +106,7 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
               }}
             >
               <img
-                src={
-                  currentIssue.coverImageUrl ||
-                  "/img_1.png" // fallback image
-                }
+                src={currentIssue.coverImageUrl || "/img_1.png"}
                 alt="cover"
                 style={{
                   width: "100%",
@@ -125,33 +127,33 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
                 mb: 1,
               }}
             >
-              JILD {currentIssue.year} | SON {currentIssue.number}
+              {t("issue.volume")} {currentIssue.year} | {t("issue.number")}{" "}
+              {currentIssue.number}
             </Typography>
 
             <Typography variant="h4" sx={{ fontWeight: 700, mb: 3 }}>
-              {currentIssue.series || "No series"}
+              {currentIssue.series || t("issue.noSeries")}
             </Typography>
 
             <Typography sx={{ mb: 3 }}>
-              Nashr qilingan:{" "}
+              {t("issue.published")}:{" "}
               {currentIssue.publishedDate
                 ? new Date(currentIssue.publishedDate).toLocaleDateString()
-                : "Noma’lum"}
+                : t("issue.unknown")}
             </Typography>
 
-            {/* 🔥 FIXED BUTTON */}
             <Button
               variant="contained"
               startIcon={<VisibilityIcon />}
               onClick={handleOpenPdf}
-              disabled={!currentIssue.pdfUrl} // 👈 NULL CHECK
+              disabled={!currentIssue.pdfUrl}
               sx={{
                 textTransform: "none",
                 fontWeight: 600,
                 borderRadius: "10px",
               }}
             >
-              PDF ko‘rish
+              {t("issue.viewPdf")}
             </Button>
           </Box>
         </Box>

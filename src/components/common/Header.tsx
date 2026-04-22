@@ -17,20 +17,22 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LanguageIcon from "@mui/icons-material/Language";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link, useLocation } from "react-router-dom";
-
-const navItems = [
-  { name: "Jurnal haqida", path: "/about" },
-  { name: "Sonlar", path: "/issues" },
-  { name: "Tahririyat hay`ati", path: "/editorial-board" },
-  { name: "Mualliflar uchun", path: "/for-authors" },
-  { name: "Kontaktlar", path: "/contacts" },
-];
+import { useTranslation } from "react-i18next";
 
 const Header: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const theme = useTheme();
   const isSmallDesktop = useMediaQuery(theme.breakpoints.down("lg"));
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const location = useLocation();
+
+  const navItems = [
+    { name: t("nav.about"), path: "/about" },
+    { name: t("nav.issues"), path: "/issues" },
+    { name: t("nav.editorial"), path: "/editorial-board" },
+    { name: t("nav.authors"), path: "/for-authors" },
+    { name: t("nav.contacts"), path: "/contacts" },
+  ];
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -39,6 +41,18 @@ const Header: React.FC = () => {
   const handleClose = () => setAnchorEl(null);
 
   const isActive = (path: string) => location.pathname === path;
+
+  const [langAnchor, setLangAnchor] = React.useState<null | HTMLElement>(null);
+
+  const openLangMenu = (e: React.MouseEvent<HTMLElement>) =>
+    setLangAnchor(e.currentTarget);
+
+  const closeLangMenu = () => setLangAnchor(null);
+
+  const changeLang = (lang: string) => {
+    i18n.changeLanguage(lang);
+    closeLangMenu();
+  };
 
   return (
     <AppBar
@@ -87,8 +101,6 @@ const Header: React.FC = () => {
                 sx={{
                   color: "primary.main",
                   fontWeight: "bold",
-                  flexShrink: 1,
-                  display: "block",
                 }}
               >
                 Journal of Khwarazm Information Technologies
@@ -96,11 +108,6 @@ const Header: React.FC = () => {
               <Typography
                 variant="caption"
                 color="text.secondary"
-                display="block"
-                sx={{
-                  fontSize: { xs: "0.65rem", md: "0.75rem" },
-                  lineHeight: 1.2,
-                }}
               >
                 Xorazm axborot texnologiyalari jurnali
               </Typography>
@@ -112,6 +119,7 @@ const Header: React.FC = () => {
               <IconButton size="large" onClick={handleMenu} color="primary">
                 <MenuIcon />
               </IconButton>
+
               <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
@@ -133,13 +141,26 @@ const Header: React.FC = () => {
 
                 <MenuItem component={Link} to="/login">
                   <LoginIcon fontSize="small" sx={{ mr: 1 }} />
-                  Login
+                  {t("auth.login")}
                 </MenuItem>
 
-                <MenuItem>
+                <MenuItem onClick={openLangMenu}>
                   <LanguageIcon fontSize="small" sx={{ mr: 1 }} />
-                  Tilni o'zgartirish
+                  {t("common.language")}
                 </MenuItem>
+
+                <Menu
+                  anchorEl={langAnchor}
+                  open={Boolean(langAnchor)}
+                  onClose={closeLangMenu}
+                >
+                  <MenuItem onClick={() => changeLang("uz")}>
+                    O‘zbek
+                  </MenuItem>
+                  <MenuItem onClick={() => changeLang("en")}>
+                    English
+                  </MenuItem>
+                </Menu>
               </Menu>
             </Box>
           ) : (
@@ -154,12 +175,9 @@ const Header: React.FC = () => {
                     mx: 0.3,
                     px: 1,
                     fontWeight: 600,
-                    fontSize: "0.875rem",
                     borderBottom: isActive(item.path)
                       ? `2px solid ${theme.palette.secondary.main}`
                       : "none",
-                    borderRadius: 0,
-                    whiteSpace: "nowrap",
                   }}
                 >
                   {item.name}
@@ -171,34 +189,34 @@ const Header: React.FC = () => {
                 to="/login"
                 variant="outlined"
                 size="small"
-                sx={{
-                  ml: 2,
-                  fontWeight: 600,
-                  borderColor: "primary.main",
-                  color: "primary.main",
-                  whiteSpace: "nowrap",
-                  textTransform: "none",
-                  borderRadius: "10px",
-                }}
+                sx={{ ml: 2 }}
                 startIcon={<LoginIcon />}
               >
-                Login
+                {t("auth.login")}
               </Button>
 
               <Button
                 variant="outlined"
                 size="small"
-                sx={{
-                  ml: 1,
-                  fontWeight: 600,
-                  borderColor: "primary.main",
-                  color: "primary.main",
-                  whiteSpace: "nowrap",
-                }}
+                onClick={openLangMenu}
+                sx={{ ml: 1 }}
                 startIcon={<LanguageIcon />}
               >
-                Til
+                {t("common.language")}
               </Button>
+
+              <Menu
+                anchorEl={langAnchor}
+                open={Boolean(langAnchor)}
+                onClose={closeLangMenu}
+              >
+                <MenuItem onClick={() => changeLang("uz")}>
+                  O‘zbek
+                </MenuItem>
+                <MenuItem onClick={() => changeLang("en")}>
+                  English
+                </MenuItem>
+              </Menu>
             </Box>
           )}
         </Toolbar>
