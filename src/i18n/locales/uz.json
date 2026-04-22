@@ -50,5 +50,81 @@
       "contact": "Aloqa"
     },
     "copy": "©2024-{{year}} Abu Rayhon Beruniy nomidagi Urganch davlat universiteti. Barcha huquqlar himoyalangan."
+  },
+  "sidebar": {
+    "title": "Journal KIT",
+    "logout": "Chiqish",
+    "user": {
+      "dashboard": "Dashboard",
+      "myArticles": "Maqolalarim",
+      "submit": "Maqola yuborish",
+      "profile": "Profil"
+    },
+    "editor": {
+      "dashboard": "Editor panel",
+      "articles": "Maqolalar",
+      "profile": "Profil"
+    },
+    "admin": {
+      "dashboard": "Admin panel",
+      "editors": "Editorlar",
+      "users": "Foydalanuvchilar",
+      "issues": "Nashrlar",
+      "publish": "Chop etish",
+      "profile": "Profil"
+    }
+  },
+  "about": {
+    "pageTitle": "Jurnal haqida",
+    "title": "\"Journal of Khwarazm Information Technologies\" jurnali haqida",
+    "mission": "Abu Rayhon Beruniy nomidagi Urganch Davlat Universitetining ilmiy-uslubiy jurnali \"Journal of Khwarazm Information Technologies\" 2024-yilda asos solingan. Bizning asosiy maqsadimiz — milliy va xalqaro tadqiqotchilar o'rtasida ilmiy tajriba almashinuvi uchun samarali jurnal yaratishdir. Jurnal fundamental va amaliy tadqiqotlarning eng dolzarb natijalarini nashr etishga qaratilgan bo‘lib, milliy va xalqaro akademik hamjamiyat standartlariga javob beradigan, ochiq kirish (Open Access) tamoyillariga asoslangan nufuzli ilmiy jurnal bo‘lib xizmat qiladi.\n\nJurnalning asosiy maqsadi — ilmiy bilimlar almashinuvini rag‘batlantirish, mahalliy va xorijiy olimlar, tadqiqotchilar, professor-o‘qituvchilar hamda yosh mutaxassislar o‘rtasida o‘zaro tajriba almashish uchun sifatli maydon yaratishdir.\n\nBiz quyidagi Strategik Vazifalarni amalga oshirishni maqsad qilganmiz:\n\n1. Sifat va Integritetni Ta'minlash: Nashr etilayotgan barcha maqolalarning ilmiy yangilik, dolzarblik va metodologik puxtalik talablariga qat’iy javob berishini ta’minlash. Barcha taqdim etilgan ishlarni ikki tomonlama anonim ko‘rikdan (Double-Blind Peer Review) o‘tkazish orqali xolislik va yuqori sifat mezonlarini saqlash. Nashr etish jarayonining shaffofligi va tezkorligini ta'minlash.\n\n2. Ilmiy-amaliy ko‘prik yaratish: Axborot texnologiyalari, raqamli iqtisodiyot va kompyuter fanlari sohasidagi fundamental ilmiy natijalarni respublikamizning iqtisodiy-ijtimoiy rivojlanishiga yo‘naltirish. Ilmiy tadqiqotlar va ishlab chiqarish, ta’lim va amaliy texnologik sohalardagi muammolarni yechish o‘rtasida mustahkam ko‘prik vazifasini o‘tash.\n\n3. Xalqaro Integratsiya: Jurnalni Scopus, Web of Science kabi nufuzli xalqaro ma’lumotlar bazalariga kiritishga tayyorlash orqali O‘zbekiston IT fanining xalqaro miqyosdagi o‘rnini mustahkamlash. Xalqaro standartlar (masalan, DOI, ORCID) asosida nashriyot amaliyotini takomillashtirish.\n\n4. Akademik etikaga rioya: Nashrlarda plagiat, soxtalashtirish va boshqa axloqiy buzilishlarga yo‘l qo‘ymaslikka qat’iy rioya qilishni targ‘ib qilish. Tadqiqot etikasi va mualliflik huquqlariga oid milliy va xalqaro qoidalarni doimiy ravishda targ‘ib qilish va ularga rioya etilishini nazorat qilish.\n\nBundan tashqari, O'zbekistonning ta'lim, fan va madaniyat sohalaridagi yutuqlarni targ‘ib qilish orqali, ilmiy jamoatchiligi bilan aloqalarni mustahkamlashga xizmat qiladi.",
+    "fieldsTitle": "Jurnalda nashr etiladigan ilmiy yo'nalishlar:",
+    "scienceFields": [
+      "Dasturlash texnologiyalari va algoritmlar",
+      "Infokommunikatsiya texnologiyalari",
+      "Sun’iy intellekt va raqamli texnologiyalar",
+      "Kriptografiya va ma’lumotlarni himoyalash texnologiyalari",
+      "Aloqa, tarmoq va radioeshitish texnologiyalari",
+      "Intellektual axborot tizimlari va kompyuter lingvistikasi"
+    ],
+    "certificateBtn": "Guvohnoma PDF",
+    "certificateTitle": "Jurnal guvohnomasi",
+    "org": {
+      "title": "Tashkiliy ma'lumotlar",
+      "editor": "Bosh muharrir",
+      "secretary": "Mas'ul kotib",
+      "address": "Tahririyat manzili",
+      "index": "Indeks",
+      "phone": "Telefon"
+    }
+  },
+  "issues": {
+    "pageTitle": "Sonlar arxivi",
+    "total": "Jami nashr qilingan sonlar: {{count}}"
+  },
+  "article": {
+    "volumeNumber": "Jild {{year}}, Son {{number}}",
+    "series": "Seriyasi",
+    "view": "Ko‘rish"
+  },
+  "contacts": {
+    "breadcrumb": "Kontaktlar",
+    "title": "Kontaktlar",
+    "form": {
+      "title": "Bizga xabar yuboring",
+      "success": "Xabaringiz muvaffaqiyatli yuborildi!",
+      "fullName": "To'liq ism",
+      "email": "Elektron pochta",
+      "phone": "Telefon",
+      "message": "Xabar",
+      "send": "Yuborish",
+      "sending": "Yuborilmoqda..."
+    },
+    "info": {
+      "title": "Aloqa ma'lumotlari",
+      "address": "Manzil",
+      "phone": "Telefon",
+      "email": "Elektron pochta"
+    }
   }
 }

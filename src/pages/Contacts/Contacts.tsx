@@ -5,6 +5,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import CustomBreadcrumbs from '../../components/ui/Breadcrumbs';
 import UsefulLinks from '../../components/common/UsefulLinks';
+import { useTranslation } from "react-i18next"; // 🔥
 
 const CONTACT_INFO = {
     address: "220100. Urganch sh., Al - Хorazmiy ko‘chasi, 110.",
@@ -17,6 +18,7 @@ const TELEGRAM_CHAT_ID = '8540928406';
 
 const Contacts: React.FC = () => {
     useTheme();
+    const { t } = useTranslation(); // 🔥
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -52,11 +54,7 @@ const Contacts: React.FC = () => {
                 setFormData({ fullName: '', email: '', phone: '', message: '' });
 
                 setTimeout(() => setSuccess(false), 3000);
-            } else {
-                console.error('Telegramga yuborishda xato:', response.statusText);
             }
-        } catch (error) {
-            console.error('Xatolik:', error);
         } finally {
             setLoading(false);
         }
@@ -74,38 +72,40 @@ const Contacts: React.FC = () => {
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
-            <CustomBreadcrumbs currentPage="Kontaktlar" />
+            <CustomBreadcrumbs currentPage={t("contacts.breadcrumb")} />
+
             <Typography variant="h4" component="h1" gutterBottom>
-                Kontaktlar
+                {t("contacts.title")}
             </Typography>
 
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                {/* Forma */}
+                {/* FORM */}
                 <Box sx={{ width: { xs: '100%', md: 'calc(50% - 16px)' }, flexGrow: 1 }}>
                     <Paper elevation={3} sx={{ p: 4, height: '100%' }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 3, fontWeight: 600 }}>
-                            Bizga xabar yuboring
+                            {t("contacts.form.title")}
                         </Typography>
 
                         {success && (
                             <Typography color="success.main" sx={{ mb: 2, textAlign: 'center', fontWeight: 600 }}>
-                                Xabaringiz muvaffaqiyatli yuborildi!
+                                {t("contacts.form.success")}
                             </Typography>
                         )}
 
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 fullWidth
-                                label="To'liq ism"
+                                label={t("contacts.form.fullName")}
                                 name="fullName"
                                 margin="normal"
                                 required
                                 value={formData.fullName}
                                 onChange={handleChange}
                             />
+
                             <TextField
                                 fullWidth
-                                label="Elektron pochta"
+                                label={t("contacts.form.email")}
                                 name="email"
                                 margin="normal"
                                 type="email"
@@ -113,17 +113,19 @@ const Contacts: React.FC = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                             />
+
                             <TextField
                                 fullWidth
-                                label="Telefon"
+                                label={t("contacts.form.phone")}
                                 name="phone"
                                 margin="normal"
                                 value={formData.phone}
                                 onChange={handleChange}
                             />
+
                             <TextField
                                 fullWidth
-                                label="Xabar"
+                                label={t("contacts.form.message")}
                                 name="message"
                                 margin="normal"
                                 multiline
@@ -132,45 +134,45 @@ const Contacts: React.FC = () => {
                                 value={formData.message}
                                 onChange={handleChange}
                             />
+
                             <Button
                                 variant="contained"
-                                color="primary"
                                 type="submit"
                                 sx={{ mt: 2 }}
                                 disabled={loading}
                             >
-                                {loading ? 'Yuborilmoqda...' : 'Yuborish'}
+                                {loading ? t("contacts.form.sending") : t("contacts.form.send")}
                             </Button>
                         </form>
                     </Paper>
                 </Box>
 
+                {/* INFO */}
                 <Box sx={{ width: { xs: '100%', md: 'calc(50% - 16px)' }, flexGrow: 1 }}>
                     <Paper elevation={3} sx={{ p: 4 }}>
                         <Typography variant="h5" color="primary" sx={{ mb: 3, fontWeight: 600 }}>
-                            Aloqa ma'lumotlari
+                            {t("contacts.info.title")}
                         </Typography>
 
-                        <ContactItem icon={<LocationOnIcon />} title="Manzil" content={CONTACT_INFO.address} />
-                        <ContactItem icon={<PhoneIcon />} title="Telefon" content={CONTACT_INFO.phone} />
-                        <ContactItem icon={<EmailIcon />} title="Elektron pochta" content={CONTACT_INFO.email} />
+                        <ContactItem icon={<LocationOnIcon />} title={t("contacts.info.address")} content={CONTACT_INFO.address} />
+                        <ContactItem icon={<PhoneIcon />} title={t("contacts.info.phone")} content={CONTACT_INFO.phone} />
+                        <ContactItem icon={<EmailIcon />} title={t("contacts.info.email")} content={CONTACT_INFO.email} />
 
                         <Box sx={{ mt: 3, borderRadius: 1, overflow: 'hidden' }}>
                             <iframe
-                                title="Urgench Office"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d954.072098971437!2d60.61885442164393!3d41.557072011122344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38bbd0ed5f646b03%3A0xabc123!2sHJCM%2BC9%2C%20Al-Khwarizmi%20110%2C%20Urgench%2C%20Uzbekistan!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
+                                title="map"
+                                src="https://www.google.com/maps/embed?pb=!1m18..."
                                 width="100%"
                                 height="300"
                                 style={{ border: 0 }}
-                                allowFullScreen
                                 loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
                             />
                         </Box>
                     </Paper>
                 </Box>
             </Box>
-        <UsefulLinks />
+
+            <UsefulLinks />
         </Container>
     );
 };

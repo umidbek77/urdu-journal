@@ -11,10 +11,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [open, setOpen] = useState(true);
 
@@ -24,29 +26,29 @@ const Sidebar = () => {
 
   if (user.role === "USER") {
     menu = [
-      { label: "Dashboard", path: "/dashboard" },
-      { label: "My Articles", path: "/my-articles" },
-      { label: "Submit Article", path: "/submit-article" },
-      { label: "Profile", path: "/profile" },
+      { label: t("sidebar.user.dashboard"), path: "/dashboard" },
+      { label: t("sidebar.user.myArticles"), path: "/my-articles" },
+      { label: t("sidebar.user.submit"), path: "/submit-article" },
+      { label: t("sidebar.user.profile"), path: "/profile" },
     ];
   }
 
   if (user.role === "EDITOR") {
     menu = [
-      { label: "Editor Dashboard", path: "/editor-dashboard" },
-      { label: "Articles", path: "/editor-articles" },
-      { label: "Profile", path: "/profile" },
+      { label: t("sidebar.editor.dashboard"), path: "/editor-dashboard" },
+      { label: t("sidebar.editor.articles"), path: "/editor-articles" },
+      { label: t("sidebar.editor.profile"), path: "/profile" },
     ];
   }
 
   if (user.role === "SUPER_ADMIN") {
     menu = [
-      { label: "Dashboard", path: "/admin-dashboard" },
-      { label: "Editors", path: "/editors" },
-      { label: "Users", path: "/users" },
-      { label: "Issues", path: "/issues-admin" },
-      { label: "Publish", path: "/publish" },
-      { label: "Profile", path: "/profile" },
+      { label: t("sidebar.admin.dashboard"), path: "/admin-dashboard" },
+      { label: t("sidebar.admin.editors"), path: "/editors" },
+      { label: t("sidebar.admin.users"), path: "/users" },
+      { label: t("sidebar.admin.issues"), path: "/issues-admin" },
+      { label: t("sidebar.admin.publish"), path: "/publish" },
+      { label: t("sidebar.admin.profile"), path: "/profile" },
     ];
   }
 
@@ -75,7 +77,7 @@ const Sidebar = () => {
         }}
       >
         {open ? (
-          <Typography fontWeight="bold">Journal KIT</Typography>
+          <Typography fontWeight="bold">{t("sidebar.title")}</Typography>
         ) : (
           <Typography fontWeight="bold">J-KIT</Typography>
         )}
@@ -106,7 +108,6 @@ const Sidebar = () => {
           </ListItemButton>
         ))}
 
-
         <ListItemButton
           onClick={() => {
             logout();
@@ -120,7 +121,7 @@ const Sidebar = () => {
           }}
         >
           <ListItemText
-            primary={open ? "Logout" : "L"}
+            primary={open ? t("sidebar.logout") : "L"}
             primaryTypographyProps={{
               fontWeight: "bold",
             }}

@@ -9,6 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface Issue {
   id: string;
@@ -25,6 +26,7 @@ interface ArticleCardProps {
 
 const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Card
@@ -69,11 +71,14 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
           variant="subtitle1"
           sx={{ fontWeight: 700, color: "primary.main", mb: 0.5 }}
         >
-          {`Jild ${issue.year}, Son ${issue.number}`}
+          {t("article.volumeNumber", {
+            year: issue.year,
+            number: issue.number,
+          })}
         </Typography>
 
         <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-          Seriyasi: {issue.series}
+          {t("article.series")}: {issue.series}
         </Typography>
 
         <Typography variant="caption" color="text.secondary" sx={{ mb: 1 }}>
@@ -93,7 +98,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
             borderRadius: 2,
           }}
         >
-          Ko‘rish
+          {t("article.view")}
         </Button>
       </CardContent>
     </Card>

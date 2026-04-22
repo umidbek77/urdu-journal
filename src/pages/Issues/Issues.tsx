@@ -4,6 +4,7 @@ import ArticleCard from "../../components/articles/ArticleCard";
 import CustomBreadcrumbs from "../../components/ui/Breadcrumbs";
 import UsefulLinks from "../../components/common/UsefulLinks";
 import { api } from "../../api/axios";
+import { useTranslation } from "react-i18next";
 
 interface Issue {
   id: string;
@@ -16,6 +17,8 @@ interface Issue {
 }
 
 const Issues: React.FC = () => {
+  const { t } = useTranslation();
+
   const [issues, setIssues] = useState<Issue[]>([]);
 
   const fetchIssues = async () => {
@@ -38,15 +41,15 @@ const Issues: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <CustomBreadcrumbs currentPage="Sonlar arxivi" />
+      <CustomBreadcrumbs currentPage={t("issues.pageTitle")} />
 
-      <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
-        Sonlar arxivi
+      <Typography variant="h4" gutterBottom sx={{ mb: 1 }}>
+        {t("issues.pageTitle")}
       </Typography>
 
-      <Box sx={{ mb: 4 }}>
+      <Box sx={{ mb: 1 }}>
         <Typography variant="h6" color="primary" sx={{ fontWeight: 600 }}>
-          Jami nashr qilingan sonlar: {issues.length}
+          {t("issues.total", { count: issues.length })}
         </Typography>
       </Box>
 

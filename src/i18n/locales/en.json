@@ -50,5 +50,81 @@
       "contact": "Contact"
     },
     "copy": "©2024-{{year}} Urgench State University named after Abu Rayhan Beruni. All rights reserved."
+  },
+  "sidebar": {
+    "title": "Journal KIT",
+    "logout": "Logout",
+    "user": {
+      "dashboard": "Dashboard",
+      "myArticles": "My Articles",
+      "submit": "Submit Article",
+      "profile": "Profile"
+    },
+    "editor": {
+      "dashboard": "Editor Dashboard",
+      "articles": "Articles",
+      "profile": "Profile"
+    },
+    "admin": {
+      "dashboard": "Admin Dashboard",
+      "editors": "Editors",
+      "users": "Users",
+      "issues": "Issues",
+      "publish": "Publish",
+      "profile": "Profile"
+    }
+  },
+  "about": {
+    "pageTitle": "About Journal",
+    "title": "About \"Journal of Khwarazm Information Technologies\"",
+    "mission": "The scientific and methodological journal of Urgench State University named after Abu Rayhan Beruni, \"Journal of Khwarazm Information Technologies\", was founded in 2024. Our main goal is to create an effective platform for the exchange of scientific experience among national and international researchers. The journal is aimed at publishing the most актуal results of fundamental and applied research and serves as a prestigious scientific publication based on Open Access principles, meeting national and international academic standards.\n\nThe primary objective of the journal is to promote the exchange of scientific knowledge and to create a high-quality platform for collaboration among local and international scientists, researchers, professors, and young specialists.\n\nWe aim to implement the following strategic objectives:\n\n1. Ensuring Quality and Integrity: To guarantee that all published articles meet strict requirements of scientific novelty, relevance, and methodological rigor. All submitted works undergo a double-blind peer review process to ensure objectivity and maintain high-quality standards. To ensure transparency and efficiency in the publication process.\n\n2. Building a Scientific-Practical Bridge: To direct fundamental scientific results in the fields of information technologies, digital economy, and computer science towards the socio-economic development of our country. To serve as a strong bridge between research and practical implementation in education and industry.\n\n3. International Integration: To strengthen the position of Uzbekistan’s IT science at the international level by preparing the journal for inclusion in prestigious databases such as Scopus and Web of Science. To improve publishing practices based on international standards (e.g., DOI, ORCID).\n\n4. Adherence to Academic Ethics: To strictly promote and enforce the prevention of plagiarism, falsification, and other ethical violations in publications. To continuously promote and monitor compliance with national and international standards of research ethics and authorship rights.\n\nIn addition, the journal contributes to strengthening connections with the scientific community by promoting achievements in education, science, and culture in Uzbekistan.",
+    "fieldsTitle": "Scientific fields published in the journal:",
+    "scienceFields": [
+      "Programming technologies and algorithms",
+      "Infocommunication technologies",
+      "Artificial intelligence and digital technologies",
+      "Cryptography and data protection",
+      "Communication and network technologies",
+      "Intelligent systems and computational linguistics"
+    ],
+    "certificateBtn": "View Certificate PDF",
+    "certificateTitle": "Journal Certificate",
+    "org": {
+      "title": "Organizational Information",
+      "editor": "Editor-in-chief",
+      "secretary": "Executive secretary",
+      "address": "Address",
+      "index": "Postal code",
+      "phone": "Phone"
+    }
+  },
+  "issues": {
+    "pageTitle": "Issues Archive",
+    "total": "Total published issues: {{count}}"
+  },
+  "article": {
+    "volumeNumber": "Volume {{year}}, Issue {{number}}",
+    "series": "Series",
+    "view": "View"
+  },
+  "contacts": {
+    "breadcrumb": "Contacts",
+    "title": "Contacts",
+    "form": {
+      "title": "Send us a message",
+      "success": "Your message has been successfully sent!",
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "send": "Send",
+      "sending": "Sending..."
+    },
+    "info": {
+      "title": "Contact Information",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email"
+    }
   }
 }
