@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
-  Paper,
-  TextField,
   Button,
   Stack,
+  TextField,
   MenuItem,
   Chip,
   Dialog,
@@ -41,7 +40,8 @@ const AdminEditors = () => {
     categories: [] as string[],
   });
 
-  const [editOpen, setEditOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [selectedEditor, setSelectedEditor] = useState<any>(null);
 
   const loadEditors = async () => {
@@ -60,31 +60,55 @@ const AdminEditors = () => {
     loadEditors();
   }, []);
 
-  const handleCreate = async () => {
-    if (
-      !form.name ||
-      !form.email ||
-      !form.password ||
-      form.categories.length === 0
-    ) {
-      alert(t("common.fillFields"));
+  const handleOpenCreate = () => {
+    setIsEdit(false);
+    setForm({
+      name: "",
+      email: "",
+      password: "",
+      categories: [],
+    });
+    setModalOpen(true);
+  };
+
+  const handleEditOpen = (editor: any) => {
+    setIsEdit(true);
+    setSelectedEditor(editor);
+    setForm({
+      name: editor.name,
+      email: editor.email,
+      password: "",
+      categories: editor.categories || [],
+    });
+    setModalOpen(true);
+  };
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.email || (!isEdit && !form.password)) {
+      alert(t("commo.fillFields"));
       return;
     }
 
     try {
-      await createEditor(form);
+      if (isEdit) {
+        await updateEditor(selectedEditor.id, {
+          name: form.name,
+          email: form.email,
+        });
+      } else {
+        if (form.categories.length === 0) {
+          alert(t("commo.fillFields"));
+          return;
+        }
 
-      setForm({
-        name: "",
-        email: "",
-        password: "",
-        categories: [],
-      });
+        await createEditor(form);
+      }
 
+      setModalOpen(false);
       loadEditors();
     } catch (err) {
       console.error(err);
-      alert(t("commo.createError"));
+      alert(isEdit ? t("commo.updateError") : t("commo.createError"));
     }
   };
 
@@ -93,34 +117,6 @@ const AdminEditors = () => {
 
     await deleteEditor(id);
     loadEditors();
-  };
-
-  const handleEditOpen = (editor: any) => {
-    setSelectedEditor({
-      ...editor,
-      categories: editor.categories || [],
-    });
-    setEditOpen(true);
-  };
-
-  const handleUpdate = async () => {
-    if (!selectedEditor.name || !selectedEditor.email) {
-      alert(t("commo.fillFields"));
-      return;
-    }
-
-    try {
-      await updateEditor(selectedEditor.id, {
-        name: selectedEditor.name,
-        email: selectedEditor.email,
-      });
-
-      setEditOpen(false);
-      loadEditors();
-    } catch (err) {
-      console.error(err);
-      alert(t("commo.updateError"));
-    }
   };
 
   const columns = [
@@ -162,131 +158,89 @@ const AdminEditors = () => {
 
   return (
     <Box p={3}>
-      <Typography variant="h4" mb={2} fontWeight={700}>
-        {t("admin.editors.title")}
-      </Typography>
-
-      <Paper
-        sx={{ p: 2.5, mb: 2, borderRadius: 3, border: "1px solid #e5e7eb" }}
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={2}
       >
-        <Typography variant="h6" mb={1} fontWeight={600}>
-          {t("admin.editors.create")}
+        <Typography variant="h4" fontWeight={700}>
+          {t("admin.editors.title")}
         </Typography>
 
-        <Stack direction="row" spacing={2} flexWrap="wrap">
-          <TextField
-            label={t("admin.editors.name")}
-            size="small"
-            value={form.name}
-            onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-          />
-
-          <TextField
-            label={t("admin.editors.email")}
-            size="small"
-            value={form.email}
-            onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
-          />
-
-          <TextField
-            label={t("admin.editors.password")}
-            type="password"
-            size="small"
-            value={form.password}
-            onChange={(e) =>
-              setForm((p) => ({ ...p, password: e.target.value }))
-            }
-          />
-
-          <TextField
-            select
-            label={t("admin.editors.categories")}
-            size="small"
-            sx={{ minWidth: 220 }}
-            SelectProps={{
-              multiple: true,
-              renderValue: (selected) => (selected as string[]).join(", "),
-            }}
-            value={form.categories}
-            onChange={(e) => {
-              const value = e.target.value;
-              setForm((p) => ({
-                ...p,
-                categories:
-                  typeof value === "string" ? value.split(",") : value,
-              }));
-            }}
-          >
-            {CATEGORY_OPTIONS.map((c) => (
-              <MenuItem key={c} value={c}>
-                {c}
-              </MenuItem>
-            ))}
-          </TextField>
-
-          <Button
-            variant="contained"
-            onClick={handleCreate}
-            sx={{
-              height: 40,
-              minWidth: 140,
-              px: 3,
-              flexGrow: 1,
-              maxWidth: 200,
-              fontWeight: 600,
-              borderRadius: 2,
-            }}
-          >
-            {t("commo.create")}
-          </Button>
-        </Stack>
-      </Paper>
+        <Button
+          variant="contained"
+          onClick={handleOpenCreate}
+          sx={{
+            height: 42,
+            px: 3,
+            borderRadius: 2,
+            fontWeight: 600,
+          }}
+        >
+          {t("commo.create")}
+        </Button>
+      </Stack>
 
       <BaseDataTable columns={columns} rows={editors} loading={loading} />
 
       <Dialog
-        open={editOpen}
-        onClose={() => setEditOpen(false)}
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>{t("admin.editors.edit")}</DialogTitle>
+        <DialogTitle>
+          {isEdit ? t("admin.editors.edit") : t("admin.editors.create")}
+        </DialogTitle>
 
         <DialogContent>
           <Stack spacing={2} mt={1}>
             <TextField
               label={t("admin.editors.name")}
-              value={selectedEditor?.name || ""}
-              onChange={(e) =>
-                setSelectedEditor((p: any) => ({
-                  ...p,
-                  name: e.target.value,
-                }))
-              }
+              value={form.name}
+              onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
             />
 
             <TextField
               label={t("admin.editors.email")}
-              value={selectedEditor?.email || ""}
+              value={form.email}
               onChange={(e) =>
-                setSelectedEditor((p: any) => ({
-                  ...p,
-                  email: e.target.value,
-                }))
+                setForm((p) => ({ ...p, email: e.target.value }))
               }
             />
+
+            {!isEdit && (
+              <TextField
+                label={t("admin.editors.password")}
+                type="password"
+                value={form.password}
+                onChange={(e) =>
+                  setForm((p) => ({ ...p, password: e.target.value }))
+                }
+              />
+            )}
 
             <TextField
               select
               label={t("admin.editors.categories")}
               SelectProps={{
                 multiple: true,
-                renderValue: (selected) => (selected as string[]).join(", "),
+                renderValue: (selected) => (
+                  <Stack direction="row" gap={1} flexWrap="wrap">
+                    {(selected as string[]).map((value) => (
+                      <Chip key={value} label={value} size="small" />
+                    ))}
+                  </Stack>
+                ),
               }}
-              value={selectedEditor?.categories || []}
+              value={form.categories}
               onChange={(e) => {
-                const value = e.target.value;
-                setSelectedEditor((p: any) => ({
+                const {
+                  target: { value },
+                } = e;
+
+                setForm((p) => ({
                   ...p,
                   categories:
                     typeof value === "string" ? value.split(",") : value,
@@ -295,7 +249,19 @@ const AdminEditors = () => {
             >
               {CATEGORY_OPTIONS.map((c) => (
                 <MenuItem key={c} value={c}>
-                  {c}
+                  <Stack direction="row" alignItems="center" gap={1}>
+                    <Box
+                      sx={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: "50%",
+                        backgroundColor: form.categories.includes(c)
+                          ? "#1976d2"
+                          : "#ccc",
+                      }}
+                    />
+                    {c}
+                  </Stack>
                 </MenuItem>
               ))}
             </TextField>
@@ -303,11 +269,12 @@ const AdminEditors = () => {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={() => setEditOpen(false)}>
+          <Button onClick={() => setModalOpen(false)}>
             {t("commo.cancel")}
           </Button>
-          <Button variant="contained" onClick={handleUpdate}>
-            {t("commo.save")}
+
+          <Button variant="contained" onClick={handleSubmit}>
+            {isEdit ? t("commo.save") : t("commo.create")}
           </Button>
         </DialogActions>
       </Dialog>

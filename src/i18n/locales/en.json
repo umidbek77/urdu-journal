@@ -71,6 +71,7 @@
       "users": "Users",
       "issues": "Issues",
       "publish": "Publish",
+      "published": "Published Articles",
       "profile": "Profile"
     }
   },
@@ -155,6 +156,40 @@
       "email": "Email",
       "affiliation": "Affiliation",
       "created": "Created"
+    },
+    "issues": {
+      "title": "Issues Management",
+      "create": "Create Issue",
+      "edit": "Edit Issue",
+      "volume": "Volume",
+      "number": "Number",
+      "year": "Year",
+      "series": "Series",
+      "published": "Published Date",
+      "uploadPdf": "Upload Issue PDF",
+      "uploadCover": "Upload Cover Image"
+    },
+    "publish": {
+      "titlePage": "Accepted Articles",
+      "titleText": "Published Articles",
+      "title": "Title",
+      "status": "Status",
+      "issue": "Issue",
+      "publish": "Publish",
+      "review": "Review",
+      "payment": "Payment",
+      "selectIssue": "Select issue"
+    },
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "users": "Users",
+      "usersDesc": "All registered users",
+      "editors": "Editors",
+      "editorsDesc": "Editors with access",
+      "articles": "Articles",
+      "articlesDesc": "Total articles submitted",
+      "published": "Published",
+      "publishedDesc": "Published articles"
     }
   }
 }

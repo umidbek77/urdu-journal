@@ -22,6 +22,7 @@ const App: React.FC = () => {
     "/users",
     "/issues-admin",
     "/publish",
+    "/published",
   ];
 
   const showSidebar =

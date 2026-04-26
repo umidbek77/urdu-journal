@@ -2,207 +2,168 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
   Button,
-  Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
   TextField,
   MenuItem,
   Stack,
   Chip,
 } from "@mui/material";
 
+import { useTranslation } from "react-i18next";
+
+import BaseDataTable from "../../components/ui/table/BaseDataTable";
+import TableActions from "../../components/ui/table/TableActions";
+
 import { getAcceptedArticles, publishArticle } from "../../api/admin.api";
 import { api } from "../../api/axios";
+
 import PdfViewerModal from "../../components/ui/PdfViewerModal";
 
 const AdminPublish = () => {
+  const { t } = useTranslation();
+
   const [articles, setArticles] = useState<any[]>([]);
   const [issues, setIssues] = useState<any[]>([]);
-  const [selectedIssues, setSelectedIssues] = useState<Record<string, string>>(
-    {},
-  );
+  const [loading, setLoading] = useState(true);
 
-  const [open, setOpen] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState<any>(null);
+  const [selectedIssue, setSelectedIssue] = useState("");
+
+  const [publishModal, setPublishModal] = useState(false);
+
+  const [openPdf, setOpenPdf] = useState(false);
   const [pdfUrl, setPdfUrl] = useState("");
   const [pdfTitle, setPdfTitle] = useState("");
 
-  const loadArticles = () => {
-    getAcceptedArticles().then((res) => {
-      setArticles(res.data);
-    });
+  const loadArticles = async () => {
+    try {
+      const res = await getAcceptedArticles();
+      setArticles(res.data || []);
+    } catch (err) {
+      console.error(err);
+      setArticles([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadIssues = async () => {
+    const res = await api.get("/issues");
+    setIssues(res.data || []);
   };
 
   useEffect(() => {
     loadArticles();
+    loadIssues();
   }, []);
 
-  useEffect(() => {
-    api.get("/issues").then((res) => {
-      setIssues(res.data);
-    });
-  }, []);
+  const handleOpenPublish = (row: any) => {
+    setSelectedArticle(row);
+    setSelectedIssue("");
+    setPublishModal(true);
+  };
 
-  const handlePublish = async (articleId: string) => {
-    const issueId = selectedIssues[articleId];
-
-    if (!issueId) {
-      alert("Issue tanlang!");
+  const handlePublish = async () => {
+    if (!selectedIssue) {
+      alert(t("commo.selectIssue"));
       return;
     }
 
     try {
-      await publishArticle(articleId, issueId);
+      await publishArticle(selectedArticle.id, selectedIssue);
+      setPublishModal(false);
       loadArticles();
     } catch (err) {
       console.error(err);
-      alert("Publish error");
+      alert(t("commo.error"));
     }
   };
 
   const handleOpenPdf = (url?: string, title?: string) => {
     if (!url) return;
 
-    const safeUrl = encodeURI(url);
-
-    setPdfUrl(safeUrl);
-    setPdfTitle(title || "PDF Viewer");
-    setOpen(true);
+    setPdfUrl(encodeURI(url));
+    setPdfTitle(title || "PDF");
+    setOpenPdf(true);
   };
 
-  const handleClosePdf = () => {
-    setOpen(false);
-    setPdfUrl("");
-    setPdfTitle("");
-  };
+  const columns = [
+    {
+      field: "title",
+      headerName: t("admin.publish.title"),
+    },
+    {
+      field: "status",
+      headerName: t("admin.publish.status"),
+      render: (row: any) => (
+        <Chip label={row.status} color="success" size="small" />
+      ),
+    },
+    {
+      field: "actions",
+      headerName: t("commo.actions"),
+      render: (row: any) => (
+        <TableActions
+          row={row}
+          actions={[
+            {
+              label: t("admin.publish.publish"),
+              onClick: () => handleOpenPublish(row),
+            },
+            {
+              label: t("admin.publish.review"),
+              onClick: () => handleOpenPdf(row.reviewFileUrl, "Review File"),
+            },
+            {
+              label: t("admin.publish.payment"),
+              onClick: () => handleOpenPdf(row.paymentReceiptUrl, "Payment"),
+            },
+          ]}
+        />
+      ),
+    },
+  ];
 
   return (
     <Box p={3}>
       <Typography variant="h4" mb={3} fontWeight={700}>
-        Accepted Articles
+        {t("admin.publish.titlePage")}
       </Typography>
 
-      <Paper
-        sx={{
-          border: "1px solid #e5e7eb",
-          borderRadius: 3,
-          overflow: "hidden",
-          boxShadow: "none",
-        }}
-      >
-        <Table>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: "#f8fafc" }}>
-              <TableCell sx={{ fontWeight: 700 }}>Title</TableCell>
+      <BaseDataTable columns={columns} rows={articles} loading={loading} />
 
-              <TableCell sx={{ fontWeight: 700 }}>Status</TableCell>
+      <Dialog open={publishModal} onClose={() => setPublishModal(false)}>
+        <DialogTitle>{t("admin.publish.selectIssue")}</DialogTitle>
 
-              <TableCell sx={{ fontWeight: 700 }}>Issue</TableCell>
+        <DialogContent>
+          <Stack spacing={2} mt={2}>
+            <TextField
+              select
+              label={t("admin.publish.issue")}
+              value={selectedIssue}
+              onChange={(e) => setSelectedIssue(e.target.value)}
+              fullWidth
+            >
+              {issues.map((i) => (
+                <MenuItem key={i.id} value={i.id}>
+                  {i.volume}-{i.number} ({i.year})
+                </MenuItem>
+              ))}
+            </TextField>
 
-              <TableCell sx={{ fontWeight: 700 }}>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {articles.map((a) => (
-              <TableRow
-                key={a.id}
-                hover
-                sx={{
-                  "& td": {
-                    fontWeight: 500,
-                    borderBottom: "1px solid #f1f5f9",
-                  },
-                }}
-              >
-                <TableCell>{a.title}</TableCell>
-
-                <TableCell>
-                  <Chip
-                    label={a.status}
-                    color="success"
-                    size="small"
-                    sx={{ fontWeight: 600 }}
-                  />
-                </TableCell>
-
-                <TableCell>
-                  <TextField
-                    select
-                    size="small"
-                    value={selectedIssues[a.id] || ""}
-                    onChange={(e) =>
-                      setSelectedIssues((prev) => ({
-                        ...prev,
-                        [a.id]: e.target.value,
-                      }))
-                    }
-                    sx={{ minWidth: 180 }}
-                  >
-                    {issues.map((issue) => (
-                      <MenuItem key={issue.id} value={issue.id}>
-                        {issue.volume}-{issue.number} ({issue.year})
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </TableCell>
-
-                <TableCell>
-                  <Stack direction="row" spacing={1} flexWrap="wrap">
-                    {/* Publish */}
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      sx={{
-                        textTransform: "none",
-                        fontWeight: 600,
-                        borderRadius: "10px",
-                        minWidth: "90px",
-                      }}
-                      onClick={() => handlePublish(a.id)}
-                    >
-                      Publish
-                    </Button>
-
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      color="secondary"
-                      sx={{ textTransform: "none", borderRadius: "10px" }}
-                      disabled={!a.reviewFileUrl}
-                      onClick={() =>
-                        handleOpenPdf(a.reviewFileUrl, "Review File")
-                      }
-                    >
-                      Review
-                    </Button>
-
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      color="success"
-                      sx={{ textTransform: "none", borderRadius: "10px" }}
-                      disabled={!a.paymentReceiptUrl}
-                      onClick={() =>
-                        handleOpenPdf(a.paymentReceiptUrl, "Payment Receipt")
-                      }
-                    >
-                      Payment
-                    </Button>
-                  </Stack>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
+            <Button variant="contained" onClick={handlePublish}>
+              {t("admin.publish.publish")}
+            </Button>
+          </Stack>
+        </DialogContent>
+      </Dialog>
 
       <PdfViewerModal
-        open={open}
-        onClose={handleClosePdf}
+        open={openPdf}
+        onClose={() => setOpenPdf(false)}
         pdfUrl={pdfUrl}
         title={pdfTitle}
       />

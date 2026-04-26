@@ -71,6 +71,7 @@
       "users": "Foydalanuvchilar",
       "issues": "Nashrlar",
       "publish": "Chop etish",
+      "published": "Nashr qilinganlar",
       "profile": "Profil"
     }
   },
@@ -155,6 +156,40 @@
       "email": "Email",
       "affiliation": "Tashkilot",
       "created": "Yaratilgan sana"
+    },
+    "issues": {
+      "title": "Nashrlarni boshqarish",
+      "create": "Nashr yaratish",
+      "edit": "Nashrni tahrirlash",
+      "volume": "Jild",
+      "number": "Son",
+      "year": "Yil",
+      "series": "Seriya",
+      "published": "Nashr sanasi",
+      "uploadPdf": "PDF yuklash",
+      "uploadCover": "Muqova rasmi yuklash"
+    },
+    "publish": {
+      "titlePage": "Qabul qilingan maqolalar",
+      "titleText": "Nashr qilingan maqolalar",
+      "title": "Sarlavha",
+      "status": "Holati",
+      "issue": "Nashr",
+      "publish": "Nashr qilish",
+      "review": "Ko‘rish",
+      "payment": "To‘lov",
+      "selectIssue": "Nashrni tanlang"
+    },
+    "dashboard": {
+      "title": "Admin panel",
+      "users": "Foydalanuvchilar",
+      "usersDesc": "Ro'yxatdan o'tgan barcha foydalanuvchilar",
+      "editors": "Muharrirlar",
+      "editorsDesc": "Tizimga kirish huquqiga ega muharrirlar",
+      "articles": "Maqolalar",
+      "articlesDesc": "Yuborilgan barcha maqolalar soni",
+      "published": "Nashr qilingan",
+      "publishedDesc": "Nashr qilingan maqolalar soni"
     }
   }
 }

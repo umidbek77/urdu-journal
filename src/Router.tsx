@@ -25,7 +25,7 @@ import AdminPublish from "./pages/Admin/Publish.tsx";
 import AdminEditors from "./pages/Admin/Editors.tsx";
 import AdminUsers from "./pages/Admin/Users.tsx";
 import AdminIssues from "./pages/Admin/Issues.tsx";
-
+import AdminPublished from "./pages/Admin/AdminPublished.tsx";
 
 const Router: React.FC = () => {
   return (
@@ -131,6 +131,15 @@ const Router: React.FC = () => {
             element={
               <ProtectedRoute roles={["SUPER_ADMIN"]}>
                 <AdminPublish />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="published"
+            element={
+              <ProtectedRoute roles={["SUPER_ADMIN"]}>
+                <AdminPublished />
               </ProtectedRoute>
             }
           />

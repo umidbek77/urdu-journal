@@ -48,6 +48,7 @@ const Sidebar = () => {
       { label: t("sidebar.admin.users"), path: "/users" },
       { label: t("sidebar.admin.issues"), path: "/issues-admin" },
       { label: t("sidebar.admin.publish"), path: "/publish" },
+      { label: t("sidebar.admin.published"), path: "/published" },
       { label: t("sidebar.admin.profile"), path: "/profile" },
     ];
   }
