@@ -1,20 +1,8 @@
 import { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Chip,
-  Button,
-  Stack,
-} from "@mui/material";
+import { Box, Typography, Chip, Button, Stack } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import BaseDataTable from "../../components/ui/table/BaseDataTable";
 import { getMyArticles, uploadPayment } from "../../api/articles.api";
-import PdfViewerModal from "../../components/ui/PdfViewerModal";
 
 interface Article {
   id: string;
@@ -26,19 +14,20 @@ interface Article {
 }
 
 const MyArticles = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const { t } = useTranslation();
 
-  // 🔥 PDF MODAL STATE
-  const [open, setOpen] = useState(false);
-  const [pdfUrl, setPdfUrl] = useState("");
-  const [pdfTitle, setPdfTitle] = useState("");
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchArticles = async () => {
     try {
       const res = await getMyArticles();
-      setArticles(res.data);
+      setArticles(res.data || []);
     } catch (err) {
       console.error("Articles load error", err);
+      setArticles([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,7 +37,7 @@ const MyArticles = () => {
 
   const handlePaymentUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
-    id: string
+    id: string,
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -61,163 +50,84 @@ const MyArticles = () => {
     }
   };
 
-  // 🔥 UNIVERSAL PDF OPEN
-  const handleOpenPdf = (url?: string, title?: string) => {
-    if (!url) return;
-
-    const safeUrl = encodeURI(url);
-
-    setPdfUrl(safeUrl);
-    setPdfTitle(title || "PDF Viewer");
-    setOpen(true);
-  };
-
-  const handleClosePdf = () => {
-    setOpen(false);
-    setPdfUrl("");
-    setPdfTitle("");
-  };
-
   const getStatusColor = (status: string) => {
-    switch (status) {
-      case "ACCEPTED":
-        return "#16a34a";
-      case "REJECTED":
-        return "#dc2626";
-      case "PUBLISHED":
-        return "#2563eb";
-      default:
-        return "#64748b";
-    }
+    const s = status?.toUpperCase();
+
+    if (s === "ACCEPTED") return "success";
+    if (s === "REJECTED") return "error";
+    if (s === "PUBLISHED") return "primary";
+    return "default";
   };
+
+  const columns = [
+    {
+      field: "title",
+      headerName: t("author.articles.title"),
+    },
+    {
+      field: "status",
+      headerName: t("author.articles.status"),
+      render: (row: Article) => (
+        <Chip
+          label={row.status}
+          color={getStatusColor(row.status) as any}
+          size="small"
+        />
+      ),
+    },
+    {
+      field: "createdAt",
+      headerName: t("author.articles.date"),
+      render: (row: Article) => new Date(row.createdAt).toLocaleDateString(),
+    },
+    {
+      field: "actions",
+      headerName: t("author.articles.actions"),
+      render: (row: Article) => {
+        const isAccepted = row.status?.toUpperCase() === "ACCEPTED";
+        const hasPaid = !!row.paymentReceiptUrl;
+
+        return (
+          <Stack direction="row" spacing={1}>
+            {isAccepted && !hasPaid && (
+              <Button
+                variant="contained"
+                component="label"
+                size="small"
+                sx={{
+                  textTransform: "none",
+                  borderRadius: 2,
+                }}
+              >
+                {t("author.articles.upload")}
+                <input
+                  type="file"
+                  hidden
+                  onChange={(e) => handlePaymentUpload(e, row.id)}
+                />
+              </Button>
+            )}
+
+            {hasPaid && (
+              <Chip
+                label={t("author.articles.paid")}
+                color="success"
+                size="small"
+              />
+            )}
+          </Stack>
+        );
+      },
+    },
+  ];
 
   return (
     <Box p={3}>
-      <Typography variant="h4" mb={3} fontWeight={700}>
-        My Articles
+      <Typography variant="h4" mb={2} fontWeight={700}>
+        {t("author.articles.titlePage")}
       </Typography>
 
-      <TableContainer
-        component={Paper}
-        sx={{
-          border: "1px solid #e5e7eb",
-          borderRadius: 3,
-          overflow: "hidden",
-          boxShadow: "none",
-        }}
-      >
-        <Table>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: "#f8fafc" }}>
-              <TableCell sx={{ fontWeight: 700 }}>Title</TableCell>
-              <TableCell sx={{ fontWeight: 700 }}>Status</TableCell>
-              <TableCell sx={{ fontWeight: 700 }}>Date</TableCell>
-              <TableCell sx={{ fontWeight: 700 }}>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {articles.map((article) => (
-              <TableRow
-                key={article.id}
-                hover
-                sx={{
-                  "& td": {
-                    fontWeight: 500,
-                    borderBottom: "1px solid #f1f5f9",
-                  },
-                }}
-              >
-                <TableCell>{article.title}</TableCell>
-
-                <TableCell>
-                  <Chip
-                    label={article.status}
-                    size="small"
-                    sx={{
-                      fontWeight: 600,
-                      backgroundColor: getStatusColor(article.status),
-                      color: "#fff",
-                    }}
-                  />
-                </TableCell>
-
-                <TableCell>
-                  {new Date(article.createdAt).toLocaleDateString()}
-                </TableCell>
-
-                {/* 🔥 ACTIONS */}
-                <TableCell>
-                  <Stack direction="row" spacing={1} flexWrap="wrap">
-                    {/* Upload Payment */}
-                    {article.status === "ACCEPTED" &&
-                      !article.paymentReceiptUrl && (
-                        <Button
-                          variant="contained"
-                          component="label"
-                          size="small"
-                        >
-                          Upload Payment
-                          <input
-                            type="file"
-                            hidden
-                            onChange={(e) =>
-                              handlePaymentUpload(e, article.id)
-                            }
-                          />
-                        </Button>
-                      )}
-
-                    {/* View Payment */}
-                    {article.paymentReceiptUrl && (
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        color="success"
-                        sx={{ textTransform: "none" }}
-                        onClick={() =>
-                          handleOpenPdf(
-                            article.paymentReceiptUrl,
-                            "Payment Receipt"
-                          )
-                        }
-                      >
-                        Payment
-                      </Button>
-                    )}
-
-                    {/* 🔥 NEW: View Review */}
-                    {article.reviewFileUrl && (
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        color="secondary"
-                        sx={{ textTransform: "none" }}
-                        onClick={() =>
-                          handleOpenPdf(
-                            article.reviewFileUrl,
-                            "Review File"
-                          )
-                        }
-                      >
-                        Review
-                      </Button>
-                    )}
-                  </Stack>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      {/* 🔥 PDF MODAL */}
-      <PdfViewerModal
-        open={open}
-        onClose={handleClosePdf}
-        pdfUrl={pdfUrl}
-        title={pdfTitle}
-      />
+      <BaseDataTable columns={columns} rows={articles} loading={loading} />
     </Box>
   );
 };

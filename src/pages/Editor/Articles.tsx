@@ -2,34 +2,59 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
   Button,
-  Paper,
   IconButton,
   Dialog,
   DialogContent,
+  Chip,
+  Stack,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 
-import { getSubmittedArticles, reviewArticle } from "../../api/articles.api";
+import { useTranslation } from "react-i18next";
+
+import BaseDataTable from "../../components/ui/table/BaseDataTable";
+
+import { reviewArticle } from "../../api/articles.api";
+import { api } from "../../api/axios";
 
 const EditorArticles = () => {
+  const { t } = useTranslation();
+
   const [articles, setArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const [openPreview, setOpenPreview] = useState(false);
   const [selectedFile, setSelectedFile] = useState("");
 
   const [selectedFiles, setSelectedFiles] = useState<Record<string, File>>({});
 
-  const loadArticles = () => {
-    getSubmittedArticles().then((res) => {
-      setArticles(res.data);
-    });
-  };
+  const [confirm, setConfirm] = useState<{
+    open: boolean;
+    id: string;
+    status: string;
+  }>({ open: false, id: "", status: "" });
+
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    type: "success",
+    message: "",
+  });
+
+  const loadArticles = async () => {
+  try {
+    const res = await api.get("/articles/editor/articles");
+    setArticles(res.data || []);
+  } catch {
+    setArticles([]);
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     loadArticles();
@@ -42,16 +67,40 @@ const EditorArticles = () => {
     }));
   };
 
-  const handleReview = async (id: string, status: string) => {
-    const file = selectedFiles[id];
+  const handleConfirmOpen = (id: string, status: string) => {
+    setConfirm({ open: true, id, status });
+  };
 
-    await reviewArticle(id, {
-      status,
-      feedback: "Reviewed by editor",
-      file,
-    });
+  const handleConfirmClose = () => {
+    setConfirm({ open: false, id: "", status: "" });
+  };
 
-    loadArticles();
+  const handleReview = async () => {
+    try {
+      const file = selectedFiles[confirm.id];
+
+      await reviewArticle(confirm.id, {
+        status: confirm.status,
+        feedback: "Reviewed by editor",
+        file,
+      });
+
+      setSnackbar({
+        open: true,
+        type: "success",
+        message: t("editor.articles.success"),
+      });
+
+      loadArticles();
+    } catch {
+      setSnackbar({
+        open: true,
+        type: "error",
+        message: t("editor.articles.error"),
+      });
+    } finally {
+      handleConfirmClose();
+    }
   };
 
   const handlePreview = (url: string) => {
@@ -59,109 +108,102 @@ const EditorArticles = () => {
     setOpenPreview(true);
   };
 
+  const getStatusColor = (status: string) => {
+    if (status === "ACCEPTED") return "success";
+    if (status === "REJECTED") return "error";
+    return "warning";
+  };
+
+  const columns = [
+    {
+      field: "title",
+      headerName: t("editor.articles.title"),
+    },
+    {
+      field: "status",
+      headerName: t("editor.articles.status"),
+      render: (row: any) => (
+        <Chip
+          label={row.status}
+          color={getStatusColor(row.status)}
+          size="small"
+        />
+      ),
+    },
+    {
+      field: "preview",
+      headerName: t("editor.articles.preview"),
+      render: (row: any) => (
+        <IconButton color="primary" onClick={() => handlePreview(row.fileUrl)}>
+          <VisibilityIcon />
+        </IconButton>
+      ),
+    },
+    {
+      field: "actions",
+      headerName: t("editor.articles.actions"),
+      render: (row: any) => {
+        const hasFile = !!selectedFiles[row.id];
+
+        return (
+          <Stack direction="row" spacing={1}>
+            <input
+              type="file"
+              hidden
+              id={`file-${row.id}`}
+              onChange={(e) => {
+                if (e.target.files?.[0]) {
+                  handleFileChange(row.id, e.target.files[0]);
+                }
+              }}
+            />
+
+            <label htmlFor={`file-${row.id}`}>
+              <Button
+                component="span"
+                size="small"
+                variant="outlined"
+                startIcon={<UploadFileIcon />}
+                sx={{ textTransform: "none", borderRadius: 2 }}
+              >
+                {t("editor.articles.upload")}
+              </Button>
+            </label>
+
+            <Button
+              size="small"
+              color="success"
+              variant="contained"
+              disabled={!hasFile}
+              sx={{ textTransform: "none", borderRadius: 2 }}
+              onClick={() => handleConfirmOpen(row.id, "ACCEPTED")}
+            >
+              {t("editor.articles.accept")}
+            </Button>
+
+            <Button
+              size="small"
+              color="error"
+              variant="outlined"
+              disabled={!hasFile}
+              sx={{ textTransform: "none", borderRadius: 2 }}
+              onClick={() => handleConfirmOpen(row.id, "REJECTED")}
+            >
+              {t("editor.articles.reject")}
+            </Button>
+          </Stack>
+        );
+      },
+    },
+  ];
+
   return (
     <Box p={3}>
-      <Typography variant="h4" mb={3} fontWeight={700}>
-        Articles For Review
+      <Typography variant="h4" mb={2} fontWeight={700}>
+        {t("editor.articles.titlePage")}
       </Typography>
 
-      <Paper
-        elevation={0}
-        sx={{
-          borderRadius: 3,
-          overflow: "hidden",
-          border: "1px solid #e5e7eb",
-        }}
-      >
-        <Table>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: "#f8fafc" }}>
-              <TableCell sx={{ fontWeight: 700 }}>Title</TableCell>
-              <TableCell sx={{ fontWeight: 700 }}>Status</TableCell>
-              <TableCell sx={{ fontWeight: 700 }}>Review</TableCell>
-              <TableCell sx={{ fontWeight: 700 }}>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {articles.map((a) => (
-              <TableRow key={a.id} hover>
-                <TableCell>{a.title}</TableCell>
-
-                <TableCell>{a.status}</TableCell>
-
-                <TableCell>
-                  <IconButton
-                    color="primary"
-                    onClick={() => handlePreview(a.fileUrl)}
-                  >
-                    <VisibilityIcon />
-                  </IconButton>
-                </TableCell>
-
-                <TableCell>
-                  <input
-                    type="file"
-                    style={{ display: "none" }}
-                    id={`file-${a.id}`}
-                    onChange={(e) => {
-                      if (e.target.files?.[0]) {
-                        handleFileChange(a.id, e.target.files[0]);
-                      }
-                    }}
-                  />
-
-                  <label htmlFor={`file-${a.id}`}>
-                    <Button
-                      component="span"
-                      variant="contained"
-                      size="small"
-                      sx={{
-                        mr: 1,
-                        textTransform: "none",
-                        borderRadius: "10px",
-                      }}
-                    >
-                      Upload Review
-                    </Button>
-                  </label>
-
-                  <Button
-                    variant="outlined"
-                    color="success"
-                    size="small"
-                    sx={{
-                      mr: 1,
-                      minWidth: "90px",
-                      textTransform: "none",
-                      fontWeight: 600,
-                      borderRadius: "10px",
-                    }}
-                    onClick={() => handleReview(a.id, "ACCEPTED")}
-                  >
-                    Accept
-                  </Button>
-
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    size="small"
-                    sx={{
-                      minWidth: "90px",
-                      textTransform: "none",
-                      fontWeight: 600,
-                      borderRadius: "10px",
-                    }}
-                    onClick={() => handleReview(a.id, "REJECTED")}
-                  >
-                    Reject
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
+      <BaseDataTable columns={columns} rows={articles} loading={loading} />
 
       <Dialog
         open={openPreview}
@@ -179,6 +221,30 @@ const EditorArticles = () => {
           />
         </DialogContent>
       </Dialog>
+
+      <Dialog open={confirm.open} onClose={handleConfirmClose}>
+        <DialogContent>
+          <Typography mb={2}>{t("editor.articles.confirm")}</Typography>
+
+          <Stack direction="row" spacing={2}>
+            <Button variant="contained" onClick={handleReview}>
+              {t("editor.articles.yes")}
+            </Button>
+
+            <Button variant="outlined" onClick={handleConfirmClose}>
+              {t("editor.articles.cancel")}
+            </Button>
+          </Stack>
+        </DialogContent>
+      </Dialog>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar((s) => ({ ...s, open: false }))}
+      >
+        <Alert severity={snackbar.type as any}>{snackbar.message}</Alert>
+      </Snackbar>
     </Box>
   );
 };

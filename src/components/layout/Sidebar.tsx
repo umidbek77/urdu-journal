@@ -44,6 +44,7 @@ const Sidebar = () => {
   if (user.role === "SUPER_ADMIN") {
     menu = [
       { label: t("sidebar.admin.dashboard"), path: "/admin-dashboard" },
+      { label: t("sidebar.admin.articles"), path: "/admin-articles" },
       { label: t("sidebar.admin.editors"), path: "/editors" },
       { label: t("sidebar.admin.users"), path: "/users" },
       { label: t("sidebar.admin.issues"), path: "/issues-admin" },

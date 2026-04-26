@@ -11,7 +11,8 @@
     "register": "Ro‘yxatdan o‘tish"
   },
   "common": {
-    "language": "Til"
+    "language": "Til",
+    "actions": "Amallar"
   },
   "home": {
     "hero": {
@@ -67,6 +68,7 @@
     },
     "admin": {
       "dashboard": "Admin panel",
+      "articles": "Maqolalar",
       "editors": "Editorlar",
       "users": "Foydalanuvchilar",
       "issues": "Nashrlar",
@@ -141,6 +143,14 @@
     "deleteConfirm": "Haqiqatan o‘chirmoqchimisiz?"
   },
   "admin": {
+    "articles": {
+      "titlePage": "Maqolalarni boshqarish",
+      "title": "Sarlavha",
+      "status": "Holati",
+      "editor": "Muharrir",
+      "assign": "Biriktirish",
+      "assignEditor": "Muharrir biriktirish"
+    },
     "editors": {
       "title": "Editorlarni boshqarish",
       "create": "Editor yaratish",
@@ -183,13 +193,107 @@
     "dashboard": {
       "title": "Admin panel",
       "users": "Foydalanuvchilar",
-      "usersDesc": "Ro'yxatdan o'tgan barcha foydalanuvchilar",
+      "usersDesc": "Barcha foydalanuvchilar",
       "editors": "Muharrirlar",
-      "editorsDesc": "Tizimga kirish huquqiga ega muharrirlar",
+      "editorsDesc": "Tizimga kirish huquqiga ega",
       "articles": "Maqolalar",
-      "articlesDesc": "Yuborilgan barcha maqolalar soni",
+      "articlesDesc": "Yuborilgan maqolalar",
       "published": "Nashr qilingan",
-      "publishedDesc": "Nashr qilingan maqolalar soni"
+      "publishedDesc": "Chop etilgan maqolalar",
+      "statusChart": "Maqolalar holati",
+      "monthlyChart": "Oylik statistika"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "personal": "Shaxsiy ma'lumotlar",
+    "password": "Parolni o‘zgartirish",
+
+    "name": "Ism",
+    "email": "Email",
+    "affiliation": "Tashkilot",
+
+    "currentPassword": "Joriy parol",
+    "newPassword": "Yangi parol",
+
+    "save": "Saqlash",
+    "change": "Parolni o‘zgartirish",
+
+    "successUpdate": "Profil muvaffaqiyatli yangilandi",
+    "errorUpdate": "Profilni yangilashda xatolik",
+
+    "successPassword": "Parol muvaffaqiyatli o‘zgartirildi",
+    "errorPassword": "Parolni o‘zgartirishda xatolik"
+  },
+  "editor": {
+    "dashboard": {
+      "title": "Muharrir paneli",
+
+      "assigned": "Biriktirilgan",
+      "assignedDesc": "Sizga tekshirish uchun berilgan maqolalar",
+
+      "underReview": "Ko‘rib chiqilmoqda",
+      "underReviewDesc": "Hozir tahlil qilinayotgan maqolalar",
+
+      "accepted": "Qabul qilingan",
+      "acceptedDesc": "Tasdiqlangan maqolalar",
+
+      "chartTitle": "Maqolalar statistikasi"
+    },
+    "articles": {
+      "titlePage": "Tekshiruv uchun maqolalar",
+      "title": "Sarlavha",
+      "status": "Holati",
+      "preview": "Ko‘rish",
+      "actions": "Amallar",
+
+      "upload": "Review yuklash",
+      "accept": "Qabul qilish",
+      "reject": "Rad etish",
+
+      "confirm": "Ishonchingiz komilmi?",
+      "yes": "Ha",
+      "cancel": "Bekor qilish",
+
+      "success": "Muvaffaqiyatli bajarildi",
+      "error": "Xatolik yuz berdi"
+    }
+  },
+  "author": {
+    "dashboard": {
+      "title": "Muallif paneli",
+
+      "total": "Maqolalarim",
+      "totalDesc": "Siz yuborgan maqolalar",
+
+      "review": "Ko‘rib chiqilmoqda",
+      "reviewDesc": "Tahrirda bo‘lgan maqolalar",
+
+      "accepted": "Qabul qilingan",
+      "acceptedDesc": "Tasdiqlangan maqolalar",
+
+      "chart": "Maqolalar statistikasi"
+    },
+    "articles": {
+      "titlePage": "Maqolalarim",
+      "title": "Sarlavha",
+      "status": "Holati",
+      "date": "Sana",
+      "actions": "Amallar",
+      "upload": "To‘lov yuklash",
+      "paid": "To‘lov qilingan"
+    },
+    "submit": {
+      "titlePage": "Maqola yuborish",
+      "title": "Sarlavha",
+      "abstract": "Annotatsiya",
+      "keywords": "Kalit so‘zlar",
+      "category": "Kategoriya",
+      "upload": "Fayl yuklash (PDF/DOC)",
+      "submit": "Yuborish",
+      "success": "Maqola muvaffaqiyatli yuborildi",
+      "error": "Xatolik yuz berdi",
+      "validation": "Iltimos barcha maydonlarni to‘ldiring"
     }
   }
 }

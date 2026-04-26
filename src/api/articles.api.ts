@@ -23,6 +23,7 @@ export const submitArticle = (data: {
   title: string;
   abstract: string;
   keywords: string;
+  category: string;
   fileUrl: string;
 }) => {
   return api.post("/articles/submit", data);

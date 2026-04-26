@@ -11,7 +11,8 @@
     "register": "Register"
   },
   "common": {
-    "language": "Language"
+    "language": "Language",
+    "actions": "Actions"
   },
   "home": {
     "hero": {
@@ -67,6 +68,7 @@
     },
     "admin": {
       "dashboard": "Admin Dashboard",
+      "articles": "Articles",
       "editors": "Editors",
       "users": "Users",
       "issues": "Issues",
@@ -141,6 +143,14 @@
     "deleteConfirm": "Are you sure you want to delete?"
   },
   "admin": {
+    "articles": {
+      "titlePage": "Manage Articles",
+      "title": "Title",
+      "status": "Status",
+      "editor": "Editor",
+      "assign": "Assign",
+      "assignEditor": "Assign Editor"
+    },
     "editors": {
       "title": "Editors Management",
       "create": "Create Editor",
@@ -183,13 +193,107 @@
     "dashboard": {
       "title": "Admin Dashboard",
       "users": "Users",
-      "usersDesc": "All registered users",
+      "usersDesc": "All users",
       "editors": "Editors",
       "editorsDesc": "Editors with access",
       "articles": "Articles",
-      "articlesDesc": "Total articles submitted",
+      "articlesDesc": "Submitted articles",
       "published": "Published",
-      "publishedDesc": "Published articles"
+      "publishedDesc": "Published articles",
+      "statusChart": "Articles status",
+      "monthlyChart": "Monthly statistics"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "personal": "Personal Information",
+    "password": "Change Password",
+
+    "name": "Name",
+    "email": "Email",
+    "affiliation": "Affiliation",
+
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+
+    "save": "Save Changes",
+    "change": "Change Password",
+
+    "successUpdate": "Profile updated successfully",
+    "errorUpdate": "Profile update failed",
+
+    "successPassword": "Password changed successfully",
+    "errorPassword": "Password change failed"
+  },
+  "editor": {
+    "dashboard": {
+      "title": "Editor Dashboard",
+
+      "assigned": "Assigned",
+      "assignedDesc": "Articles assigned to you",
+
+      "underReview": "Under Review",
+      "underReviewDesc": "Articles being reviewed",
+
+      "accepted": "Accepted",
+      "acceptedDesc": "Approved articles",
+
+      "chartTitle": "Articles Statistics"
+    },
+    "articles": {
+      "titlePage": "Articles For Review",
+      "title": "Title",
+      "status": "Status",
+      "preview": "Preview",
+      "actions": "Actions",
+
+      "upload": "Upload Review",
+      "accept": "Accept",
+      "reject": "Reject",
+
+      "confirm": "Are you sure?",
+      "yes": "Yes",
+      "cancel": "Cancel",
+
+      "success": "Action successful",
+      "error": "Something went wrong"
+    }
+  },
+  "author": {
+    "dashboard": {
+      "title": "Author Dashboard",
+
+      "total": "My Articles",
+      "totalDesc": "Articles you submitted",
+
+      "review": "Under Review",
+      "reviewDesc": "Articles being reviewed",
+
+      "accepted": "Accepted",
+      "acceptedDesc": "Approved articles",
+
+      "chart": "Articles Statistics"
+    },
+    "articles": {
+      "titlePage": "My Articles",
+      "title": "Title",
+      "status": "Status",
+      "date": "Date",
+      "actions": "Actions",
+      "upload": "Upload Payment",
+      "paid": "Paid"
+    },
+    "submit": {
+      "titlePage": "Submit Article",
+      "title": "Title",
+      "abstract": "Abstract",
+      "keywords": "Keywords",
+      "category": "Category",
+      "upload": "Upload file (PDF/DOC)",
+      "submit": "Submit",
+      "success": "Article submitted successfully",
+      "error": "Something went wrong",
+      "validation": "Please fill all fields"
     }
   }
 }

@@ -6,10 +6,18 @@ import {
   Typography,
   Paper,
   Alert,
+  Stack,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
+
+import PersonIcon from "@mui/icons-material/Person";
+import LockIcon from "@mui/icons-material/Lock";
+
 import { api } from "../../api/axios";
 
 const Profile = () => {
+  const { t } = useTranslation();
+
   const [user, setUser] = useState<any>(null);
 
   const [currentPassword, setCurrentPassword] = useState("");
@@ -31,10 +39,10 @@ const Profile = () => {
         affiliation: user.affiliation,
       });
 
-      setSuccess("Profile updated successfully");
+      setSuccess(t("profile.successUpdate"));
       setError("");
     } catch {
-      setError("Profile update failed");
+      setError(t("profile.errorUpdate"));
       setSuccess("");
     }
   };
@@ -46,13 +54,13 @@ const Profile = () => {
         newPassword: newPassword,
       });
 
-      setSuccess("Password changed successfully");
+      setSuccess(t("profile.successPassword"));
       setError("");
 
       setCurrentPassword("");
       setNewPassword("");
     } catch {
-      setError("Password change failed");
+      setError(t("profile.errorPassword"));
       setSuccess("");
     }
   };
@@ -60,53 +68,45 @@ const Profile = () => {
   if (!user) return null;
 
   return (
-    <Box p={4}>
+    <Box p={3}>
       <Typography variant="h4" mb={3} fontWeight={700}>
-        Profile
+        {t("profile.title")}
       </Typography>
 
       {success && (
-        <Alert
-          severity="success"
-          sx={{
-            mb: 2,
-            borderRadius: 2,
-          }}
-        >
+        <Alert severity="success" sx={{ mb: 2, borderRadius: 2 }}>
           {success}
         </Alert>
       )}
 
       {error && (
-        <Alert
-          severity="error"
-          sx={{
-            mb: 2,
-            borderRadius: 2,
-          }}
-        >
+        <Alert severity="error" sx={{ mb: 2, borderRadius: 2 }}>
           {error}
         </Alert>
       )}
 
-      <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={4}>
+      <Stack direction={{ xs: "column", md: "row" }} spacing={3}>
         <Paper
           sx={{
-            p: 4,
-            maxWidth: 600,
-            width: "100%",
-            mb: 4,
-            border: "1px solid #e5e7eb",
+            flex: 1,
+            p: 3,
             borderRadius: 3,
-            boxShadow: "none",
+            border: "1px solid #e5e7eb",
+            transition: "0.25s",
+            "&:hover": {
+              boxShadow: "0 8px 20px rgba(0,0,0,0.06)",
+            },
           }}
         >
-          <Typography variant="h6" mb={2} fontWeight={600}>
-            Personal Information
-          </Typography>
+          <Stack direction="row" alignItems="center" spacing={1} mb={2}>
+            <PersonIcon color="primary" />
+            <Typography variant="h6" fontWeight={600}>
+              {t("profile.personal")}
+            </Typography>
+          </Stack>
 
           <TextField
-            label="Name"
+            label={t("profile.name")}
             fullWidth
             size="small"
             sx={{ mb: 2 }}
@@ -115,7 +115,7 @@ const Profile = () => {
           />
 
           <TextField
-            label="Email"
+            label={t("profile.email")}
             fullWidth
             disabled
             size="small"
@@ -124,45 +124,49 @@ const Profile = () => {
           />
 
           <TextField
-            label="Affiliation"
+            label={t("profile.affiliation")}
             fullWidth
             size="small"
-            sx={{ mb: 2 }}
+            sx={{ mb: 3 }}
             value={user.affiliation || ""}
             onChange={(e) => setUser({ ...user, affiliation: e.target.value })}
           />
 
           <Button
-            variant="outlined"
+            variant="contained"
             onClick={handleSave}
             sx={{
               textTransform: "none",
               fontWeight: 600,
-              borderRadius: "10px",
-              px: 2.5,
+              borderRadius: 2,
+              px: 3,
             }}
           >
-            Save Changes
+            {t("profile.save")}
           </Button>
         </Paper>
 
         <Paper
           sx={{
-            p: 4,
-            maxWidth: 600,
-            width: "100%",
-            mb: 4,
-            border: "1px solid #e5e7eb",
+            flex: 1,
+            p: 3,
             borderRadius: 3,
-            boxShadow: "none",
+            border: "1px solid #e5e7eb",
+            transition: "0.25s",
+            "&:hover": {
+              boxShadow: "0 8px 20px rgba(0,0,0,0.06)",
+            },
           }}
         >
-          <Typography variant="h6" mb={2} fontWeight={600}>
-            Change Password
-          </Typography>
+          <Stack direction="row" alignItems="center" spacing={1} mb={2}>
+            <LockIcon color="primary" />
+            <Typography variant="h6" fontWeight={600}>
+              {t("profile.password")}
+            </Typography>
+          </Stack>
 
           <TextField
-            label="Current Password"
+            label={t("profile.currentPassword")}
             type="password"
             fullWidth
             size="small"
@@ -172,7 +176,7 @@ const Profile = () => {
           />
 
           <TextField
-            label="New Password"
+            label={t("profile.newPassword")}
             type="password"
             fullWidth
             size="small"
@@ -182,20 +186,19 @@ const Profile = () => {
           />
 
           <Button
-            variant="outlined"
-            color="primary"
+            variant="contained"
             onClick={handleChangePassword}
             sx={{
               textTransform: "none",
               fontWeight: 600,
-              borderRadius: "10px",
-              px: 2.5,
+              borderRadius: 2,
+              px: 3,
             }}
           >
-            Change Password
+            {t("profile.change")}
           </Button>
         </Paper>
-      </Box>
+      </Stack>
     </Box>
   );
 };
