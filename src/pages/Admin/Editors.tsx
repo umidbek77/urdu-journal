@@ -3,36 +3,53 @@ import {
   Box,
   Typography,
   Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Button,
   TextField,
+  Button,
+  Stack,
+  MenuItem,
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 
-import { getEditors, createEditor, deleteEditor } from "../../api/admin.api";
+import { useTranslation } from "react-i18next";
+
+import BaseDataTable from "../../components/ui/table/BaseDataTable";
+import TableActions from "../../components/ui/table/TableActions";
+
+import {
+  getEditors,
+  createEditor,
+  deleteEditor,
+  updateEditor,
+} from "../../api/admin.api";
+
+import { CATEGORY_OPTIONS } from "../../constants/categories";
 
 const AdminEditors = () => {
+  const { t } = useTranslation();
+
   const [editors, setEditors] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    categories: [] as string[],
+  });
+
+  const [editOpen, setEditOpen] = useState(false);
+  const [selectedEditor, setSelectedEditor] = useState<any>(null);
 
   const loadEditors = async () => {
     try {
       const res = await getEditors();
-
-      if (Array.isArray(res.data?.data)) {
-        setEditors(res.data.data);
-      } else {
-        setEditors([]);
-      }
+      setEditors(res.data?.data || res.data);
     } catch (err) {
-      console.error("Editors fetch error", err);
+      console.error(err);
       setEditors([]);
     } finally {
       setLoading(false);
@@ -44,155 +61,256 @@ const AdminEditors = () => {
   }, []);
 
   const handleCreate = async () => {
-    if (!name || !email || !password) return;
+    if (
+      !form.name ||
+      !form.email ||
+      !form.password ||
+      form.categories.length === 0
+    ) {
+      alert(t("common.fillFields"));
+      return;
+    }
 
-    await createEditor({
-      name,
-      email,
-      password,
-    });
+    try {
+      await createEditor(form);
 
-    setName("");
-    setEmail("");
-    setPassword("");
+      setForm({
+        name: "",
+        email: "",
+        password: "",
+        categories: [],
+      });
 
-    loadEditors();
+      loadEditors();
+    } catch (err) {
+      console.error(err);
+      alert(t("commo.createError"));
+    }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this editor?")) return;
+    if (!confirm(t("commo.deleteConfirm"))) return;
 
     await deleteEditor(id);
-
     loadEditors();
   };
 
+  const handleEditOpen = (editor: any) => {
+    setSelectedEditor({
+      ...editor,
+      categories: editor.categories || [],
+    });
+    setEditOpen(true);
+  };
+
+  const handleUpdate = async () => {
+    if (!selectedEditor.name || !selectedEditor.email) {
+      alert(t("commo.fillFields"));
+      return;
+    }
+
+    try {
+      await updateEditor(selectedEditor.id, {
+        name: selectedEditor.name,
+        email: selectedEditor.email,
+      });
+
+      setEditOpen(false);
+      loadEditors();
+    } catch (err) {
+      console.error(err);
+      alert(t("commo.updateError"));
+    }
+  };
+
+  const columns = [
+    { field: "name", headerName: t("admin.editors.name") },
+    { field: "email", headerName: t("admin.editors.email") },
+
+    {
+      field: "categories",
+      headerName: t("admin.editors.categories"),
+      render: (row: any) => (
+        <Stack direction="row" spacing={1}>
+          {(row.categories || []).map((c: string) => (
+            <Chip key={c} label={c} size="small" />
+          ))}
+        </Stack>
+      ),
+    },
+
+    {
+      field: "actions",
+      headerName: t("commo.actions"),
+      render: (row: any) => (
+        <TableActions
+          row={row}
+          actions={[
+            {
+              label: t("commo.edit"),
+              onClick: () => handleEditOpen(row),
+            },
+            {
+              label: t("commo.delete"),
+              onClick: () => handleDelete(row.id),
+            },
+          ]}
+        />
+      ),
+    },
+  ];
+
   return (
     <Box p={3}>
-      <Typography variant="h4" mb={3} fontWeight={700}>
-        Editors Management
+      <Typography variant="h4" mb={2} fontWeight={700}>
+        {t("admin.editors.title")}
       </Typography>
 
       <Paper
-        sx={{
-          p: 3,
-          mb: 4,
-          border: "1px solid #e5e7eb",
-          borderRadius: 3,
-          boxShadow: "none",
-        }}
+        sx={{ p: 2.5, mb: 2, borderRadius: 3, border: "1px solid #e5e7eb" }}
       >
-        <Typography variant="h6" mb={2} fontWeight={600}>
-          Create Editor
+        <Typography variant="h6" mb={1} fontWeight={600}>
+          {t("admin.editors.create")}
         </Typography>
 
-        <Box display="flex" flexWrap="wrap" gap={2}>
+        <Stack direction="row" spacing={2} flexWrap="wrap">
           <TextField
-            label="Name"
-            value={name}
+            label={t("admin.editors.name")}
             size="small"
-            onChange={(e) => setName(e.target.value)}
+            value={form.name}
+            onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
           />
 
           <TextField
-            label="Email"
-            value={email}
+            label={t("admin.editors.email")}
             size="small"
-            onChange={(e) => setEmail(e.target.value)}
+            value={form.email}
+            onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
           />
 
           <TextField
-            label="Password"
+            label={t("admin.editors.password")}
             type="password"
-            value={password}
             size="small"
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            onChange={(e) =>
+              setForm((p) => ({ ...p, password: e.target.value }))
+            }
           />
+
+          <TextField
+            select
+            label={t("admin.editors.categories")}
+            size="small"
+            sx={{ minWidth: 220 }}
+            SelectProps={{
+              multiple: true,
+              renderValue: (selected) => (selected as string[]).join(", "),
+            }}
+            value={form.categories}
+            onChange={(e) => {
+              const value = e.target.value;
+              setForm((p) => ({
+                ...p,
+                categories:
+                  typeof value === "string" ? value.split(",") : value,
+              }));
+            }}
+          >
+            {CATEGORY_OPTIONS.map((c) => (
+              <MenuItem key={c} value={c}>
+                {c}
+              </MenuItem>
+            ))}
+          </TextField>
 
           <Button
-            variant="outlined"
-            sx={{
-              textTransform: "none",
-              fontWeight: 600,
-              borderRadius: "10px",
-              px: 2,
-            }}
+            variant="contained"
             onClick={handleCreate}
+            sx={{
+              height: 40,
+              minWidth: 140,
+              px: 3,
+              flexGrow: 1,
+              maxWidth: 200,
+              fontWeight: 600,
+              borderRadius: 2,
+            }}
           >
-            Create
+            {t("commo.create")}
           </Button>
-        </Box>
+        </Stack>
       </Paper>
 
-      <Paper
-        sx={{
-          border: "1px solid #e5e7eb",
-          borderRadius: 3,
-          overflow: "hidden",
-          boxShadow: "none",
-        }}
+      <BaseDataTable columns={columns} rows={editors} loading={loading} />
+
+      <Dialog
+        open={editOpen}
+        onClose={() => setEditOpen(false)}
+        maxWidth="sm"
+        fullWidth
       >
-        <Table>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: "#f8fafc" }}>
-              <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
+        <DialogTitle>{t("admin.editors.edit")}</DialogTitle>
 
-              <TableCell sx={{ fontWeight: 700 }}>Email</TableCell>
+        <DialogContent>
+          <Stack spacing={2} mt={1}>
+            <TextField
+              label={t("admin.editors.name")}
+              value={selectedEditor?.name || ""}
+              onChange={(e) =>
+                setSelectedEditor((p: any) => ({
+                  ...p,
+                  name: e.target.value,
+                }))
+              }
+            />
 
-              <TableCell sx={{ fontWeight: 700 }}>Password</TableCell>
+            <TextField
+              label={t("admin.editors.email")}
+              value={selectedEditor?.email || ""}
+              onChange={(e) =>
+                setSelectedEditor((p: any) => ({
+                  ...p,
+                  email: e.target.value,
+                }))
+              }
+            />
 
-              <TableCell sx={{ fontWeight: 700 }}>Action</TableCell>
-            </TableRow>
-          </TableHead>
+            <TextField
+              select
+              label={t("admin.editors.categories")}
+              SelectProps={{
+                multiple: true,
+                renderValue: (selected) => (selected as string[]).join(", "),
+              }}
+              value={selectedEditor?.categories || []}
+              onChange={(e) => {
+                const value = e.target.value;
+                setSelectedEditor((p: any) => ({
+                  ...p,
+                  categories:
+                    typeof value === "string" ? value.split(",") : value,
+                }));
+              }}
+            >
+              {CATEGORY_OPTIONS.map((c) => (
+                <MenuItem key={c} value={c}>
+                  {c}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Stack>
+        </DialogContent>
 
-          <TableBody>
-            {loading ? (
-              <TableRow>
-                <TableCell colSpan={4}>Loading...</TableCell>
-              </TableRow>
-            ) : editors.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={4}>No editors found</TableCell>
-              </TableRow>
-            ) : (
-              editors.map((e) => (
-                <TableRow
-                  key={e.id}
-                  hover
-                  sx={{
-                    "& td": {
-                      fontWeight: 500,
-                      borderBottom: "1px solid #f1f5f9",
-                    },
-                  }}
-                >
-                  <TableCell>{e.name}</TableCell>
-
-                  <TableCell>{e.email}</TableCell>
-
-                  <TableCell>{e.password}</TableCell>
-
-                  <TableCell>
-                    <Button
-                      color="error"
-                      variant="outlined"
-                      size="small"
-                      sx={{
-                        textTransform: "none",
-                        fontWeight: 600,
-                        borderRadius: "10px",
-                      }}
-                      onClick={() => handleDelete(e.id)}
-                    >
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </Paper>
+        <DialogActions>
+          <Button onClick={() => setEditOpen(false)}>
+            {t("commo.cancel")}
+          </Button>
+          <Button variant="contained" onClick={handleUpdate}>
+            {t("commo.save")}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

@@ -12,6 +12,10 @@ export const createEditor = (data:any) => {
   return api.post("/admin/editors", data);
 };
 
+export const updateEditor = (id: string, data: any) => {
+  return api.patch(`/admin/editors/${id}`, data);
+};
+
 export const deleteEditor = (id:string) => {
   return api.delete(`/admin/editors/${id}`);
 };

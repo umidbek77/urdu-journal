@@ -126,5 +126,35 @@
       "phone": "Telefon",
       "email": "Elektron pochta"
     }
+  },
+  "commo": {
+    "create": "Yaratish",
+    "edit": "Tahrirlash",
+    "delete": "O‘chirish",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "actions": "Amallar",
+    "fillFields": "Barcha maydonlarni to‘ldiring",
+    "createError": "Yaratishda xatolik",
+    "updateError": "Yangilashda xatolik",
+    "deleteConfirm": "Haqiqatan o‘chirmoqchimisiz?"
+  },
+  "admin": {
+    "editors": {
+      "title": "Editorlarni boshqarish",
+      "create": "Editor yaratish",
+      "edit": "Edit qilish",
+      "name": "Ism",
+      "email": "Email",
+      "password": "Parol",
+      "categories": "Kategoriyalar"
+    },
+    "users": {
+      "title": "Foydalanuvchilar",
+      "name": "Ism",
+      "email": "Email",
+      "affiliation": "Tashkilot",
+      "created": "Yaratilgan sana"
+    }
   }
 }

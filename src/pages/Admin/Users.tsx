@@ -1,30 +1,22 @@
 import { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
+
+import { useTranslation } from "react-i18next";
+
+import BaseDataTable from "../../components/ui/table/BaseDataTable";
 
 import { getUsers } from "../../api/admin.api";
 
 const AdminUsers = () => {
+  const { t } = useTranslation();
+
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const loadUsers = async () => {
     try {
       const res = await getUsers();
-
-      if (Array.isArray(res.data?.data)) {
-        setUsers(res.data.data);
-      } else {
-        setUsers([]);
-      }
+      setUsers(res.data?.data || res.data || []);
     } catch (err) {
       console.error("Users fetch error", err);
       setUsers([]);
@@ -37,69 +29,34 @@ const AdminUsers = () => {
     loadUsers();
   }, []);
 
+  const columns = [
+    {
+      field: "name",
+      headerName: t("admin.users.name"),
+    },
+    {
+      field: "email",
+      headerName: t("admin.users.email"),
+    },
+    {
+      field: "affiliation",
+      headerName: t("admin.users.affiliation"),
+      render: (row: any) => row.affiliation || "-",
+    },
+    {
+      field: "createdAt",
+      headerName: t("admin.users.created"),
+      render: (row: any) => new Date(row.createdAt).toLocaleDateString(),
+    },
+  ];
+
   return (
     <Box p={3}>
-      <Typography variant="h4" mb={3} fontWeight={700}>
-        Users
+      <Typography variant="h4" mb={2} fontWeight={700}>
+        {t("admin.users.title")}
       </Typography>
 
-      <Paper
-        sx={{
-          border: "1px solid #e5e7eb",
-          borderRadius: 3,
-          overflow: "hidden",
-          boxShadow: "none",
-        }}
-      >
-        <Table>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: "#f8fafc" }}>
-              <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
-
-              <TableCell sx={{ fontWeight: 700 }}>Email</TableCell>
-
-              <TableCell sx={{ fontWeight: 700 }}>Affiliation</TableCell>
-
-              <TableCell sx={{ fontWeight: 700 }}>Created</TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {loading ? (
-              <TableRow>
-                <TableCell colSpan={4}>Loading...</TableCell>
-              </TableRow>
-            ) : users.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={4}>No users found</TableCell>
-              </TableRow>
-            ) : (
-              users.map((u) => (
-                <TableRow
-                  key={u.id}
-                  hover
-                  sx={{
-                    "& td": {
-                      fontWeight: 500,
-                      borderBottom: "1px solid #f1f5f9",
-                    },
-                  }}
-                >
-                  <TableCell>{u.name}</TableCell>
-
-                  <TableCell>{u.email}</TableCell>
-
-                  <TableCell>{u.affiliation || "-"}</TableCell>
-
-                  <TableCell>
-                    {new Date(u.createdAt).toLocaleDateString()}
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </Paper>
+      <BaseDataTable columns={columns} rows={users} loading={loading} />
     </Box>
   );
 };

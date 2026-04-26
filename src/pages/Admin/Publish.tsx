@@ -26,7 +26,6 @@ const AdminPublish = () => {
     {},
   );
 
-  // 🔥 PDF MODAL STATE
   const [open, setOpen] = useState(false);
   const [pdfUrl, setPdfUrl] = useState("");
   const [pdfTitle, setPdfTitle] = useState("");
@@ -64,11 +63,9 @@ const AdminPublish = () => {
     }
   };
 
-  // 🔥 UNIVERSAL PDF OPEN
   const handleOpenPdf = (url?: string, title?: string) => {
     if (!url) return;
 
-    // URL encode fix
     const safeUrl = encodeURI(url);
 
     setPdfUrl(safeUrl);
@@ -153,7 +150,6 @@ const AdminPublish = () => {
                   </TextField>
                 </TableCell>
 
-                {/* 🔥 ACTIONS */}
                 <TableCell>
                   <Stack direction="row" spacing={1} flexWrap="wrap">
                     {/* Publish */}
@@ -171,7 +167,6 @@ const AdminPublish = () => {
                       Publish
                     </Button>
 
-                    {/* 🔥 VIEW REVIEW */}
                     <Button
                       size="small"
                       variant="outlined"
@@ -185,7 +180,6 @@ const AdminPublish = () => {
                       Review
                     </Button>
 
-                    {/* 🔥 VIEW PAYMENT */}
                     <Button
                       size="small"
                       variant="outlined"
@@ -206,7 +200,6 @@ const AdminPublish = () => {
         </Table>
       </Paper>
 
-      {/* 🔥 PDF MODAL */}
       <PdfViewerModal
         open={open}
         onClose={handleClosePdf}

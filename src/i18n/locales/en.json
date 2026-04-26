@@ -126,5 +126,35 @@
       "phone": "Phone",
       "email": "Email"
     }
+  },
+  "commo": {
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "actions": "Actions",
+    "fillFields": "Fill all fields",
+    "createError": "Create error",
+    "updateError": "Update error",
+    "deleteConfirm": "Are you sure you want to delete?"
+  },
+  "admin": {
+    "editors": {
+      "title": "Editors Management",
+      "create": "Create Editor",
+      "edit": "Edit Editor",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "categories": "Categories"
+    },
+    "users": {
+      "title": "Users",
+      "name": "Name",
+      "email": "Email",
+      "affiliation": "Affiliation",
+      "created": "Created"
+    }
   }
 }
