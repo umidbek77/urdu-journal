@@ -28,6 +28,9 @@ const AdminArticles = () => {
   const [selectedArticle, setSelectedArticle] = useState<any>(null);
   const [selectedEditor, setSelectedEditor] = useState("");
 
+  const [viewModal, setViewModal] = useState(false);
+  const [currentFile, setCurrentFile] = useState("");
+
   const loadArticles = async () => {
     try {
       const res = await api.get("/admin/articles");
@@ -70,10 +73,43 @@ const AdminArticles = () => {
     }
   };
 
+  const filteredEditors = selectedArticle
+    ? editors.filter((e) =>
+        selectedArticle.category
+          ? e.categories?.some(
+              (c: string) =>
+                c.toLowerCase() === selectedArticle.category.toLowerCase(),
+            )
+          : true,
+      )
+    : editors;
+
+  const formatDate = (date: string) => new Date(date).toLocaleString();
+
+  const handleView = (url: string) => {
+    setCurrentFile(url);
+    setViewModal(true);
+  };
+
   const columns = [
     {
       field: "title",
       headerName: t("admin.articles.title"),
+    },
+    {
+      field: "category",
+      headerName: t("admin.articles.category"),
+      render: (row: any) => row.category || "-",
+    },
+    {
+      field: "createdAt",
+      headerName: t("admin.articles.createdAt"),
+      render: (row: any) => formatDate(row.createdAt),
+    },
+    {
+      field: "updatedAt",
+      headerName: t("admin.articles.updatedAt"),
+      render: (row: any) => formatDate(row.updatedAt),
     },
     {
       field: "status",
@@ -93,6 +129,10 @@ const AdminArticles = () => {
           row={row}
           actions={[
             {
+              label: "View",
+              onClick: () => handleView(row.fileUrl),
+            },
+            {
               label: t("admin.articles.assign"),
               onClick: () => handleAssign(row),
             },
@@ -110,7 +150,12 @@ const AdminArticles = () => {
 
       <BaseDataTable columns={columns} rows={articles} loading={loading} />
 
-      <Dialog open={assignModal} onClose={() => setAssignModal(false)}>
+      <Dialog
+        open={assignModal}
+        onClose={() => setAssignModal(false)}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>{t("admin.articles.assignEditor")}</DialogTitle>
 
         <DialogContent>
@@ -122,7 +167,7 @@ const AdminArticles = () => {
               onChange={(e) => setSelectedEditor(e.target.value)}
               fullWidth
             >
-              {editors.map((e) => (
+              {filteredEditors.map((e) => (
                 <MenuItem key={e.id} value={e.id}>
                   {e.name}
                 </MenuItem>
@@ -133,6 +178,24 @@ const AdminArticles = () => {
               {t("admin.articles.assign")}
             </Button>
           </Stack>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={viewModal}
+        onClose={() => setViewModal(false)}
+        maxWidth="lg"
+        fullWidth
+      >
+        <DialogContent sx={{ p: 0 }}>
+          <iframe
+            src={`https://docs.google.com/gview?url=${encodeURIComponent(
+              currentFile,
+            )}&embedded=true`}
+            width="100%"
+            height="600px"
+            style={{ border: "none" }}
+          />
         </DialogContent>
       </Dialog>
     </Box>

@@ -4,6 +4,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 import uz from "./locales/uz.json";
 import en from "./locales/en.json";
+import ru from "./locales/ru.json";
 
 i18n
   .use(LanguageDetector)
@@ -12,6 +13,7 @@ i18n
     resources: {
       uz: { translation: uz },
       en: { translation: en },
+      ru: { translation: ru },
     },
     fallbackLng: "uz",
     interpolation: {

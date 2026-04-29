@@ -18,9 +18,11 @@ import LanguageIcon from "@mui/icons-material/Language";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../hooks/useAuth";
 
 const Header: React.FC = () => {
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
   const theme = useTheme();
   const isSmallDesktop = useMediaQuery(theme.breakpoints.down("lg"));
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -90,7 +92,7 @@ const Header: React.FC = () => {
               alt="Universitet Logosi"
               sx={{
                 height: { xs: 35, md: 45 },
-                mr: 1.5,
+                mr: 1.2,
                 flexShrink: 0,
               }}
             />
@@ -105,10 +107,7 @@ const Header: React.FC = () => {
               >
                 Journal of Khwarazm Information Technologies
               </Typography>
-              <Typography
-                variant="caption"
-                color="text.secondary"
-              >
+              <Typography variant="inherit" color="text.secondary">
                 Xorazm axborot texnologiyalari jurnali
               </Typography>
             </Box>
@@ -139,10 +138,25 @@ const Header: React.FC = () => {
 
                 <Divider />
 
-                <MenuItem component={Link} to="/login">
-                  <LoginIcon fontSize="small" sx={{ mr: 1 }} />
-                  {t("auth.login")}
-                </MenuItem>
+                {!user ? (
+                  <MenuItem component={Link} to="/login">
+                    <LoginIcon fontSize="small" sx={{ mr: 1 }} />
+                    {t("auth.login")}
+                  </MenuItem>
+                ) : (
+                  <MenuItem
+                    component={Link}
+                    to={
+                      user.role === "USER"
+                        ? "/dashboard"
+                        : user.role === "EDITOR"
+                          ? "/editor-dashboard"
+                          : "/admin-dashboard"
+                    }
+                  >
+                    {t("auth.dashboard")}
+                  </MenuItem>
+                )}
 
                 <MenuItem onClick={openLangMenu}>
                   <LanguageIcon fontSize="small" sx={{ mr: 1 }} />
@@ -154,12 +168,9 @@ const Header: React.FC = () => {
                   open={Boolean(langAnchor)}
                   onClose={closeLangMenu}
                 >
-                  <MenuItem onClick={() => changeLang("uz")}>
-                    O‘zbek
-                  </MenuItem>
-                  <MenuItem onClick={() => changeLang("en")}>
-                    English
-                  </MenuItem>
+                  <MenuItem onClick={() => changeLang("uz")}>O‘zbek</MenuItem>
+                  <MenuItem onClick={() => changeLang("en")}>English</MenuItem>
+                  <MenuItem onClick={() => changeLang("ru")}>Русский</MenuItem>
                 </Menu>
               </Menu>
             </Box>
@@ -184,16 +195,34 @@ const Header: React.FC = () => {
                 </Button>
               ))}
 
-              <Button
-                component={Link}
-                to="/login"
-                variant="outlined"
-                size="small"
-                sx={{ ml: 2 }}
-                startIcon={<LoginIcon />}
-              >
-                {t("auth.login")}
-              </Button>
+              {!user ? (
+                <Button
+                  component={Link}
+                  to="/login"
+                  variant="outlined"
+                  size="small"
+                  sx={{ ml: 2 }}
+                  startIcon={<LoginIcon />}
+                >
+                  {t("auth.login")}
+                </Button>
+              ) : (
+                <Button
+                  component={Link}
+                  to={
+                    user.role === "USER"
+                      ? "/dashboard"
+                      : user.role === "EDITOR"
+                        ? "/editor-dashboard"
+                        : "/admin-dashboard"
+                  }
+                  variant="contained"
+                  size="small"
+                  sx={{ ml: 2 }}
+                >
+                  {t("auth.dashboard")}
+                </Button>
+              )}
 
               <Button
                 variant="outlined"
@@ -210,12 +239,9 @@ const Header: React.FC = () => {
                 open={Boolean(langAnchor)}
                 onClose={closeLangMenu}
               >
-                <MenuItem onClick={() => changeLang("uz")}>
-                  O‘zbek
-                </MenuItem>
-                <MenuItem onClick={() => changeLang("en")}>
-                  English
-                </MenuItem>
+                <MenuItem onClick={() => changeLang("uz")}>O‘zbek</MenuItem>
+                <MenuItem onClick={() => changeLang("en")}>English</MenuItem>
+                <MenuItem onClick={() => changeLang("ru")}>Русский</MenuItem>
               </Menu>
             </Box>
           )}

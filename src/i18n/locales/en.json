@@ -8,7 +8,8 @@
   },
   "auth": {
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "dashboard": "Dashboard"
   },
   "common": {
     "language": "Language",
@@ -149,7 +150,10 @@
       "status": "Status",
       "editor": "Editor",
       "assign": "Assign",
-      "assignEditor": "Assign Editor"
+      "assignEditor": "Assign Editor",
+      "category": "Category",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At"
     },
     "editors": {
       "title": "Editors Management",

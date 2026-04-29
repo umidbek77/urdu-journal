@@ -34,10 +34,17 @@ const Issues: React.FC = () => {
     fetchIssues();
   }, []);
 
-  const sortedIssues = [...issues].sort(
-    (a, b) =>
-      new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime(),
-  );
+  const sortedIssues = [...issues].sort((a, b) => {
+    const dateA = a.publishedDate
+      ? new Date(a.publishedDate).getTime()
+      : new Date(a.year, a.number).getTime();
+
+    const dateB = b.publishedDate
+      ? new Date(b.publishedDate).getTime()
+      : new Date(b.year, b.number).getTime();
+
+    return dateB - dateA;
+  });
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>

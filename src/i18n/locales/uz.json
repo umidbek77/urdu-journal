@@ -8,7 +8,8 @@
   },
   "auth": {
     "login": "Kirish",
-    "register": "Ro‘yxatdan o‘tish"
+    "register": "Ro‘yxatdan o‘tish",
+    "dashboard": "Kabinet"
   },
   "common": {
     "language": "Til",
@@ -149,7 +150,10 @@
       "status": "Holati",
       "editor": "Muharrir",
       "assign": "Biriktirish",
-      "assignEditor": "Muharrir biriktirish"
+      "assignEditor": "Muharrir biriktirish",
+      "category": "Kategoriya",
+      "createdAt": "Yaratilgan sana",
+      "updatedAt": "Yangilangan sana"
     },
     "editors": {
       "title": "Editorlarni boshqarish",
