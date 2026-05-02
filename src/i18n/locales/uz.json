@@ -9,11 +9,13 @@
   "auth": {
     "login": "Kirish",
     "register": "Ro‘yxatdan o‘tish",
-    "dashboard": "Kabinet"
+    "dashboard": "Kabinet",
+    "logout": "Chiqish"
   },
   "common": {
     "language": "Til",
-    "actions": "Amallar"
+    "actions": "Amallar",
+    "view": "Ko‘rish"
   },
   "home": {
     "hero": {
@@ -72,7 +74,7 @@
       "articles": "Maqolalar",
       "editors": "Editorlar",
       "users": "Foydalanuvchilar",
-      "issues": "Nashrlar",
+      "issues": "Jurnal Nashrlari",
       "publish": "Chop etish",
       "published": "Nashr qilinganlar",
       "profile": "Profil"
@@ -159,8 +161,8 @@
       "title": "Editorlarni boshqarish",
       "create": "Editor yaratish",
       "edit": "Edit qilish",
-      "name": "Ism",
-      "email": "Email",
+      "name": "Ism Familya",
+      "email": "Elektron pochta",
       "password": "Parol",
       "categories": "Kategoriyalar"
     },
@@ -172,7 +174,7 @@
       "created": "Yaratilgan sana"
     },
     "issues": {
-      "title": "Nashrlarni boshqarish",
+      "title": "Jurnal Nashrlarni boshqarish",
       "create": "Nashr yaratish",
       "edit": "Nashrni tahrirlash",
       "volume": "Jild",
@@ -192,7 +194,10 @@
       "publish": "Nashr qilish",
       "review": "Ko‘rish",
       "payment": "To‘lov",
-      "selectIssue": "Nashrni tanlang"
+      "selectIssue": "Nashrni tanlang",
+      "category": "Kategoriya",
+      "author": "Muallif",
+      "editor": "Muharrir"
     },
     "dashboard": {
       "title": "Admin panel",
@@ -242,7 +247,8 @@
       "accepted": "Qabul qilingan",
       "acceptedDesc": "Tasdiqlangan maqolalar",
 
-      "chartTitle": "Maqolalar statistikasi"
+      "chartTitle": "Maqolalar statistikasi",
+      "rejected": "Rad etilgan"
     },
     "articles": {
       "titlePage": "Tekshiruv uchun maqolalar",
@@ -298,6 +304,29 @@
       "success": "Maqola muvaffaqiyatli yuborildi",
       "error": "Xatolik yuz berdi",
       "validation": "Iltimos barcha maydonlarni to‘ldiring"
+    }
+  },
+  "enums": {
+    "category": {
+      "PROGRAMMING": "Dasturlash",
+      "INFOCOMMUNICATION": "Infokommunikatsiya",
+      "AI": "Sun’iy intellekt",
+      "CRYPTOGRAPHY": "Kriptografiya",
+      "NETWORK": "Tarmoqlar",
+      "INTELLIGENT_SYSTEMS": "Intellektual tizimlar"
+    },
+    "status": {
+      "SUBMITTED": "Yuborilgan",
+      "UNDER_REVIEW": "Ko‘rib chiqilmoqda",
+      "REVISION": "Tahrir talab qilinadi",
+      "ACCEPTED": "Qabul qilingan",
+      "REJECTED": "Rad etilgan",
+      "PUBLISHED": "Nashr qilingan"
+    },
+    "role": {
+      "USER": "Foydalanuvchi",
+      "EDITOR": "Muharrir",
+      "SUPER_ADMIN": "Admin"
     }
   }
 }

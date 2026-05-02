@@ -12,17 +12,21 @@ import {
   useTheme,
   Container,
   Divider,
+  Avatar,
 } from "@mui/material";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import LanguageIcon from "@mui/icons-material/Language";
 import LoginIcon from "@mui/icons-material/Login";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../hooks/useAuth";
 
 const Header: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const theme = useTheme();
   const isSmallDesktop = useMediaQuery(theme.breakpoints.down("lg"));
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -37,24 +41,36 @@ const Header: React.FC = () => {
   ];
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [langAnchor, setLangAnchor] = React.useState<null | HTMLElement>(null);
+  const [userMenu, setUserMenu] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorEl(event.currentTarget);
+
   const handleClose = () => setAnchorEl(null);
-
-  const isActive = (path: string) => location.pathname === path;
-
-  const [langAnchor, setLangAnchor] = React.useState<null | HTMLElement>(null);
 
   const openLangMenu = (e: React.MouseEvent<HTMLElement>) =>
     setLangAnchor(e.currentTarget);
 
   const closeLangMenu = () => setLangAnchor(null);
 
+  const openUserMenu = (e: React.MouseEvent<HTMLElement>) =>
+    setUserMenu(e.currentTarget);
+
+  const closeUserMenu = () => setUserMenu(null);
+
+  const handleLogout = () => {
+    logout();
+    closeUserMenu();
+    window.location.href = "/";
+  };
+
   const changeLang = (lang: string) => {
     i18n.changeLanguage(lang);
     closeLangMenu();
   };
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <AppBar
@@ -93,19 +109,15 @@ const Header: React.FC = () => {
               sx={{
                 height: { xs: 35, md: 45 },
                 mr: 1.2,
-                flexShrink: 0,
               }}
             />
 
             <Box sx={{ lineHeight: 1.2 }}>
               <Typography
                 variant={isMobile ? "subtitle2" : "h6"}
-                sx={{
-                  color: "primary.main",
-                  fontWeight: "bold",
-                }}
+                sx={{ fontWeight: "bold" }}
               >
-                Journal of Khwarazm Information Technologies
+                Journal of Khorezm Information Technologies
               </Typography>
               <Typography variant="inherit" color="text.secondary">
                 Xorazm axborot texnologiyalari jurnali
@@ -123,7 +135,6 @@ const Header: React.FC = () => {
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
-                onClick={handleClose}
               >
                 {navItems.map((item) => (
                   <MenuItem
@@ -140,7 +151,7 @@ const Header: React.FC = () => {
 
                 {!user ? (
                   <MenuItem component={Link} to="/login">
-                    <LoginIcon fontSize="small" sx={{ mr: 1 }} />
+                    <LoginIcon sx={{ mr: 1 }} />
                     {t("auth.login")}
                   </MenuItem>
                 ) : (
@@ -159,19 +170,9 @@ const Header: React.FC = () => {
                 )}
 
                 <MenuItem onClick={openLangMenu}>
-                  <LanguageIcon fontSize="small" sx={{ mr: 1 }} />
+                  <LanguageIcon sx={{ mr: 1 }} />
                   {t("common.language")}
                 </MenuItem>
-
-                <Menu
-                  anchorEl={langAnchor}
-                  open={Boolean(langAnchor)}
-                  onClose={closeLangMenu}
-                >
-                  <MenuItem onClick={() => changeLang("uz")}>O‘zbek</MenuItem>
-                  <MenuItem onClick={() => changeLang("en")}>English</MenuItem>
-                  <MenuItem onClick={() => changeLang("ru")}>Русский</MenuItem>
-                </Menu>
               </Menu>
             </Box>
           ) : (
@@ -195,44 +196,15 @@ const Header: React.FC = () => {
                 </Button>
               ))}
 
-              {!user ? (
-                <Button
-                  component={Link}
-                  to="/login"
-                  variant="outlined"
-                  size="small"
-                  sx={{ ml: 2 }}
-                  startIcon={<LoginIcon />}
-                >
-                  {t("auth.login")}
-                </Button>
-              ) : (
-                <Button
-                  component={Link}
-                  to={
-                    user.role === "USER"
-                      ? "/dashboard"
-                      : user.role === "EDITOR"
-                        ? "/editor-dashboard"
-                        : "/admin-dashboard"
-                  }
-                  variant="contained"
-                  size="small"
-                  sx={{ ml: 2 }}
-                >
-                  {t("auth.dashboard")}
-                </Button>
+              {!user && (
+                <IconButton component={Link} to="/login" sx={{ ml: 1 }}>
+                  <LoginIcon />
+                </IconButton>
               )}
 
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={openLangMenu}
-                sx={{ ml: 1 }}
-                startIcon={<LanguageIcon />}
-              >
-                {t("common.language")}
-              </Button>
+              <IconButton onClick={openLangMenu} sx={{ ml: 1 }}>
+                <LanguageIcon />
+              </IconButton>
 
               <Menu
                 anchorEl={langAnchor}
@@ -243,6 +215,48 @@ const Header: React.FC = () => {
                 <MenuItem onClick={() => changeLang("en")}>English</MenuItem>
                 <MenuItem onClick={() => changeLang("ru")}>Русский</MenuItem>
               </Menu>
+
+              {user && (
+                <>
+                  <IconButton onClick={openUserMenu} sx={{ ml: 1 }}>
+                    {user.avatarUrl ? (
+                      <Avatar
+                        src={user.avatarUrl}
+                        sx={{ width: 32, height: 32 }}
+                      />
+                    ) : (
+                      <AccountCircleIcon />
+                    )}
+                  </IconButton>
+
+                  <Menu
+                    anchorEl={userMenu}
+                    open={Boolean(userMenu)}
+                    onClose={closeUserMenu}
+                  >
+                    <MenuItem component={Link} to="/profile">
+                      {t("profile.title")}
+                    </MenuItem>
+
+                    <MenuItem
+                      component={Link}
+                      to={
+                        user.role === "USER"
+                          ? "/dashboard"
+                          : user.role === "EDITOR"
+                            ? "/editor-dashboard"
+                            : "/admin-dashboard"
+                      }
+                    >
+                      {t("auth.dashboard")}
+                    </MenuItem>
+
+                    <MenuItem onClick={handleLogout}>
+                      {t("auth.logout")}
+                    </MenuItem>
+                  </Menu>
+                </>
+              )}
             </Box>
           )}
         </Toolbar>

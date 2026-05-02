@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
+import { translateEnum } from "../../utils/enumTranslator";
 
 import BaseDataTable from "../../components/ui/table/BaseDataTable";
 import TableActions from "../../components/ui/table/TableActions";
@@ -43,6 +44,9 @@ const AdminEditors = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedEditor, setSelectedEditor] = useState<any>(null);
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const loadEditors = async () => {
     try {
@@ -112,11 +116,28 @@ const AdminEditors = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm(t("commo.deleteConfirm"))) return;
+  const handleDelete = (id: string) => {
+    setDeleteId(id);
+    setConfirmOpen(true);
+  };
 
-    await deleteEditor(id);
-    loadEditors();
+  const handleConfirmDelete = async () => {
+    if (!deleteId) return;
+
+    try {
+      await deleteEditor(deleteId);
+      loadEditors();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setConfirmOpen(false);
+      setDeleteId(null);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmOpen(false);
+    setDeleteId(null);
   };
 
   const columns = [
@@ -129,7 +150,7 @@ const AdminEditors = () => {
       render: (row: any) => (
         <Stack direction="row" spacing={1}>
           {(row.categories || []).map((c: string) => (
-            <Chip key={c} label={c} size="small" />
+            <Chip key={c} label={translateEnum(t, "category", c)} size="small" />
           ))}
         </Stack>
       ),
@@ -229,7 +250,7 @@ const AdminEditors = () => {
                 renderValue: (selected) => (
                   <Stack direction="row" gap={1} flexWrap="wrap">
                     {(selected as string[]).map((value) => (
-                      <Chip key={value} label={value} size="small" />
+                      <Chip key={value} label={translateEnum(t, "category", value)} size="small" />
                     ))}
                   </Stack>
                 ),
@@ -260,7 +281,7 @@ const AdminEditors = () => {
                           : "#ccc",
                       }}
                     />
-                    {c}
+                    {translateEnum(t, "category", c)}
                   </Stack>
                 </MenuItem>
               ))}
@@ -275,6 +296,27 @@ const AdminEditors = () => {
 
           <Button variant="contained" onClick={handleSubmit}>
             {isEdit ? t("commo.save") : t("commo.create")}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={confirmOpen}
+        onClose={handleCancelDelete}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>{t("commo.deleteConfirm")}</DialogTitle>
+
+        <DialogActions>
+          <Button onClick={handleCancelDelete}>{t("commo.cancel")}</Button>
+
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleConfirmDelete}
+          >
+            {t("commo.delete")}
           </Button>
         </DialogActions>
       </Dialog>

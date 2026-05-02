@@ -5,6 +5,9 @@ interface User {
   id: string;
   email: string;
   role: "USER" | "EDITOR" | "SUPER_ADMIN";
+  name?: string;
+  avatarUrl?: string;
+  affiliation?: string;
 }
 
 interface AuthContextType {

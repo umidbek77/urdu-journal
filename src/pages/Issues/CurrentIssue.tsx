@@ -68,7 +68,7 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
         variant="h4"
         sx={{
           fontWeight: 800,
-          mb: 5,
+          mb: 4,
           textAlign: "center",
           color: theme.palette.primary.dark,
           letterSpacing: "0.05em",
@@ -79,9 +79,9 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
       </Typography>
 
       <Paper
-        elevation={10}
+        elevation={3}
         sx={{
-          p: { xs: 2, sm: 4, md: 6 },
+          p: { xs: 2, sm: 3, md: 4 },
           borderRadius: 3,
           background: gradientBackground,
           border: `1px solid ${theme.palette.grey[200]}`,
@@ -91,18 +91,19 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
           sx={{
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
-            gap: { xs: 4, md: 6 },
+            gap: { xs: 3, md: 4 },
             alignItems: "center",
           }}
         >
-          {/* COVER */}
-          <Box sx={{ width: { xs: "100%", md: 300 } }}>
+          <Box sx={{ width: { xs: "100%", md: 260 } }}>
             <Box
               sx={{
                 borderRadius: 2,
                 overflow: "hidden",
-                boxShadow: "8px 8px 20px rgba(0, 0, 0, 0.4)",
-                border: `4px solid ${theme.palette.common.white}`,
+
+                boxShadow: "0 6px 18px rgba(0,0,0,0.18)",
+
+                border: `2px solid ${theme.palette.common.white}`,
               }}
             >
               <img
@@ -117,25 +118,36 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
             </Box>
           </Box>
 
-          {/* INFO */}
           <Box sx={{ flexGrow: 1 }}>
             <Typography
-              variant="h5"
+              variant="h6"
               color="secondary"
               sx={{
-                fontWeight: 900,
+                fontWeight: 700,
                 mb: 1,
+                letterSpacing: 1,
               }}
             >
               {t("issue.volume")} {currentIssue.year} | {t("issue.number")}{" "}
               {currentIssue.number}
             </Typography>
 
-            <Typography variant="h4" sx={{ fontWeight: 700, mb: 3 }}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 700,
+                mb: 2,
+              }}
+            >
               {currentIssue.series || t("issue.noSeries")}
             </Typography>
 
-            <Typography sx={{ mb: 3 }}>
+            <Typography
+              sx={{
+                mb: 2.5,
+                color: "text.secondary",
+              }}
+            >
               {t("issue.published")}:{" "}
               {currentIssue.publishedDate
                 ? new Date(currentIssue.publishedDate).toLocaleDateString()
@@ -150,7 +162,10 @@ const CurrentIssue: React.FC<Props> = ({ issue }) => {
               sx={{
                 textTransform: "none",
                 fontWeight: 600,
-                borderRadius: "10px",
+                borderRadius: "8px",
+                px: 3,
+                py: 1,
+                boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
               }}
             >
               {t("issue.viewPdf")}

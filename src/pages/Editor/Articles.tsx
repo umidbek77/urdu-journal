@@ -10,11 +10,15 @@ import {
   Stack,
   Snackbar,
   Alert,
+  Tooltip,
 } from "@mui/material";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
+import { translateEnum } from "../../utils/enumTranslator";
 import { useTranslation } from "react-i18next";
 
 import BaseDataTable from "../../components/ui/table/BaseDataTable";
@@ -46,15 +50,15 @@ const EditorArticles = () => {
   });
 
   const loadArticles = async () => {
-  try {
-    const res = await api.get("/articles/editor/articles");
-    setArticles(res.data || []);
-  } catch {
-    setArticles([]);
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      const res = await api.get("/articles/editor/articles");
+      setArticles(res.data || []);
+    } catch {
+      setArticles([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     loadArticles();
@@ -104,6 +108,12 @@ const EditorArticles = () => {
   };
 
   const handlePreview = (url: string) => {
+    const isPdf = url.toLowerCase().endsWith(".pdf");
+
+    if (!isPdf) {
+      window.open(url, "_blank");
+      return;
+    }
     setSelectedFile(url);
     setOpenPreview(true);
   };
@@ -124,7 +134,7 @@ const EditorArticles = () => {
       headerName: t("editor.articles.status"),
       render: (row: any) => (
         <Chip
-          label={row.status}
+          label={translateEnum(t, "status", row.status)}
           color={getStatusColor(row.status)}
           size="small"
         />
@@ -134,9 +144,14 @@ const EditorArticles = () => {
       field: "preview",
       headerName: t("editor.articles.preview"),
       render: (row: any) => (
-        <IconButton color="primary" onClick={() => handlePreview(row.fileUrl)}>
-          <VisibilityIcon />
-        </IconButton>
+        <Tooltip title={t("commo.view")}>
+          <IconButton
+            color="primary"
+            onClick={() => handlePreview(row.fileUrl)}
+          >
+            <VisibilityIcon />
+          </IconButton>
+        </Tooltip>
       ),
     },
     {
@@ -159,38 +174,36 @@ const EditorArticles = () => {
             />
 
             <label htmlFor={`file-${row.id}`}>
-              <Button
-                component="span"
-                size="small"
-                variant="outlined"
-                startIcon={<UploadFileIcon />}
-                sx={{ textTransform: "none", borderRadius: 2 }}
-              >
-                {t("editor.articles.upload")}
-              </Button>
+              <Tooltip title={t("editor.articles.upload")}>
+                <IconButton component="span" color="info">
+                  <UploadFileIcon />
+                </IconButton>
+              </Tooltip>
             </label>
 
-            <Button
-              size="small"
-              color="success"
-              variant="contained"
-              disabled={!hasFile}
-              sx={{ textTransform: "none", borderRadius: 2 }}
-              onClick={() => handleConfirmOpen(row.id, "ACCEPTED")}
-            >
-              {t("editor.articles.accept")}
-            </Button>
+            <Tooltip title={t("editor.articles.accept")}>
+              <span>
+                <IconButton
+                  color="success"
+                  disabled={!hasFile}
+                  onClick={() => handleConfirmOpen(row.id, "ACCEPTED")}
+                >
+                  <CheckCircleIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
 
-            <Button
-              size="small"
-              color="error"
-              variant="outlined"
-              disabled={!hasFile}
-              sx={{ textTransform: "none", borderRadius: 2 }}
-              onClick={() => handleConfirmOpen(row.id, "REJECTED")}
-            >
-              {t("editor.articles.reject")}
-            </Button>
+            <Tooltip title={t("editor.articles.reject")}>
+              <span>
+                <IconButton
+                  color="error"
+                  disabled={!hasFile}
+                  onClick={() => handleConfirmOpen(row.id, "REJECTED")}
+                >
+                  <CancelIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
           </Stack>
         );
       },

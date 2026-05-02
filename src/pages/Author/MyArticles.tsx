@@ -1,6 +1,18 @@
 import { useEffect, useState } from "react";
-import { Box, Typography, Chip, Button, Stack } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Chip,
+  Stack,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
+
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+
 import { useTranslation } from "react-i18next";
+import { translateEnum } from "../../utils/enumTranslator";
+
 import BaseDataTable from "../../components/ui/table/BaseDataTable";
 import { getMyArticles, uploadPayment } from "../../api/articles.api";
 
@@ -69,7 +81,7 @@ const MyArticles = () => {
       headerName: t("author.articles.status"),
       render: (row: Article) => (
         <Chip
-          label={row.status}
+          label={translateEnum(t, "status", row.status)}
           color={getStatusColor(row.status) as any}
           size="small"
         />
@@ -90,22 +102,22 @@ const MyArticles = () => {
         return (
           <Stack direction="row" spacing={1}>
             {isAccepted && !hasPaid && (
-              <Button
-                variant="contained"
-                component="label"
-                size="small"
-                sx={{
-                  textTransform: "none",
-                  borderRadius: 2,
-                }}
-              >
-                {t("author.articles.upload")}
+              <>
                 <input
                   type="file"
                   hidden
+                  id={`payment-${row.id}`}
                   onChange={(e) => handlePaymentUpload(e, row.id)}
                 />
-              </Button>
+
+                <label htmlFor={`payment-${row.id}`}>
+                  <Tooltip title={t("author.articles.upload")}>
+                    <IconButton component="span" color="primary">
+                      <UploadFileIcon />
+                    </IconButton>
+                  </Tooltip>
+                </label>
+              </>
             )}
 
             {hasPaid && (

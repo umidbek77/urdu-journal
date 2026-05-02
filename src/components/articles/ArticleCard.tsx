@@ -18,15 +18,23 @@ interface Issue {
   series: string;
   publishedDate: string;
   coverImageUrl?: string;
+  pdfUrl?: string;
 }
 
 interface ArticleCardProps {
   issue: Issue;
+  onOpenPdf?: (url: string, title: string) => void;
 }
 
-const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
+const ArticleCard: React.FC<ArticleCardProps> = ({ issue, onOpenPdf }) => {
   const theme = useTheme();
   const { t } = useTranslation();
+
+  const handleClick = () => {
+    if (onOpenPdf && issue.pdfUrl) {
+      onOpenPdf(issue.pdfUrl, `${issue.year} - ${issue.number}`);
+    }
+  };
 
   return (
     <Card
@@ -85,21 +93,38 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ issue }) => {
           {new Date(issue.publishedDate).toLocaleDateString()}
         </Typography>
 
-        <Button
-          variant="contained"
-          size="small"
-          fullWidth
-          component={Link}
-          to={`/issues/${issue.id}`}
-          sx={{
-            mt: 1,
-            textTransform: "none",
-            fontWeight: 600,
-            borderRadius: 2,
-          }}
-        >
-          {t("article.view")}
-        </Button>
+        {onOpenPdf ? (
+          <Button
+            variant="contained"
+            size="small"
+            fullWidth
+            onClick={handleClick}
+            sx={{
+              mt: 1,
+              textTransform: "none",
+              fontWeight: 600,
+              borderRadius: 2,
+            }}
+          >
+            {t("article.view")}
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            size="small"
+            fullWidth
+            component={Link}
+            to={`/issues/${issue.id}`}
+            sx={{
+              mt: 1,
+              textTransform: "none",
+              fontWeight: 600,
+              borderRadius: 2,
+            }}
+          >
+            {t("article.view")}
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

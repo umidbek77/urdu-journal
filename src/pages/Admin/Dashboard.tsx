@@ -39,11 +39,13 @@ const AdminDashboard = () => {
     });
 
     api.get("/admin/stats/articles-status").then((res) => {
-      const raw = res.data || {};
-      const formatted = Object.keys(raw).map((key) => ({
-        name: key,
-        value: Number(raw[key]),
+      const raw = res.data || [];
+
+      const formatted = raw.map((item: any) => ({
+        name: t(`enums.status.${item.status}`),
+        value: item.count,
       }));
+
       setStatusData(formatted);
     });
 
@@ -164,22 +166,95 @@ const AdminDashboard = () => {
               {t("admin.dashboard.statusChart")}
             </Typography>
 
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={statusData}
-                  dataKey="value"
-                  nameKey="name"
-                  outerRadius={100}
-                  label
-                >
-                  {statusData.map((_, index) => (
-                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+            <Stack
+              direction={{ xs: "column", md: "row" }}
+              alignItems="center"
+              gap={4}
+            >
+              <Box sx={{ width: 300, height: 300 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={statusData}
+                      dataKey="value"
+                      nameKey="name"
+                      outerRadius={90}
+                      innerRadius={55}
+                    >
+                      {statusData.map((_, index) => (
+                        <Cell
+                          key={index}
+                          fill={COLORS[index % COLORS.length]}
+                        />
+                      ))}
+                    </Pie>
+
+                    <text
+                      x="50%"
+                      y="50%"
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      style={{ fontSize: 18, fontWeight: 700 }}
+                    >
+                      {statusData.reduce((acc, cur) => acc + cur.value, 0)}
+                    </text>
+
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+              </Box>
+
+              <Box flex={1} width="100%">
+                <Stack spacing={1.5}>
+                  {statusData.map((item, i) => {
+                    const total = statusData.reduce(
+                      (acc, cur) => acc + cur.value,
+                      0,
+                    );
+
+                    const percent =
+                      total > 0 ? Math.round((item.value / total) * 100) : 0;
+
+                    return (
+                      <Stack
+                        key={i}
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        sx={{
+                          p: 1,
+                          borderRadius: 2,
+                          "&:hover": {
+                            background: "#f5f6fa",
+                          },
+                        }}
+                      >
+                        <Stack direction="row" alignItems="center" gap={1}>
+                          <Box
+                            sx={{
+                              width: 12,
+                              height: 12,
+                              borderRadius: "50%",
+                              background: COLORS[i % COLORS.length],
+                            }}
+                          />
+
+                          <Typography fontWeight={500}>{item.name}</Typography>
+                        </Stack>
+
+                        <Stack direction="row" alignItems="center" gap={2}>
+                          <Typography fontWeight={600}>{item.value}</Typography>
+
+                          <Typography color="text.secondary">
+                            {percent}%
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    );
+                  })}
+                </Stack>
+              </Box>
+            </Stack>
           </Paper>
         </Box>
 

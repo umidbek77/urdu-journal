@@ -3,11 +3,23 @@ import {
   List,
   ListItemButton,
   ListItemText,
+  ListItemIcon,
   Box,
   Typography,
   IconButton,
 } from "@mui/material";
+
 import MenuIcon from "@mui/icons-material/Menu";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ArticleIcon from "@mui/icons-material/Article";
+import PeopleIcon from "@mui/icons-material/People";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
+import PublishIcon from "@mui/icons-material/Publish";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import EditIcon from "@mui/icons-material/Edit";
+
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -26,31 +38,87 @@ const Sidebar = () => {
 
   if (user.role === "USER") {
     menu = [
-      { label: t("sidebar.user.dashboard"), path: "/dashboard" },
-      { label: t("sidebar.user.myArticles"), path: "/my-articles" },
-      { label: t("sidebar.user.submit"), path: "/submit-article" },
-      { label: t("sidebar.user.profile"), path: "/profile" },
+      {
+        label: t("sidebar.user.dashboard"),
+        path: "/dashboard",
+        icon: <DashboardIcon />,
+      },
+      {
+        label: t("sidebar.user.myArticles"),
+        path: "/my-articles",
+        icon: <ArticleIcon />,
+      },
+      {
+        label: t("sidebar.user.submit"),
+        path: "/submit-article",
+        icon: <PublishIcon />,
+      },
+      {
+        label: t("sidebar.user.profile"),
+        path: "/profile",
+        icon: <AccountCircleIcon />,
+      },
     ];
   }
 
   if (user.role === "EDITOR") {
     menu = [
-      { label: t("sidebar.editor.dashboard"), path: "/editor-dashboard" },
-      { label: t("sidebar.editor.articles"), path: "/editor-articles" },
-      { label: t("sidebar.editor.profile"), path: "/profile" },
+      {
+        label: t("sidebar.editor.dashboard"),
+        path: "/editor-dashboard",
+        icon: <DashboardIcon />,
+      },
+      {
+        label: t("sidebar.editor.articles"),
+        path: "/editor-articles",
+        icon: <EditIcon />,
+      },
+      {
+        label: t("sidebar.editor.profile"),
+        path: "/profile",
+        icon: <AccountCircleIcon />,
+      },
     ];
   }
 
   if (user.role === "SUPER_ADMIN") {
     menu = [
-      { label: t("sidebar.admin.dashboard"), path: "/admin-dashboard" },
-      { label: t("sidebar.admin.articles"), path: "/admin-articles" },
-      { label: t("sidebar.admin.editors"), path: "/editors" },
-      { label: t("sidebar.admin.users"), path: "/users" },
-      { label: t("sidebar.admin.issues"), path: "/issues-admin" },
-      { label: t("sidebar.admin.publish"), path: "/publish" },
-      { label: t("sidebar.admin.published"), path: "/published" },
-      { label: t("sidebar.admin.profile"), path: "/profile" },
+      {
+        label: t("sidebar.admin.dashboard"),
+        path: "/admin-dashboard",
+        icon: <DashboardIcon />,
+      },
+      {
+        label: t("sidebar.admin.articles"),
+        path: "/admin-articles",
+        icon: <ArticleIcon />,
+      },
+      {
+        label: t("sidebar.admin.editors"),
+        path: "/editors",
+        icon: <AdminPanelSettingsIcon />,
+      },
+      { label: t("sidebar.admin.users"), path: "/users", icon: <PeopleIcon /> },
+      {
+        label: t("sidebar.admin.issues"),
+        path: "/issues-admin",
+        icon: <LibraryBooksIcon />,
+      },
+      {
+        label: t("sidebar.admin.publish"),
+        path: "/publish",
+        icon: <PublishIcon />,
+      },
+      {
+        label: t("sidebar.admin.published"),
+        path: "/published",
+        icon: <ArticleIcon />,
+      },
+      {
+        label: t("sidebar.admin.profile"),
+        path: "/profile",
+        icon: <AccountCircleIcon />,
+      },
     ];
   }
 
@@ -58,15 +126,16 @@ const Sidebar = () => {
     <Drawer
       variant="permanent"
       sx={{
-        width: open ? 260 : 140,
+        width: open ? 260 : 90,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: open ? 260 : 115,
+          width: open ? 260 : 90,
           boxSizing: "border-box",
           backgroundColor: "#1E3A5F",
           color: "white",
           transition: "0.3s",
           mt: "64px",
+          overflowX: "hidden",
         },
       }}
     >
@@ -79,9 +148,12 @@ const Sidebar = () => {
         }}
       >
         {open ? (
-          <Typography fontWeight="bold">{t("sidebar.title")}</Typography>
+          <Box display="flex" alignItems="center" gap={1}>
+            <LibraryBooksIcon />
+            <Typography fontWeight="bold">{t("sidebar.title")}</Typography>
+          </Box>
         ) : (
-          <Typography fontWeight="bold">J-KIT</Typography>
+          <LibraryBooksIcon />
         )}
 
         <IconButton onClick={() => setOpen(!open)} sx={{ color: "white" }}>
@@ -95,18 +167,32 @@ const Sidebar = () => {
             key={item.label}
             onClick={() => navigate(item.path)}
             sx={{
-              px: 3,
+              px: 2,
+              justifyContent: open ? "initial" : "center",
               "&:hover": {
                 backgroundColor: "#274c77",
               },
             }}
           >
-            <ListItemText
-              primary={open ? item.label : item.label.charAt(0)}
-              primaryTypographyProps={{
-                fontWeight: "bold",
+            <ListItemIcon
+              sx={{
+                color: "white",
+                minWidth: 0,
+                mr: open ? 2 : 0,
+                justifyContent: "center",
               }}
-            />
+            >
+              {item.icon}
+            </ListItemIcon>
+
+            {open && (
+              <ListItemText
+                primary={item.label}
+                primaryTypographyProps={{
+                  fontWeight: "bold",
+                }}
+              />
+            )}
           </ListItemButton>
         ))}
 
@@ -116,18 +202,32 @@ const Sidebar = () => {
             window.location.href = "/login";
           }}
           sx={{
-            px: 3,
+            px: 2,
+            justifyContent: open ? "initial" : "center",
             "&:hover": {
               backgroundColor: "#274c77",
             },
           }}
         >
-          <ListItemText
-            primary={open ? t("sidebar.logout") : "L"}
-            primaryTypographyProps={{
-              fontWeight: "bold",
+          <ListItemIcon
+            sx={{
+              color: "white",
+              minWidth: 0,
+              mr: open ? 2 : 0,
+              justifyContent: "center",
             }}
-          />
+          >
+            <LogoutIcon />
+          </ListItemIcon>
+
+          {open && (
+            <ListItemText
+              primary={t("sidebar.logout")}
+              primaryTypographyProps={{
+                fontWeight: "bold",
+              }}
+            />
+          )}
         </ListItemButton>
       </List>
     </Drawer>

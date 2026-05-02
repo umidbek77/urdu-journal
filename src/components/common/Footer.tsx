@@ -4,7 +4,6 @@ import {
   Container,
   Typography,
   Link as MuiLink,
-  IconButton,
   Divider,
 } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -46,13 +45,16 @@ const Footer: React.FC = () => {
             rowGap: 5,
           }}
         >
-          {/* LOGO */}
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               width: { xs: "100%", md: "33%" },
               textDecoration: "none",
+              transition: "0.3s",
+              "&:hover": {
+                transform: "translateY(-3px)",
+              },
             }}
             component={Link}
             to="/"
@@ -64,6 +66,7 @@ const Footer: React.FC = () => {
               sx={{
                 height: { xs: 40, md: 45 },
                 mr: 1.5,
+                transition: "0.3s",
               }}
             />
             <Box sx={{ lineHeight: 1.2 }}>
@@ -85,8 +88,7 @@ const Footer: React.FC = () => {
             </Box>
           </Box>
 
-          {/* LINKS */}
-          <Box sx={{ width: { xs: "100%", md: "33%" }, textAlign: "center" }}>
+          <Box sx={{ width: { xs: "100%", md: "33%" }, textAlign: "left" }}>
             <Typography
               variant="subtitle1"
               sx={{
@@ -104,7 +106,8 @@ const Footer: React.FC = () => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
                 gap: 0.8,
                 mt: 1,
               }}
@@ -114,14 +117,16 @@ const Footer: React.FC = () => {
                   key={item.title}
                   component={Link}
                   to={item.path}
-                  underline="hover"
+                  underline="none"
                   color="inherit"
                   sx={{
                     fontSize: "0.9rem",
                     opacity: 0.85,
+                    transition: "0.3s",
                     "&:hover": {
                       color: "#FFCC00",
                       opacity: 1,
+                      transform: "translateX(4px)",
                     },
                   }}
                 >
@@ -131,7 +136,6 @@ const Footer: React.FC = () => {
             </Box>
           </Box>
 
-          {/* CONTACT */}
           <Box sx={{ width: { xs: "100%", md: "33%" } }}>
             <Typography
               variant="subtitle1"
@@ -147,20 +151,30 @@ const Footer: React.FC = () => {
             </Typography>
 
             <Box sx={{ mt: 1 }}>
-              <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                <PhoneIcon sx={{ mr: 1, fontSize: 18 }} />
-                <Typography variant="body2">{CONTACT_INFO.phone}</Typography>
-              </Box>
-
-              <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                <EmailIcon sx={{ mr: 1, fontSize: 18 }} />
-                <Typography variant="body2">{CONTACT_INFO.email}</Typography>
-              </Box>
-
-              <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-                <LocationOnIcon sx={{ mr: 1, mt: 0.5, fontSize: 18 }} />
-                <Typography variant="body2">{CONTACT_INFO.address}</Typography>
-              </Box>
+              {[
+                { icon: <PhoneIcon />, text: CONTACT_INFO.phone },
+                { icon: <EmailIcon />, text: CONTACT_INFO.email },
+                { icon: <LocationOnIcon />, text: CONTACT_INFO.address },
+              ].map((item, i) => (
+                <Box
+                  key={i}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    mb: 1,
+                    transition: "0.3s",
+                    "&:hover": {
+                      color: "#FFCC00",
+                      transform: "translateX(4px)",
+                    },
+                  }}
+                >
+                  {React.cloneElement(item.icon, {
+                    sx: { mr: 1, fontSize: 18 },
+                  })}
+                  <Typography variant="body2">{item.text}</Typography>
+                </Box>
+              ))}
             </Box>
           </Box>
         </Box>
@@ -172,17 +186,30 @@ const Footer: React.FC = () => {
             display: "flex",
             justifyContent: "space-between",
             flexWrap: "wrap",
+            alignItems: "center",
+            gap: 1,
           }}
         >
           <Typography variant="caption" sx={{ opacity: 0.7 }}>
             {t("footer.copy", { year: new Date().getFullYear() })}
           </Typography>
 
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton color="inherit" size="small">
-              <LanguageIcon fontSize="small" />
-            </IconButton>
-            <Typography variant="caption" sx={{ ml: 0.5 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              px: 1,
+              py: 0.5,
+              borderRadius: 2,
+              transition: "0.3s",
+              "&:hover": {
+                backgroundColor: "rgba(255,255,255,0.1)",
+              },
+            }}
+          >
+            <LanguageIcon fontSize="small" />
+            <Typography variant="caption">
               {i18n.language === "uz" ? "O‘zbekcha" : "English"}
             </Typography>
           </Box>

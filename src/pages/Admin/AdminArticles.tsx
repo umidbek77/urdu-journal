@@ -11,6 +11,7 @@ import {
   Stack,
   Chip,
 } from "@mui/material";
+import { translateEnum } from "../../utils/enumTranslator";
 
 import { useTranslation } from "react-i18next";
 import BaseDataTable from "../../components/ui/table/BaseDataTable";
@@ -99,7 +100,7 @@ const AdminArticles = () => {
     {
       field: "category",
       headerName: t("admin.articles.category"),
-      render: (row: any) => row.category || "-",
+      render: (row: any) => translateEnum(t, "category", row.category),
     },
     {
       field: "createdAt",
@@ -114,7 +115,7 @@ const AdminArticles = () => {
     {
       field: "status",
       headerName: t("admin.articles.status"),
-      render: (row: any) => <Chip label={row.status} size="small" />,
+      render: (row: any) => <Chip label={translateEnum(t, "status", row.status)} size="small" />,
     },
     {
       field: "editor",
@@ -129,7 +130,7 @@ const AdminArticles = () => {
           row={row}
           actions={[
             {
-              label: "View",
+              label: t("common.view"),
               onClick: () => handleView(row.fileUrl),
             },
             {

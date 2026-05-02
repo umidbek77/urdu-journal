@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { uploadArticle, submitArticle } from "../../api/articles.api";
+import { translateEnum } from "../../utils/enumTranslator";
 
 const categories = [
   "PROGRAMMING",
@@ -146,7 +147,7 @@ const SubmitArticle = () => {
             >
               {categories.map((cat) => (
                 <MenuItem key={cat} value={cat}>
-                  {cat}
+                   {translateEnum(t, "category", cat)}
                 </MenuItem>
               ))}
             </TextField>

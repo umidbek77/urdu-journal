@@ -9,11 +9,13 @@
   "auth": {
     "login": "Login",
     "register": "Register",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "logout": "Logout"
   },
   "common": {
     "language": "Language",
-    "actions": "Actions"
+    "actions": "Actions",
+    "view": "View"
   },
   "home": {
     "hero": {
@@ -72,7 +74,7 @@
       "articles": "Articles",
       "editors": "Editors",
       "users": "Users",
-      "issues": "Issues",
+      "issues": "Journal Publications",
       "publish": "Publish",
       "published": "Published Articles",
       "profile": "Profile"
@@ -159,7 +161,7 @@
       "title": "Editors Management",
       "create": "Create Editor",
       "edit": "Edit Editor",
-      "name": "Name",
+      "name": "First name Last name",
       "email": "Email",
       "password": "Password",
       "categories": "Categories"
@@ -172,7 +174,7 @@
       "created": "Created"
     },
     "issues": {
-      "title": "Issues Management",
+      "title": "Manage Magazine Publications",
       "create": "Create Issue",
       "edit": "Edit Issue",
       "volume": "Volume",
@@ -192,7 +194,10 @@
       "publish": "Publish",
       "review": "Review",
       "payment": "Payment",
-      "selectIssue": "Select issue"
+      "selectIssue": "Select issue",
+      "category": "Category",
+      "author": "Author",
+      "editor": "Editor"
     },
     "dashboard": {
       "title": "Admin Dashboard",
@@ -242,7 +247,8 @@
       "accepted": "Accepted",
       "acceptedDesc": "Approved articles",
 
-      "chartTitle": "Articles Statistics"
+      "chartTitle": "Articles Statistics",
+      "rejected": "Rejected"
     },
     "articles": {
       "titlePage": "Articles For Review",
@@ -298,6 +304,29 @@
       "success": "Article submitted successfully",
       "error": "Something went wrong",
       "validation": "Please fill all fields"
+    }
+  },
+  "enums": {
+    "category": {
+      "PROGRAMMING": "Programming",
+      "INFOCOMMUNICATION": "Infocommunication",
+      "AI": "Artificial Intelligence",
+      "CRYPTOGRAPHY": "Cryptography",
+      "NETWORK": "Networks",
+      "INTELLIGENT_SYSTEMS": "Intelligent Systems"
+    },
+    "status": {
+      "SUBMITTED": "Submitted",
+      "UNDER_REVIEW": "Under Review",
+      "REVISION": "Revision Required",
+      "ACCEPTED": "Accepted",
+      "REJECTED": "Rejected",
+      "PUBLISHED": "Published"
+    },
+    "role": {
+      "USER": "User",
+      "EDITOR": "Editor",
+      "SUPER_ADMIN": "Admin"
     }
   }
 }

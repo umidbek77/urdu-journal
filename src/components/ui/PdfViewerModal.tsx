@@ -29,10 +29,8 @@ const PdfViewerModal: React.FC<PdfViewerModalProps> = ({
 
   const isUrlValid = pdfUrl && pdfUrl !== "#";
 
-  const safeUrl = encodeURI(pdfUrl);
-
   const googleViewerUrl = `https://docs.google.com/gview?url=${encodeURIComponent(
-    pdfUrl
+    pdfUrl,
   )}&embedded=true`;
 
   return (
@@ -62,31 +60,42 @@ const PdfViewerModal: React.FC<PdfViewerModalProps> = ({
       >
         {title}
 
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
+        <IconButton onClick={onClose}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>
 
       <DialogContent dividers sx={{ p: 0 }}>
         {isUrlValid ? (
-          <Box sx={{ width: "100%", height: "100%" }}>
+          <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
             <iframe
-              src={safeUrl}
+              src={googleViewerUrl}
               title={title}
               width="100%"
               height="100%"
               style={{ border: "none" }}
-              onError={(e) => {
-                (e.currentTarget as HTMLIFrameElement).src =
-                  googleViewerUrl;
-              }}
             />
+
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 12,
+                right: 12,
+                background: "rgba(255,255,255,0.95)",
+                borderRadius: 2,
+                px: 2,
+                py: 1,
+              }}
+            >
+              <a
+                href={pdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: "none", fontWeight: 600 }}
+              >
+                PDF ochish ↗
+              </a>
+            </Box>
           </Box>
         ) : (
           <Box sx={{ p: 4, textAlign: "center" }}>

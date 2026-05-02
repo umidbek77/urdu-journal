@@ -38,11 +38,10 @@ const Home: React.FC = () => {
 
   return (
     <Box>
-      {/* HERO */}
       <Box
         sx={{
           position: "relative",
-          height: { xs: "65vh", md: "95vh" },
+          height: { xs: "55vh", sm: "60vh", md: "75vh" },
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -62,7 +61,7 @@ const Home: React.FC = () => {
             sx={{
               fontWeight: 900,
               mb: 1,
-              fontSize: { xs: "2.5rem", sm: "3rem", md: "3rem" },
+              fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
               textShadow: "2px 2px 8px rgba(0,0,0,0.8)",
               lineHeight: 1.1,
               letterSpacing: 1.5,
@@ -75,10 +74,10 @@ const Home: React.FC = () => {
             variant="h3"
             component="h2"
             sx={{
-              mb: 5,
+              mb: 4,
               color: "white",
               textShadow: "1px 1px 5px rgba(0,0,0,0.8)",
-              fontSize: { xs: "1.1rem", sm: "1.4rem" },
+              fontSize: { xs: "1rem", sm: "1.2rem" },
               fontWeight: 500,
             }}
           >
@@ -89,24 +88,26 @@ const Home: React.FC = () => {
             variant="contained"
             component={Link}
             to="/about"
-            sx={{ mt: 4 }}
+            sx={{
+              mt: 2,
+              textTransform: "none",
+              fontWeight: 600,
+              borderRadius: "8px",
+              px: 3,
+              py: 1,
+            }}
           >
             {t("home.hero.button")}
           </Button>
         </Container>
       </Box>
 
-      {/* CURRENT ISSUE */}
-      <Box sx={{ py: 4 }}>
-        {issue && <CurrentIssue issue={issue} />}
-      </Box>
+      <Box sx={{ py: 4 }}>{issue && <CurrentIssue issue={issue} />}</Box>
 
-      {/* CALL TO ACTION */}
       <Box sx={{ backgroundColor: "primary.main", py: 6 }}>
         <ResearchCallout />
       </Box>
 
-      {/* LINKS */}
       <Box sx={{ py: 6 }}>
         <UsefulLinks />
       </Box>

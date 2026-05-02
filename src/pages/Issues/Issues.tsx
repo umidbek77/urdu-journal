@@ -5,6 +5,7 @@ import CustomBreadcrumbs from "../../components/ui/Breadcrumbs";
 import UsefulLinks from "../../components/common/UsefulLinks";
 import { api } from "../../api/axios";
 import { useTranslation } from "react-i18next";
+import PdfViewerModal from "../../components/ui/PdfViewerModal";
 
 interface Issue {
   id: string;
@@ -14,12 +15,17 @@ interface Issue {
   series: string;
   publishedDate: string;
   coverImageUrl?: string;
+  pdfUrl?: string;
 }
 
 const Issues: React.FC = () => {
   const { t } = useTranslation();
 
   const [issues, setIssues] = useState<Issue[]>([]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState("");
+  const [pdfTitle, setPdfTitle] = useState("");
 
   const fetchIssues = async () => {
     try {
@@ -45,6 +51,19 @@ const Issues: React.FC = () => {
 
     return dateB - dateA;
   });
+
+  const handleOpenPdf = (url: string, title: string) => {
+    if (!url) return;
+    setPdfUrl(url);
+    setPdfTitle(title);
+    setIsModalOpen(true);
+  };
+
+  const handleClosePdf = () => {
+    setIsModalOpen(false);
+    setPdfUrl("");
+    setPdfTitle("");
+  };
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -79,10 +98,20 @@ const Issues: React.FC = () => {
               },
             }}
           >
-            <ArticleCard issue={issue} />
+            <ArticleCard
+              issue={issue}
+              onOpenPdf={handleOpenPdf}
+            />
           </Box>
         ))}
       </Box>
+
+      <PdfViewerModal
+        open={isModalOpen}
+        onClose={handleClosePdf}
+        pdfUrl={pdfUrl}
+        title={pdfTitle}
+      />
 
       <UsefulLinks />
     </Container>

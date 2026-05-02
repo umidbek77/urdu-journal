@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, Typography, Chip } from "@mui/material";
 import { useTranslation } from "react-i18next";
-
+import { translateEnum } from "../../utils/enumTranslator";
 import BaseDataTable from "../../components/ui/table/BaseDataTable";
 import { api } from "../../api/axios";
 
@@ -37,7 +37,11 @@ const AdminPublished = () => {
       field: "status",
       headerName: t("admin.publish.status"),
       render: (row: any) => (
-        <Chip label={row.status} color="success" size="small" />
+        <Chip
+          label={translateEnum(t, "status", row.status)}
+          color="success"
+          size="small"
+        />
       ),
     },
 

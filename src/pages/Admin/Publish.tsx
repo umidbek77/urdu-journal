@@ -20,6 +20,8 @@ import TableActions from "../../components/ui/table/TableActions";
 import { getAcceptedArticles, publishArticle } from "../../api/admin.api";
 import { api } from "../../api/axios";
 
+import { translateEnum } from "../../utils/enumTranslator";
+
 import PdfViewerModal from "../../components/ui/PdfViewerModal";
 
 const AdminPublish = () => {
@@ -51,8 +53,13 @@ const AdminPublish = () => {
   };
 
   const loadIssues = async () => {
-    const res = await api.get("/issues");
-    setIssues(res.data || []);
+    try {
+      const res = await api.get("/issues");
+      setIssues(res.data || []);
+    } catch (err) {
+      console.error(err);
+      setIssues([]);
+    }
   };
 
   useEffect(() => {
@@ -85,7 +92,7 @@ const AdminPublish = () => {
   const handleOpenPdf = (url?: string, title?: string) => {
     if (!url) return;
 
-    setPdfUrl(encodeURI(url));
+    setPdfUrl(url);
     setPdfTitle(title || "PDF");
     setOpenPdf(true);
   };
@@ -96,10 +103,30 @@ const AdminPublish = () => {
       headerName: t("admin.publish.title"),
     },
     {
+      field: "category",
+      headerName: t("admin.publish.category"),
+      render: (row: any) =>
+        row.category ? translateEnum(t, "category", row.category) : "-",
+    },
+    {
+      field: "author",
+      headerName: t("admin.publish.author"),
+      render: (row: any) => row.author?.name || "-",
+    },
+    {
+      field: "editor",
+      headerName: t("admin.publish.editor"),
+      render: (row: any) => row.editor?.name || "-",
+    },
+    {
       field: "status",
       headerName: t("admin.publish.status"),
       render: (row: any) => (
-        <Chip label={row.status} color="success" size="small" />
+        <Chip
+          label={translateEnum(t, "status", row.status)}
+          color="success"
+          size="small"
+        />
       ),
     },
     {
