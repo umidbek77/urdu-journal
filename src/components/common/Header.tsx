@@ -31,6 +31,7 @@ const Header: React.FC = () => {
   const isSmallDesktop = useMediaQuery(theme.breakpoints.down("lg"));
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const location = useLocation();
+  const currentLang = i18n.language;
 
   const navItems = [
     { name: t("nav.about"), path: "/about" },
@@ -120,7 +121,7 @@ const Header: React.FC = () => {
                 Journal of Khorezm Information Technologies
               </Typography>
               <Typography variant="inherit" color="text.secondary">
-                Xorazm axborot texnologiyalari jurnali
+                 {t("header.subtitle")}
               </Typography>
             </Box>
           </Box>

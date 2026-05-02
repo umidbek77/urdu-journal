@@ -17,6 +17,9 @@
     "actions": "Actions",
     "view": "View"
   },
+  "header": {
+    "subtitle": "Journal of Khorezm Information Technologies"
+  },
   "home": {
     "hero": {
       "title": "Journal of Khwarazm Information Technologies",

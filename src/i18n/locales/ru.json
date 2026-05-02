@@ -17,6 +17,9 @@
     "actions": "Действия",
     "view": "Просмотр"
   },
+  "header": {
+    "subtitle": "Журнал информационных технологий Хорезма"
+  },
   "home": {
     "hero": {
       "title": "Journal of Khwarazm Information Technologies",

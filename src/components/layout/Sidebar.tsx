@@ -21,18 +21,21 @@ import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { useAuth } from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
 
   const [open, setOpen] = useState(true);
 
   if (!user) return null;
+
+  const isActive = (path: string) => location.pathname === path;
 
   let menu: any[] = [];
 
@@ -162,39 +165,48 @@ const Sidebar = () => {
       </Box>
 
       <List>
-        {menu.map((item) => (
-          <ListItemButton
-            key={item.label}
-            onClick={() => navigate(item.path)}
-            sx={{
-              px: 2,
-              justifyContent: open ? "initial" : "center",
-              "&:hover": {
-                backgroundColor: "#274c77",
-              },
-            }}
-          >
-            <ListItemIcon
+        {menu.map((item) => {
+          const active = isActive(item.path);
+
+          return (
+            <ListItemButton
+              key={item.label}
+              onClick={() => navigate(item.path)}
+              selected={active}
               sx={{
-                color: "white",
-                minWidth: 0,
-                mr: open ? 2 : 0,
-                justifyContent: "center",
+                px: 2,
+                justifyContent: open ? "initial" : "center",
+                backgroundColor: active ? "#274c77" : "transparent",
+                borderLeft: active
+                  ? "4px solid #FFD700"
+                  : "4px solid transparent",
+                "&:hover": {
+                  backgroundColor: "#274c77",
+                },
               }}
             >
-              {item.icon}
-            </ListItemIcon>
-
-            {open && (
-              <ListItemText
-                primary={item.label}
-                primaryTypographyProps={{
-                  fontWeight: "bold",
+              <ListItemIcon
+                sx={{
+                  color: active ? "#FFD700" : "white",
+                  minWidth: 0,
+                  mr: open ? 2 : 0,
+                  justifyContent: "center",
                 }}
-              />
-            )}
-          </ListItemButton>
-        ))}
+              >
+                {item.icon}
+              </ListItemIcon>
+
+              {open && (
+                <ListItemText
+                  primary={item.label}
+                  primaryTypographyProps={{
+                    fontWeight: active ? "bold" : "normal",
+                  }}
+                />
+              )}
+            </ListItemButton>
+          );
+        })}
 
         <ListItemButton
           onClick={() => {

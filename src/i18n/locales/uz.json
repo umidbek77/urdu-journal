@@ -17,6 +17,9 @@
     "actions": "Amallar",
     "view": "Ko‘rish"
   },
+   "header": {
+    "subtitle": "Xorazm axborot texnologiyalari jurnali"
+  },
   "home": {
     "hero": {
       "title": "Journal of Khwarazm Information Technologies",
