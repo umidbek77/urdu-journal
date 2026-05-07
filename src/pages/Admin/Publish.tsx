@@ -162,7 +162,12 @@ const AdminPublish = () => {
 
       <BaseDataTable columns={columns} rows={articles} loading={loading} />
 
-      <Dialog open={publishModal} onClose={() => setPublishModal(false)}>
+      <Dialog
+        open={publishModal}
+        onClose={() => setPublishModal(false)}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>{t("admin.publish.selectIssue")}</DialogTitle>
 
         <DialogContent>
